@@ -1,0 +1,27 @@
+app-id: org.fcitx.Fcitx5.Addon.TableOther
+runtime: org.fcitx.Fcitx5
+runtime-version: master
+sdk: org.kde.Sdk//5.15
+build-extension: true
+appstream-compose: false
+separate-locales: false
+build-options:
+  prefix: /app/addons/TableOther
+  prepend-pkg-config-path: /app/addons/TableOther/lib/pkgconfig
+
+cleanup:
+  - /bin
+  - /include
+  - /lib
+  - /share/libime
+
+modules:
+  - modules/boost.yaml
+  - modules/libime.yaml
+  - name: fcitx5-table-other
+    buildsystem: cmake
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-table-other
+    post-install:
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.TableOther --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.TableOther

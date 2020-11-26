@@ -1,0 +1,30 @@
+app-id: org.fcitx.Fcitx5.Addon.Anthy
+runtime: org.fcitx.Fcitx5
+runtime-version: master
+sdk: org.kde.Sdk//5.15
+build-extension: true
+appstream-compose: false
+separate-locales: false
+build-options:
+  prefix: /app/addons/Anthy
+  prepend-pkg-config-path: /app/addons/Anthy/lib/pkgconfig
+
+cleanup:
+  - /bin
+  - /include
+  - /lib/pkgconfig
+  - "*.la"
+
+modules:
+  - name: anthy-unicode
+    sources:
+      - type: git
+        url: https://github.com/fujiwarat/anthy-unicode/
+        branch: 1.0.0.20201109
+  - name: fcitx5-anthy
+    buildsystem: cmake
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-anthy
+    post-install:
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Anthy --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Anthy

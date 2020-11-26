@@ -1,0 +1,31 @@
+app-id: org.fcitx.Fcitx5.Addon.LibThai
+runtime: org.fcitx.Fcitx5
+runtime-version: master
+sdk: org.kde.Sdk//5.15
+build-extension: true
+appstream-compose: false
+separate-locales: false
+build-options:
+  prefix: /app/addons/LibThai
+  prepend-pkg-config-path: /app/addons/LibThai/lib/pkgconfig
+modules:
+  - name: libdatrie
+    sources:
+      - type: archive
+        url: https://linux.thai.net/pub/thailinux/software/libthai/libdatrie-0.2.12.tar.xz
+        sha256: 452dcc4d3a96c01f80f7c291b42be11863cd1554ff78b93e110becce6e00b149
+    cleanup:
+      - /share/doc
+      - /share/man
+  - name: libthai
+    sources:
+      - type: archive
+        url: https://linux.thai.net/pub/thailinux/software/libthai/libthai-0.1.28.tar.xz
+        sha256: ffe0a17b4b5aa11b153c15986800eca19f6c93a4025ffa5cf2cab2dcdf1ae911
+  - name: fcitx5-libthai
+    buildsystem: cmake
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-libthai
+    post-install:
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.LibThai --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.LibThai

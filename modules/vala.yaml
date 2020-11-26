@@ -1,0 +1,24 @@
+name: vala
+sources:
+  - type: git
+    url: https://gitlab.gnome.org/GNOME/vala.git
+    tag: 0.48.9
+make-args:
+  - V=1
+cleanup:
+  - /share/devhelp
+modules:
+  - name: vala-bootstrap
+    build-options:
+      env:
+        - VALAC=/no-valac
+    sources:
+      - type: git
+        url: https://gitlab.gnome.org/Archive/vala-bootstrap.git
+        branch: master
+        commit: b2beeaccdf2307ced172646c2ada9765e1747b28
+      - type: shell
+        commands:
+          - touch */*.stamp
+    cleanup:
+      - '*'

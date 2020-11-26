@@ -1,0 +1,28 @@
+app-id: org.fcitx.Fcitx5.Addon.Lua
+runtime: org.fcitx.Fcitx5
+runtime-version: master
+sdk: org.kde.Sdk//5.15
+build-extension: true
+appstream-compose: false
+separate-locales: false
+build-options:
+  prefix: /app/addons/Lua
+  prepend-pkg-config-path: /app/addons/Lua/lib/pkgconfig
+
+cleanup:
+  - /bin
+  - /include
+  - /lib/pkgconfig
+  - /lib/cmake
+  - "*.la"
+  - /man
+
+modules:
+  - shared-modules/lua5.3/lua-5.3.5.json
+  - name: fcitx5-lua
+    buildsystem: cmake
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-lua
+    post-install:
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Lua --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Lua

@@ -1,0 +1,94 @@
+app-id: org.fcitx.Fcitx5
+base: io.qt.qtwebkit.BaseApp
+base-version: '5.15'
+runtime: org.kde.Platform
+runtime-version: '5.15'
+sdk: org.kde.Sdk
+add-extensions:
+  org.fcitx.Fcitx5.Addon:
+    version: master
+    directory: addons
+    subdirectories: true
+    no-autodownload: true
+    add-ld-path: lib
+    autodelete: true
+separate-locales: false
+command: fcitx5
+rename-icon: fcitx
+finish-args:
+  - --socket=session-bus
+  - --socket=x11
+  - --socket=wayland
+  - --share=network
+  - --filesystem=xdg-config/fcitx5:create
+  - --filesystem=xdg-data/fcitx5:create
+  - --env=FCITX_ADDON_DIRS=/app/lib/fcitx5:/app/addons/lib/fcitx5
+modules:
+  - name: fmt
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DFMT_TEST=Off
+    sources:
+      - type: git
+        url: https://github.com/fmtlib/fmt
+        branch: 7.1.2
+  - name: xcb-imdkit
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/fcitx/xcb-imdkit
+  - name: libevent
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DEVENT__LIBRARY_TYPE=SHARED
+    sources:
+      - type: git
+        url: https://github.com/libevent/libevent/
+        branch: release-2.1.12-stable
+  - name: json-c
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DENABLE_THREADING=ON
+      - -DENABLE_RDRAND=OFF
+    sources:
+      - type: git
+        url: https://github.com/json-c/json-c/
+        branch: json-c-0.15-20200726
+
+  - name: cldr-emoji-annotation
+    sources:
+      - type: git
+        url: https://github.com/fujiwarat/cldr-emoji-annotation/
+        branch: 37.0_13.0_0_2
+  - name: fcitx5
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DUSE_SYSTEMD=Off
+      - -DENABLE_ENCHANT=Off
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5
+      - type: file
+        url: https://download.fcitx-im.org/data/en_dict-20121020.tar.gz
+        sha256: c44a5d7847925eea9e4d2d04748d442cd28dd9299a0b572ef7d91eac4f5a6ceb
+        dest-filename: src/modules/spell/dict/en_dict-20121020.tar.gz
+      - type: file
+        path: fcitx5.sh
+    post-install:
+      - install -d /app/addons
+      - mv /app/bin/fcitx5{,-bin}
+      - install -m755 fcitx5.sh /app/bin/fcitx5
+  - name: fcitx5-qt
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DENABLE_QT4=Off
+      - -DCMAKE_INSTALL_QT5PLUGINDIR=/app/lib/plugins
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-qt
+  - name: fcitx5-configtool
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-configtool
+

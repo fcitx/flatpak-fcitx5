@@ -1,0 +1,20 @@
+app-id: org.fcitx.Fcitx5.Addon.Unikey
+runtime: org.fcitx.Fcitx5
+runtime-version: master
+sdk: org.kde.Sdk//5.15
+build-extension: true
+appstream-compose: false
+separate-locales: false
+build-options:
+  prefix: /app/addons/Unikey
+  prepend-pkg-config-path: /app/addons/Unikey/lib/pkgconfig
+modules:
+  - name: fcitx5-unikey
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DENABLE_QT=On
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-unikey
+    post-install:
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Unikey --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Unikey

@@ -1,0 +1,25 @@
+app-id: org.fcitx.Fcitx5.Addon.Sayura
+runtime: org.fcitx.Fcitx5
+runtime-version: master
+sdk: org.kde.Sdk//5.15
+build-extension: true
+appstream-compose: false
+separate-locales: false
+build-options:
+  prefix: /app/addons/Sayura
+  prepend-pkg-config-path: /app/addons/Sayura/lib/pkgconfig
+
+cleanup:
+  - /bin
+  - /include
+  - /lib/pkgconfig
+  - "*.la"
+
+modules:
+  - name: fcitx5-sayura
+    buildsystem: cmake
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-sayura
+    post-install:
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Sayura --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Sayura

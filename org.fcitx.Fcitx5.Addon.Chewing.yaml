@@ -1,0 +1,27 @@
+app-id: org.fcitx.Fcitx5.Addon.Chewing
+runtime: org.fcitx.Fcitx5
+runtime-version: master
+sdk: org.kde.Sdk//5.15
+build-extension: true
+appstream-compose: false
+separate-locales: false
+cleanup:
+  - /include
+  - "*.la"
+  - /lib/pkgconfig
+build-options:
+  prefix: /app/addons/Chewing
+  prepend-pkg-config-path: /app/addons/Chewing/lib/pkgconfig
+modules:
+  - name: libchewing
+    sources:
+      - type: git
+        url: https://github.com/chewing/libchewing
+        branch: v0.5.1
+  - name: fcitx5-chewing
+    buildsystem: cmake
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-chewing
+    post-install:
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Chewing --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Chewing

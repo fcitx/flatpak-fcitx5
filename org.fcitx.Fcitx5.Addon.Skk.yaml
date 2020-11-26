@@ -1,0 +1,61 @@
+app-id: org.fcitx.Fcitx5.Addon.Skk
+runtime: org.fcitx.Fcitx5
+runtime-version: master
+sdk: org.kde.Sdk//5.15
+build-extension: true
+appstream-compose: false
+separate-locales: false
+build-options:
+  prefix: /app/addons/Skk
+  prepend-path: /app/addons/Skk/bin
+  prepend-pkg-config-path: /app/addons/Skk/lib/pkgconfig
+  cflags: -I/app/addons/Skk/include
+modules:
+  - name: gnome-common
+    rm-configure: true
+    config-opts:
+      - --enable-maintainer-mode
+    sources:
+      - type: archive
+        url: https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
+        sha256: 22569e370ae755e04527b76328befc4c73b62bfd4a572499fde116b8318af8cf
+    cleanup: ['*']
+  - name: intltool
+    sources:
+      - type: archive
+        url: https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
+        md5: 12e517cac2b57a0121cda351570f1e63
+  - modules/graphviz.yaml
+  - modules/vala.yaml
+  - modules/libgee.yaml
+  - name: libskk
+    sources:
+      - type: archive
+        url: https://github.com/ueno/libskk/archive/1.0.5.tar.gz
+        sha512: 50b07b244e1fbec13764ca00b90ede2584c53dd5c16783c9bb9114f69f43dbebd352653f335f1c3584b8c42ef4184e891e0ca7427c38afc99131196721e1c1c1
+    build-options:
+      env:
+        ACLOCAL_PATH: /app/addons/Skk/share/aclocal
+        VALAFLAGS: --vapidir /app/addons/Skk/share/vala/vapi
+        XDG_DATA_DIRS: /app/addons/Skk/share:/app/share:/usr/share
+        PYTHONPATH: /app/addons/Skk/lib/python3.8/site-packages
+      prepend-ld-library-path: /app/addons/Skk/lib
+    make-args:
+      - V=1
+  - name: skk-jisyo
+    buildsystem: simple
+    build-commands:
+      - install -Dm644 SKK-JISYO.* -t ${FLATPAK_DEST}/share/skk/
+    sources:
+      - type: git
+        url: https://github.com/skk-dev/dict.git
+        branch: master
+  - name: fcitx5-skk
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DSKK_DEFAULT_PATH=/app/addons/Skk/share/skk/SKK-JISYO.L
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-skk
+    post-install:
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Skk --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Skk
