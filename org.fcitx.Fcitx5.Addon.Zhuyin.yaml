@@ -39,6 +39,7 @@ modules:
       - V=1
     modules:
       - modules/kyotocabinet.yaml
+  - modules/fmt.yaml
   - name: fcitx5-zhuyin
     buildsystem: cmake-ninja
     sources:

@@ -6,6 +6,7 @@ sources:
 make-args:
   - V=1
 cleanup:
+  - /bin
   - /share/devhelp
 modules:
   - name: vala-bootstrap

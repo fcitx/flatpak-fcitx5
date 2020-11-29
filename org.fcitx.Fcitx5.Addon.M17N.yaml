@@ -8,7 +8,14 @@ separate-locales: false
 build-options:
   prefix: /app/addons/M17N
   prepend-pkg-config-path: /app/addons/M17N/lib/pkgconfig
+cleanup:
+  - /bin
+  - /include
+  - /lib/pkgconfig
+  - /share/pkgconfig
+  - "*.la"
 modules:
+  - modules/fmt.yaml
   - name: m17n-lib
     make-args:
       - --jobs=1

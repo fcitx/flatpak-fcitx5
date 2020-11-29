@@ -8,6 +8,11 @@ separate-locales: false
 build-options:
   prefix: /app/addons/LibThai
   prepend-pkg-config-path: /app/addons/LibThai/lib/pkgconfig
+cleanup:
+  - /bin
+  - /include
+  - /lib/pkgconfig
+  - "*.la"
 modules:
   - name: libdatrie
     sources:

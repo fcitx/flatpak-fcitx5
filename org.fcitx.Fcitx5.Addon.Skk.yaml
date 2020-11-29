@@ -10,6 +10,19 @@ build-options:
   prepend-path: /app/addons/Skk/bin
   prepend-pkg-config-path: /app/addons/Skk/lib/pkgconfig
   cflags: -I/app/addons/Skk/include
+
+cleanup:
+  - /bin
+  - /include
+  - /lib/pkgconfig
+  - "/lib/python*"
+  - "/lib/vala*"
+  - "/lib/gir*"
+  - "/share/vala*"
+  - "/share/gir*"
+  - /share/intltool
+  - "*.la"
+
 modules:
   - name: gnome-common
     rm-configure: true

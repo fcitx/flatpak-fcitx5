@@ -1,0 +1,9 @@
+name: xcb-imdkit
+buildsystem: cmake-ninja
+sources:
+  - type: git
+    url: https://github.com/fcitx/xcb-imdkit
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /lib/cmake

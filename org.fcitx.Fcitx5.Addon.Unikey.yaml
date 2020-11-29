@@ -8,6 +8,13 @@ separate-locales: false
 build-options:
   prefix: /app/addons/Unikey
   prepend-pkg-config-path: /app/addons/Unikey/lib/pkgconfig
+
+cleanup:
+  - /bin
+  - /include
+  - /lib/pkgconfig
+  - "*.la"
+
 modules:
   - name: fcitx5-unikey
     buildsystem: cmake-ninja

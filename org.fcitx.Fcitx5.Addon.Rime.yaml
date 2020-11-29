@@ -15,6 +15,9 @@ cleanup:
   - /bin
   - /include
   - /lib/pkgconfig
+  - /lib/cmake
+  - "/lib/python*"
+  - /share/cmake
   - "*.la"
 
 modules:

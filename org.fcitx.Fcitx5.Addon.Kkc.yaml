@@ -10,6 +10,19 @@ build-options:
   prepend-path: /app/addons/Kkc/bin
   prepend-pkg-config-path: /app/addons/Kkc/lib/pkgconfig
   cflags: -I/app/addons/Kkc/include
+
+cleanup:
+  - /bin
+  - /include
+  - /lib/pkgconfig
+  - "/lib/python*"
+  - "/lib/vala*"
+  - "/lib/gir*"
+  - "/share/vala*"
+  - "/share/gir*"
+  - /share/intltool
+  - "*.la"
+
 modules:
   - name: gnome-common
     rm-configure: true

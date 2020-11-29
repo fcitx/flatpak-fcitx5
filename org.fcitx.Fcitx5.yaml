@@ -24,36 +24,10 @@ finish-args:
   - --filesystem=xdg-data/fcitx5:create
   - --env=FCITX_ADDON_DIRS=/app/lib/fcitx5:/app/addons/lib/fcitx5
 modules:
-  - name: fmt
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DFMT_TEST=Off
-    sources:
-      - type: git
-        url: https://github.com/fmtlib/fmt
-        branch: 7.1.2
-  - name: xcb-imdkit
-    buildsystem: cmake-ninja
-    sources:
-      - type: git
-        url: https://github.com/fcitx/xcb-imdkit
-  - name: libevent
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DEVENT__LIBRARY_TYPE=SHARED
-    sources:
-      - type: git
-        url: https://github.com/libevent/libevent/
-        branch: release-2.1.12-stable
-  - name: json-c
-    buildsystem: cmake-ninja
-    config-opts:
-      - -DENABLE_THREADING=ON
-      - -DENABLE_RDRAND=OFF
-    sources:
-      - type: git
-        url: https://github.com/json-c/json-c/
-        branch: json-c-0.15-20200726
+  - modules/fmt.yaml
+  - modules/xcb-imdkit.yaml
+  - modules/libevent.yaml
+  - modules/json-c.yaml
 
   - name: cldr-emoji-annotation
     sources:
