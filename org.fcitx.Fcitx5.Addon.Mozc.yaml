@@ -23,19 +23,8 @@ modules:
       - GYP_DEFINES="document_dir=/app/ime/mozc/licenses/mozc use_libzinnia=1 enable_gtk_renderer=0 use_fcitx5=YES use_fcitx=0" python build_mozc.py gyp
           --server_dir=/app/addons/Mozc/lib/mozc
       - python build_mozc.py build -c Release server/server.gyp:mozc_server gui/gui.gyp:mozc_tool unix/fcitx5/fcitx5.gyp:fcitx5-mozc
-      - install -Dm755 out_linux/Release/mozc_server ${FLATPAK_DEST}/lib/mozc/mozc_server
-      - install -Dm755 out_linux/Release/mozc_tool   ${FLATPAK_DEST}/lib/mozc/mozc_tool
-      - |
-          for mofile in out_linux/Release/gen/unix/fcitx5/po/*.mo; do
-            filename=$(basename $mofile)
-            lang=${filename/.mo/}
-            install -Dm644 $mofile ${FLATPAK_DEST}/share/locale/$lang/LC_MESSAGES/fcitx5-mozc.mo
-          done
-      - install -Dm755 out_linux/Release/fcitx5-mozc.so ${FLATPAK_DEST}/lib/fcitx5/fcitx5-mozc.so
-      - install -Dm644 unix/fcitx5/mozc-addon.conf ${FLATPAK_DEST}/share/fcitx5/addon/mozc.conf
-      - install -Dm644 unix/fcitx5/mozc.conf ${FLATPAK_DEST}/share/fcitx5/inputmethod/mozc.conf
-      - msgfmt --xml -d unix/fcitx5/po/ --template unix/fcitx5/org.fcitx.Fcitx5.Addon.Mozc.metainfo.xml.in -o unix/fcitx5/org.fcitx.Fcitx5.Addon.Mozc.metainfo.xml
-      - install -Dm644 unix/fcitx5/org.fcitx.Fcitx5.Addon.Mozc.metainfo.xml ${FLATPAK_DEST}/share/metainfo/org.fcitx.Fcitx5.Addon.Mozc.metainfo.xml
+      - _bldtype=Release PREFIX=${FLATPAK_DEST} ../scripts/install_server
+      - _bldtype=Release PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5
     sources:
       - type: git
         url: https://github.com/fcitx/mozc
@@ -45,13 +34,3 @@ modules:
           - sed "/stdlib=libc++/d;/-lc++/d" -i src/gyp/common.gypi
     post-install:
       - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Mozc --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Mozc
-
-  - name: fcitx5-mozc-icons
-    buildsystem: simple
-    build-commands:
-      - install -Dm644 -t ${FLATPAK_DEST}/share/fcitx5/mozc/icon/ *.png
-      - install -Dm644 mozc.png ${FLATPAK_DEST}/share/icons/hicolor/48x48/apps/fcitx-mozc.png
-    sources:
-      - type: archive
-        url: https://download.fcitx-im.org/fcitx-mozc/fcitx-mozc-icon.tar.gz
-        sha256: e1da3026bd79f8c5b1dc07080309f9568934a829271f4ab71850cb8088956d81
