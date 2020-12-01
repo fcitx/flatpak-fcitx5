@@ -14,7 +14,6 @@ add-extensions:
     autodelete: true
 separate-locales: false
 command: fcitx5
-rename-icon: fcitx
 finish-args:
   - --socket=session-bus
   - --socket=x11
@@ -22,7 +21,6 @@ finish-args:
   - --share=network
   - --filesystem=xdg-config/fcitx5:create
   - --filesystem=xdg-data/fcitx5:create
-  - --env=FCITX_ADDON_DIRS=/app/lib/fcitx5:/app/addons/lib/fcitx5
 modules:
   - modules/fmt.yaml
   - modules/xcb-imdkit.yaml
@@ -39,6 +37,7 @@ modules:
     config-opts:
       - -DUSE_SYSTEMD=Off
       - -DENABLE_ENCHANT=Off
+      - -DUSE_FLATPAK_ICON=On
     sources:
       - type: git
         url: https://github.com/fcitx/fcitx5
@@ -66,3 +65,46 @@ modules:
       - type: git
         url: https://github.com/fcitx/fcitx5-configtool
 
+  - name: fcitx5-all-icons
+    buildsystem: simple
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-anthy
+        dest: fcitx5-anthy
+      - type: git
+        url: https://github.com/fcitx/fcitx5-chewing
+        dest: fcitx5-chewing
+      - type: git
+        url: https://github.com/fcitx/fcitx5-chinese-addons
+        dest: fcitx5-chinese-addons
+      - type: git
+        url: https://github.com/fcitx/fcitx5-hangul
+        dest: fcitx5-hangul
+      - type: git
+        url: https://github.com/fcitx/fcitx5-kkc
+        dest: fcitx5-kkc
+      - type: git
+        url: https://github.com/fcitx/fcitx5-rime
+        dest: fcitx5-rime
+      - type: git
+        url: https://github.com/fcitx/fcitx5-sayura
+        dest: fcitx5-sayura
+      - type: git
+        url: https://github.com/fcitx/fcitx5-skk
+        dest: fcitx5-skk
+      - type: git
+        url: https://github.com/fcitx/fcitx5-table-extra
+        dest: fcitx5-table-extra
+      - type: git
+        url: https://github.com/fcitx/fcitx5-table-other
+        dest: fcitx5-table-other
+      - type: git
+        url: https://github.com/fcitx/fcitx5-unikey
+        dest: fcitx5-unikey
+      - type: git
+        url: https://github.com/fcitx/fcitx5-zhuyin
+        dest: fcitx5-zhuyin
+      - type: file
+        path: install_icons
+    build-commands:
+      - ./install_icons
