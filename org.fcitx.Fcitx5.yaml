@@ -104,7 +104,12 @@ modules:
       - type: git
         url: https://github.com/fcitx/fcitx5-zhuyin
         dest: fcitx5-zhuyin
+      - type: git
+        url: https://github.com/fcitx/mozc
+        branch: fcitx
+        dest: mozc
       - type: file
         path: install_icons
     build-commands:
       - ./install_icons
+      - cd mozc/src && PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5_icons
