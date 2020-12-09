@@ -21,6 +21,8 @@ finish-args:
   - --share=network
   - --filesystem=xdg-config/fcitx5:create
   - --filesystem=xdg-data/fcitx5:create
+  - --filesystem=xdg-config/fontconfig:ro
+  - --device=dri
 modules:
   - modules/fmt.yaml
   - modules/xcb-imdkit.yaml
