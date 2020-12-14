@@ -64,6 +64,7 @@ modules:
         url: https://github.com/fcitx/fcitx5-qt
   - name: fcitx5-configtool
     buildsystem: cmake-ninja
+    builddir: true
     sources:
       - type: git
         url: https://github.com/fcitx/fcitx5-configtool
