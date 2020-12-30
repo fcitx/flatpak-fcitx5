@@ -7,4 +7,10 @@ for dir in `ls /app/addons/`; do
     export PATH=/app/addons/$dir/bin:$PATH
 done
 
+for dir in `ls /app/addons/`; do
+    if [ -d /app/addons/$dir/lib/libime ]; then
+        export LIBIME_MODEL_DIRS=/app/addons/$dir/lib/libime:$LIBIME_MODEL_DIRS
+    fi
+done
+
 exec fcitx5-bin "$@"

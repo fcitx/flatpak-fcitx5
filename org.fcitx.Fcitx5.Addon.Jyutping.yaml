@@ -1,0 +1,41 @@
+app-id: org.fcitx.Fcitx5.Addon.Jyutping
+runtime: org.fcitx.Fcitx5
+runtime-version: master
+sdk: org.kde.Sdk//5.15
+build-extension: true
+appstream-compose: false
+separate-locales: false
+build-options:
+  prefix: /app/addons/Jyutping
+  prepend-pkg-config-path: /app/addons/Jyutping/lib/pkgconfig
+cleanup:
+  - /include
+  - "*.la"
+  - "*.a"
+  - /lib/cmake
+  - /lib/pkgconfig
+  - /man
+  - "/lib/libIMEPinyin*"
+  - "/lib/libIMETable*"
+  - "/lib/libime/zh_CN.lm*"
+  - "/share/libime/*.main.dict"
+modules:
+  - modules/boost.yaml
+  - modules/libime.yaml
+  - modules/fmt.yaml
+  - modules/fcitx5-chinese-addons.yaml
+  - name: libime-jyutping
+    buildsystem: cmake
+    sources:
+      - type: git
+        url: https://github.com/fcitx/libime-jyutping
+      - type: file
+        url: https://download.fcitx-im.org/data/jyutping-dict-20180104.tar.xz
+        sha256: e3a5b13edb8efa2f764245a3232f99ba7e7670e22b8cbe666a4fffa84b35f35b
+        dest-filename: data/jyutping-dict-20180104.tar.xz
+      - type: file
+        url: https://download.fcitx-im.org/data/jyutping-model-20180103.tar.xz
+        sha256: 4f07229e2080f0ee30ce51b016409f260af82a58dd406a01ea5981b59ca87071
+        dest-filename: data/jyutping-model-20180103.tar.xz
+    post-install:
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.ChineseAddons --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Jyutping
