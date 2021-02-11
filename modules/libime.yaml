@@ -8,9 +8,9 @@ sources:
     sha256: 751bab7c55ea93a2cedfb0fbb7eb09f67d4da9c2c55496e5f31eb8580f1d1e2f
     dest-filename: data/lm_sc.3gm.arpa-20140820.tar.bz2
   - type: file
-    url: https://download.fcitx-im.org/data/dict.utf8-20200715.tar.xz
-    sha256: 23c36cd4df6de17f66bf2dfc453ec6c773641a479b6020c9e787552489c9c7d2
-    dest-filename: data/dict.utf8-20200715.tar.xz
+    url: https://download.fcitx-im.org/data/dict.utf8-20210203.tar.xz
+    sha256: 2d6b4dca8340ce8525a871943ef0e3eb81f3eda85a92857116cae55fb38d6ec4
+    dest-filename: data/dict.utf8-20210203.tar.xz
   - type: file
     url: https://download.fcitx-im.org/data/table.tar.gz
     sha256: 6196053c724125e3ae3d8bd6b2f9172d0c83b65b0d410d3cde63b7a8d6ab87b7
