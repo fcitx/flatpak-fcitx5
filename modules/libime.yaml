@@ -10,7 +10,7 @@ sources:
   - type: file
     url: https://download.fcitx-im.org/data/dict.utf8-20210302.tar.xz
     sha256: cd43f97749f38e65fc1f706b981a3c1991599770268932dbb11b2ab90c087646
-    dest-filename: data/dict.utf8-20210301.tar.xz
+    dest-filename: data/dict.utf8-20210302.tar.xz
   - type: file
     url: https://download.fcitx-im.org/data/table.tar.gz
     sha256: 6196053c724125e3ae3d8bd6b2f9172d0c83b65b0d410d3cde63b7a8d6ab87b7
