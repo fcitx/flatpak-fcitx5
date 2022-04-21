@@ -1,4 +1,5 @@
 xcb-imdkit
+libime
 fcitx5 org.fcitx.Fcitx5
 fcitx5-anthy org.fcitx.Fcitx5.Addon.Anthy
 fcitx5-chewing org.fcitx.Fcitx5.Addon.Chewing
