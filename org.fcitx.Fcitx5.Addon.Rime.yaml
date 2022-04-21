@@ -30,6 +30,8 @@ modules:
       - type: git
         url: https://github.com/rime/librime
         branch: 1.7.3
+      - type: patch
+        path: cmath-include.patch
     modules:
       - modules/boost.yaml
       - modules/capnproto.yaml
