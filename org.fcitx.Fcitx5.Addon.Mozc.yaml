@@ -2,19 +2,21 @@ app-id: org.fcitx.Fcitx5.Addon.Mozc
 runtime: org.fcitx.Fcitx5
 runtime-version: master
 sdk: org.kde.Sdk//5.15-21.08
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.llvm13
 build-extension: true
 appstream-compose: false
 separate-locales: false
 build-options:
   prefix: /app/addons/Mozc
   prepend-pkg-config-path: /app/addons/Mozc/lib/pkgconfig
-
+  prepend-path: /usr/lib/sdk/llvm13/bin
+  prepend-ld-library-path: /usr/lib/sdk/llvm13/lib
 cleanup:
   - /bin
   - /include
   - /lib/pkgconfig
-  - "*.la"
-
+  - '*.la'
 modules:
   - name: mozc
     buildsystem: simple
@@ -29,6 +31,7 @@ modules:
       - type: git
         url: https://github.com/fcitx/mozc
         branch: fcitx
+        disable-shallow-clone: true
       - type: shell
         commands:
           - sed "/stdlib=libc++/d;/-lc++/d" -i src/gyp/common.gypi

@@ -113,6 +113,7 @@ modules:
         url: https://github.com/fcitx/mozc
         branch: fcitx
         dest: mozc
+        disable-submodules: true
       - type: file
         path: install_icons
     build-commands:
