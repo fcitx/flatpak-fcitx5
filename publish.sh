@@ -65,7 +65,6 @@ else
 fi
 
 update_tag $PACKAGE/$PACKAGE.yaml
-yq -y -i '(.modules[] | select(.name? == "'$REPO'"))."post-install" |= ["awk -i inplace '"'"'/<\\/component>/ { print \"  <content_rating type=\\\"oars-1.1\\\"/>\"; } { print $0; }'"'"' ${FLATPAK_DEST}/share/metainfo/'$PACKAGE'.metainfo.xml"] + .' $PACKAGE/$PACKAGE.yaml
 
 cd $PACKAGE
 LABEL=${repo_tag[$REPO]/:/-}
