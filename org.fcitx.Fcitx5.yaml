@@ -1,4 +1,5 @@
 app-id: org.fcitx.Fcitx5
+branch: master
 base: io.qt.qtwebkit.BaseApp
 base-version: '5.15-21.08'
 runtime: org.kde.Platform

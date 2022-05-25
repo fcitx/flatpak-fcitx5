@@ -1,4 +1,5 @@
 app-id: org.fcitx.Fcitx5.Addon.Unikey
+branch: master
 runtime: org.fcitx.Fcitx5
 runtime-version: master
 sdk: org.kde.Sdk//5.15-21.08
