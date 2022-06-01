@@ -21,6 +21,7 @@ cleanup:
   - "*.la"
 
 modules:
+  - modules/kyotocabinet.yaml
   - name: libpinyin
     config-opts:
       - --with-dbm=KyotoCabinet
@@ -38,8 +39,6 @@ modules:
           - sed -i "/wget.*/d" data/Makefile.am
     make-args:
       - V=1
-    modules:
-      - modules/kyotocabinet.yaml
   - modules/fmt.yaml
   - name: fcitx5-zhuyin
     buildsystem: cmake-ninja
