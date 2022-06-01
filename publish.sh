@@ -44,31 +44,52 @@ done < projects
 
 PACKAGE=$1
 
-printarr repo_tag
-
-rm -rf $PACKAGE
-gh repo clone flathub/$PACKAGE
-
-cp $PACKAGE.yaml $PACKAGE/$PACKAGE.yaml
-
-for module in $(yq -r '.modules[] | select(type == "string" and startswith("modules/"))' $PACKAGE/$PACKAGE.yaml); do
-    mkdir -p $PACKAGE/modules
-    cp $module $PACKAGE/$module
-    update_tag $PACKAGE/$module
-done
-
-yq -y -i '.branch = "stable"' $PACKAGE/$PACKAGE.yaml
-if [[ "$PACKAGE" =~ .*Addon.* ]]; then
-    yq -y -i '."runtime-version" = "stable"' $PACKAGE/$PACKAGE.yaml
-else
-    yq -y -i '."add-extensions"."org.fcitx.Fcitx5.Addon".version = "stable"' $PACKAGE/$PACKAGE.yaml
+GIT_REPO=$PACKAGE
+if [[ "$2" == "new" ]]; then
+    GIT_REPO=flathub
 fi
 
-update_tag $PACKAGE/$PACKAGE.yaml
+printarr repo_tag
 
-cd $PACKAGE
+rm -rf $GIT_REPO
+gh repo clone flathub/$GIT_REPO
+
+if [[ "$2" == "new" ]]; then
+    pushd .
+    cd $GIT_REPO
+    git checkout new-pr
+    popd
+fi
+
+cp $PACKAGE.yaml $GIT_REPO/$PACKAGE.yaml
+
+for module in $(yq -r '.modules[] | select(type == "string" and startswith("modules/"))' $GIT_REPO/$PACKAGE.yaml); do
+    mkdir -p $GIT_REPO/modules
+    cp $module $GIT_REPO/$module
+    update_tag $GIT_REPO/$module
+done
+
+yq -y -i '.branch = "stable"' $GIT_REPO/$PACKAGE.yaml
+if [[ "$PACKAGE" =~ .*Addon.* ]]; then
+    cp flathub.json $GIT_REPO/
+    yq -y -i '."runtime-version" = "stable"' $GIT_REPO/$PACKAGE.yaml
+else
+    yq -y -i '."add-extensions"."org.fcitx.Fcitx5.Addon".version = "stable"' $GIT_REPO/$PACKAGE.yaml
+fi
+
+update_tag $GIT_REPO/$PACKAGE.yaml
+
+cd $GIT_REPO
 LABEL=${repo_tag[$REPO]/:/-}
-git checkout -b pr-$LABEL
-git commit -a -m "Update $PACKAGE"
-git push origin --force pr-$LABEL
-gh pr create --base master --title "Update $LABEL" --body ""
+git add .
+if [[ "$2" == "new" ]]; then
+    git checkout -b $PACKAGE
+    git commit -a -m "Add $PACKAGE"
+fi
+
+if [[ "$2" != "new" ]]; then
+    git checkout -b pr-$LABEL
+    git commit -a -m "Update $PACKAGE"
+    git push origin --force pr-$LABEL
+    gh pr create --base master --title "Update $LABEL" --body ""
+fi
