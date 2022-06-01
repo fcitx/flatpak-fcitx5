@@ -1,8 +1,11 @@
 name: marisa
 sources:
   - type: archive
-    url: https://github.com/s-yata/marisa-trie/releases/download/v0.2.5/marisa-0.2.5.tar.gz
-    sha256: 0e9a61052764e99ffeea793a0bb1d40947df6cd2c353e294823ce5652bcb2ea6
+    url: https://github.com/s-yata/marisa-trie/archive/v0.2.6.tar.gz
+    sha256: 1063a27c789e75afa2ee6f1716cc6a5486631dcfcb7f4d56d6485d2462e566de
+  - type: shell
+    commands:
+      - autoreconf -i
 build-commands:
   - make -C bindings swig-python
   - cd bindings/python && python3 setup.py build_ext

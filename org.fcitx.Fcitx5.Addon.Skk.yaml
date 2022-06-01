@@ -52,7 +52,6 @@ modules:
         ACLOCAL_PATH: /app/addons/Skk/share/aclocal
         VALAFLAGS: --vapidir /app/addons/Skk/share/vala/vapi
         XDG_DATA_DIRS: /app/addons/Skk/share:/app/share:/usr/share
-        PYTHONPATH: /app/addons/Skk/lib/python3.8/site-packages
       prepend-ld-library-path: /app/addons/Skk/lib
     make-args:
       - V=1
