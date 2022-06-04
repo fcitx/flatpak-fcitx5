@@ -1,0 +1,30 @@
+app-id: org.fcitx.Fcitx5.Addon.Bamboo
+branch: master
+runtime: org.fcitx.Fcitx5
+runtime-version: master
+sdk: org.kde.Sdk//5.15-21.08
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.golang
+build-extension: true
+appstream-compose: false
+separate-locales: false
+build-options:
+  prefix: /app/addons/Bamboo
+  prepend-pkg-config-path: /app/addons/Unikey/lib/pkgconfig
+  append-path: /usr/lib/sdk/golang/bin
+
+cleanup:
+  - /bin
+  - /include
+  - /lib/pkgconfig
+  - "*.la"
+
+modules:
+  - name: fcitx5-unikey
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-bamboo
+        branch: main
+    post-install:
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Bamboo --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Bamboo
