@@ -4,12 +4,12 @@ sources:
   - type: git
     url: https://github.com/fcitx/libime
   - type: file
-    url: https://download.fcitx-im.org/data/lm_sc.3gm.arpa-20140820.tar.bz2
-    sha256: 751bab7c55ea93a2cedfb0fbb7eb09f67d4da9c2c55496e5f31eb8580f1d1e2f
+    url: https://download.fcitx-im.org/data/lm_sc.arpa-20220628.tar.xz
+    sha256: 35478fcaf1a96c103206678bc741c68256ec102df9a3b7df824cfe72ea97cf04
     dest: data
   - type: file
-    url: https://download.fcitx-im.org/data/dict.utf8-20211021.tar.xz
-    sha256: 300597e6f7f79f788480fd665de8a07bfe90227048b5a7e39f40f43a62a981df
+    url: https://download.fcitx-im.org/data/dict_sc.txt-20220628.tar.xz
+    sha256: d0fc77543cc763cacb986d6e650827bd6050579584273f6216ab58672480f17c
     dest: data
   - type: file
     url: https://download.fcitx-im.org/data/table.tar.gz
