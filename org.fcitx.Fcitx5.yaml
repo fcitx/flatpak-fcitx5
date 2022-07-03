@@ -78,6 +78,9 @@ modules:
         url: https://github.com/fcitx/fcitx5-anthy
         dest: fcitx5-anthy
       - type: git
+        url: https://github.com/fcitx/fcitx5-bamboo
+        dest: fcitx5-chewing
+      - type: git
         url: https://github.com/fcitx/fcitx5-chewing
         dest: fcitx5-chewing
       - type: git
