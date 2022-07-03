@@ -18,5 +18,6 @@ fcitx5-sayura org.fcitx.Fcitx5.Addon.Sayura
 mozc org.fcitx.Fcitx5.Addon.Mozc branch:fcitx
 fcitx5-table-extra org.fcitx.Fcitx5.Addon.TableExtra
 fcitx5-table-other org.fcitx.Fcitx5.Addon.TableOther
+fcitx5-bamboo org.fcitx.Fcitx5.Addon.Bamboo
 fcitx5-qt
 fcitx5-configtool
