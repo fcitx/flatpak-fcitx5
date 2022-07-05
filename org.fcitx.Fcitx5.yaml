@@ -80,6 +80,7 @@ modules:
       - type: git
         url: https://github.com/fcitx/fcitx5-bamboo
         dest: fcitx5-bamboo
+        branch: main
       - type: git
         url: https://github.com/fcitx/fcitx5-chewing
         dest: fcitx5-chewing

@@ -15,6 +15,7 @@ update_tag() {
         repo_info="${repo_tag[$k]}"
         if [[ "$repo_info" =~ ^tag: ]]; then
             yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type == "git" and .url == "https://github.com/fcitx/'$k'")) .tag = "'${repo_info/tag:/}'"' $1
+            yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type == "git" and .url == "https://github.com/fcitx/'$k'")) |= del(.branch)' $1
         elif [[ "$repo_info" =~ ^commit: ]]; then
             yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type == "git" and .url == "https://github.com/fcitx/'$k'")) .commit = "'${repo_info/commit:/}'"' $1
             yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type == "git" and .url == "https://github.com/fcitx/'$k'")) |= del(.branch)' $1
