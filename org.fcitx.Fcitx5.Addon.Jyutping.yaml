@@ -26,7 +26,7 @@ modules:
   - modules/fmt.yaml
   - modules/fcitx5-chinese-addons.yaml
   - name: libime-jyutping
-    buildsystem: cmake
+    buildsystem: cmake-ninja
     sources:
       - type: git
         url: https://github.com/fcitx/libime-jyutping

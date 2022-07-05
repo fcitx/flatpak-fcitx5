@@ -20,7 +20,7 @@ modules:
         url: https://github.com/chewing/libchewing
         tag: v0.5.1
   - name: fcitx5-chewing
-    buildsystem: cmake
+    buildsystem: cmake-ninja
     sources:
       - type: git
         url: https://github.com/fcitx/fcitx5-chewing

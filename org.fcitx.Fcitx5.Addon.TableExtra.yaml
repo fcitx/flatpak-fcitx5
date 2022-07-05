@@ -20,7 +20,7 @@ modules:
   - modules/boost.yaml
   - modules/libime.yaml
   - name: fcitx5-table-extra
-    buildsystem: cmake
+    buildsystem: cmake-ninja
     sources:
       - type: git
         url: https://github.com/fcitx/fcitx5-table-extra

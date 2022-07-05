@@ -30,7 +30,7 @@ modules:
   - modules/marisa.yaml
   - modules/opencc.yaml
   - name: librime
-    buildsystem: cmake
+    buildsystem: cmake-ninja
     builddir: true
     config-opts:
       - -DBUILD_TEST=Off

@@ -23,7 +23,7 @@ modules:
   - modules/opencc.yaml
   - modules/fmt.yaml
   - name: fcitx5-chinese-addons
-    buildsystem: cmake
+    buildsystem: cmake-ninja
     config-opts:
       - -DENABLE_TESTING=Off
       - -DENABLE_OPENCC=On
