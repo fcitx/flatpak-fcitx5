@@ -49,7 +49,7 @@ modules:
       - type: file
         url: https://download.fcitx-im.org/data/en_dict-20121020.tar.gz
         sha256: c44a5d7847925eea9e4d2d04748d442cd28dd9299a0b572ef7d91eac4f5a6ceb
-        dest: src/modules/spell/dict
+        dest: src/modules/spell
       - type: file
         path: fcitx5.sh
     post-install:
