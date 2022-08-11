@@ -5,11 +5,11 @@ sources:
     url: https://github.com/fcitx/libime
   - type: file
     url: https://download.fcitx-im.org/data/lm_sc.arpa-20220810.tar.xz
-    sha256: 49ea0e7459301e07fcfffb79117f326ceba198946cc5a34677d59f69550e86b1
+    sha256: d731c4084d8fd803e2d6d66752a1bdcf0389636f46c67a9ef3ccdea197f7dc59
     dest: data
   - type: file
     url: https://download.fcitx-im.org/data/dict-20220810.tar.xz
-    sha256: fb1b1697d4480a63a32d36aaac446f7819862d9443fd6775663600b45604bb1b
+    sha256: cf45c9d375d999b9a859f0d04dc92bd4e4bc3c1a4d4e5624f1f802047d718b71
     dest: data
   - type: file
     url: https://download.fcitx-im.org/data/table.tar.gz
