@@ -1,0 +1,59 @@
+app-id: org.fcitx.Fcitx5.Addon.Cskk
+branch: master
+runtime: org.fcitx.Fcitx5
+runtime-version: master
+sdk: org.kde.Sdk//5.15-21.08
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+build-extension: true
+appstream-compose: false
+separate-locales: false
+build-options:
+  prefix: /app/addons/Cskk
+  prepend-path: /app/addons/Cskk/bin
+  prepend-pkg-config-path: /app/addons/Cskk/lib/pkgconfig
+  cflags: -I/app/addons/Cskk/include
+  append-path: /usr/lib/sdk/rust-stable/bin
+
+cleanup:
+  - /bin
+  - /include
+  - /lib/pkgconfig
+  - "/lib/python*"
+  - /share/intltool
+  - "*.la"
+  - "*.a"
+
+modules:
+  - name: cskk
+    sources:
+      - type: archive
+        url: https://github.com/naokiri/cskk/archive/v0.11.0.tar.gz
+        sha512: 86b8bc01d7fc02a794325f07a10feb4385b6b3b60f30604ef9a9e97c0d222bebcb1b684b04c4aeacefa7cf59960a45a893efea923d32ef4fe845eb627746567e
+      - cskk-cargo-sources.json
+    build-options:
+      prepend-ld-library-path: /app/addons/Cskk/lib
+      env:
+        CARGO_HOME: /run/build/cskk/cargo
+    buildsystem: simple
+    build-commands:
+      - cargo --offline install cargo-c
+      - cargo cinstall --release --prefix=/app/addons/Cskk
+  - name: skk-jisyo
+    buildsystem: simple
+    build-commands:
+      - install -Dm644 SKK-JISYO.* -t ${FLATPAK_DEST}/share/skk/
+    sources:
+      - type: git
+        url: https://github.com/skk-dev/dict.git
+        branch: master
+  - name: fcitx5-cskk
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-cskk
+        disable-shallow-clone: true
+    config-opts:
+      - -DSKK_DICT_DEFAULT_PATH=/app/addons/Cskk/share/skk/SKK-JISYO.L
+    post-install:
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Cskk --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Cskk
