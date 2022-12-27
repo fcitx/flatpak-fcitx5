@@ -3,6 +3,8 @@ branch: master
 runtime: org.fcitx.Fcitx5
 runtime-version: master
 sdk: org.kde.Sdk//5.15-22.08
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.vala
 build-extension: true
 appstream-compose: false
 separate-locales: false
@@ -11,6 +13,8 @@ build-options:
   prepend-path: /app/addons/Skk/bin
   prepend-pkg-config-path: /app/addons/Skk/lib/pkgconfig
   cflags: -I/app/addons/Skk/include
+  append-path: /usr/lib/sdk/vala/bin
+  prepend-ld-library-path: /usr/lib/sdk/vala/lib
 
 cleanup:
   - /bin
@@ -39,8 +43,6 @@ modules:
       - type: archive
         url: https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
         md5: 12e517cac2b57a0121cda351570f1e63
-  - modules/graphviz.yaml
-  - modules/vala.yaml
   - modules/libgee.yaml
   - name: libskk
     sources:
