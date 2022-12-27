@@ -4,7 +4,7 @@ runtime: org.fcitx.Fcitx5
 runtime-version: master
 sdk: org.kde.Sdk//5.15-22.08
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.llvm13
+  - org.freedesktop.Sdk.Extension.llvm14
 build-extension: true
 appstream-compose: false
 separate-locales: false
