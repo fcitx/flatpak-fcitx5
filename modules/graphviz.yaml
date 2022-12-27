@@ -2,7 +2,7 @@ name: graphviz
 buildsystem: autotools
 sources:
   - type: archive
-    url: https://www2.graphviz.org/Packages/stable/portable_source/graphviz-2.44.0.tar.gz
-    sha256: 9aabd13a8018b708ab3c822de2326c19d0a52ed59f50a6b0f9318c07e2a6d93b
+    url: https://www2.graphviz.org/Packages/stable/portable_source/graphviz-2.44.1.tar.gz
+    sha256: 8e1b34763254935243ccdb83c6ce108f531876d7a5dfd443f255e6418b8ea313
 cleanup:
   - '*'

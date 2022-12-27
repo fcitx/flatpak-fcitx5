@@ -2,7 +2,7 @@ name: vala
 sources:
   - type: git
     url: https://gitlab.gnome.org/GNOME/vala.git
-    tag: 0.48.9
+    tag: 0.48.25
 make-args:
   - V=1
 cleanup:
