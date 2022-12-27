@@ -1,4 +1,5 @@
 name: google-glog
+buildsystem: cmake-ninja
 sources:
   - type: archive
     url: https://github.com/google/glog/archive/v0.6.0.tar.gz
