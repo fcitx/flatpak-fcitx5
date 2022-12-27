@@ -32,11 +32,6 @@ modules:
   - modules/libevent.yaml
   - modules/json-c.yaml
 
-  - name: cldr-emoji-annotation
-    sources:
-      - type: git
-        url: https://github.com/fujiwarat/cldr-emoji-annotation/
-        branch: 37.0_13.0_0_2
   - name: fcitx5
     buildsystem: cmake-ninja
     config-opts:
