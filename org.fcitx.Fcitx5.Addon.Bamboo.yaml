@@ -20,7 +20,7 @@ cleanup:
   - "*.la"
 
 modules:
-  - name: fcitx5-unikey
+  - name: fcitx5-bamboo
     buildsystem: cmake-ninja
     sources:
       - type: git
