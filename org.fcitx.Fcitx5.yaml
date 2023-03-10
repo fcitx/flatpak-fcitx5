@@ -25,6 +25,7 @@ finish-args:
   - --filesystem=xdg-config/fontconfig:ro
   - --filesystem=xdg-config/fcitx:create
   - --filesystem=xdg-config/ibus:create
+  - --filesystem=xdg-cache/ibus:create
   - --device=dri
 modules:
   - modules/fmt.yaml
