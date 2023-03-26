@@ -18,10 +18,9 @@ command: fcitx5
 finish-args:
   - --socket=session-bus
   - --socket=x11
+  - --share=ipc
   - --socket=wayland
   - --share=network
-  - --filesystem=xdg-config/fcitx5:create
-  - --filesystem=xdg-data/fcitx5:create
   - --filesystem=xdg-config/fontconfig:ro
   - --filesystem=xdg-config/fcitx:create
   - --filesystem=xdg-config/ibus:create

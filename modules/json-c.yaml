@@ -6,7 +6,7 @@ config-opts:
 sources:
   - type: git
     url: https://github.com/json-c/json-c/
-    branch: json-c-0.16-20220414
+    tag: json-c-0.16-20220414
 cleanup:
   - /include
   - /lib/cmake
