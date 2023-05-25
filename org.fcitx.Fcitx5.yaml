@@ -114,6 +114,9 @@ modules:
         branch: fcitx
         dest: mozc
         disable-submodules: true
+      - type: git
+        url: https://github.com/openvanilla/fcitx5-mcbopomofo
+        dest: fcitx5-mcbopomofo
       - type: file
         path: install_icons
     build-commands:
