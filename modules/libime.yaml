@@ -4,8 +4,8 @@ sources:
   - type: git
     url: https://github.com/fcitx/libime
   - type: file
-    url: https://download.fcitx-im.org/data/lm_sc.arpa-20220810.tar.xz
-    sha256: a11bc97d275adaf195f9bac854368ae06cdb4a0fe1eecf59db5ae580615db4fa
+    url: https://download.fcitx-im.org/data/lm_sc.arpa-20230712.tar.xz
+    sha256: badd62c16c6373787a0fda8f09cd452d12f60d5868856f651ceecf1a07baba32
     dest: data
   - type: file
     url: https://download.fcitx-im.org/data/dict-20230412.tar.xz
