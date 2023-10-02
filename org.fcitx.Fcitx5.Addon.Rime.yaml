@@ -38,8 +38,6 @@ modules:
       - type: git
         url: https://github.com/rime/librime
         tag: 1.8.5
-      - type: patch
-        path: cmath-include.patch
   - name: librime-data
     buildsystem: simple
     build-commands:
