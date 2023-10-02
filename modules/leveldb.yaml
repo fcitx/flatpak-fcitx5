@@ -1,5 +1,5 @@
 name: leveldb
-buildsystem: cmake
+buildsystem: cmake-ninja
 config-opts:
   - -DBUILD_SHARED_LIBS=1
   - -DLEVELDB_BUILD_TESTS=Off
