@@ -24,7 +24,6 @@ cleanup:
 modules:
   - modules/boost.yaml
   - modules/capnproto.yaml
-  - modules/google-glog.yaml
   - modules/yaml-cpp.yaml
   - modules/leveldb.yaml
   - modules/marisa.yaml
@@ -34,6 +33,7 @@ modules:
     builddir: true
     config-opts:
       - -DBUILD_TEST=Off
+      - -DENABLE_LOGGING=Off
     sources:
       - type: git
         url: https://github.com/rime/librime
