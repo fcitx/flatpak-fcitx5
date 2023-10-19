@@ -42,19 +42,19 @@ modules:
       - type: git
         url: https://github.com/lotem/librime-octagram.git
         commit: a6ced5a1d623afed17284fbaa395dd3a8b019a14
-        dest: librime/plugins/librime-octagram
+        dest: plugins/librime-octagram
       - type: git
         url: https://github.com/hchunhui/librime-lua
         commit: 757a01445905f89bf58af0d7da8e283c5fbfd973
-        dest: librime/plugins/librime-lua
+        dest: plugins/librime-lua
       - type: git
         url: https://github.com/rime/librime-charcode
         commit: 3e73214fdf5d162517a74762433f486b70a5c0e1
-        dest: librime/plugins/librime-charcode
+        dest: plugins/librime-charcode
       - type: git
         url: https://github.com/lotem/librime-proto
         commit: d92f572379774a202c88e2ea6ad47d9dc040a127
-        dest: librime/plugins/librime-proto
+        dest: plugins/librime-proto
   - name: librime-data
     buildsystem: simple
     build-commands:
