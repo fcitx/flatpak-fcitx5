@@ -1,6 +1,7 @@
 name: leveldb
 buildsystem: cmake-ninja
 config-opts:
+  - -DCMAKE_BUILD_TYPE=Release
   - -DBUILD_SHARED_LIBS=1
   - -DLEVELDB_BUILD_TESTS=Off
   - -DLEVELDB_BUILD_BENCHMARKS=Off

@@ -25,5 +25,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/fcitx/fcitx5-lua
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
     post-install:
       - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Lua --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Lua

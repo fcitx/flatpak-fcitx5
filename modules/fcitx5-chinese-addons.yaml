@@ -1,5 +1,5 @@
 name: fcitx5-chinese-addons
-buildsystem: cmake
+buildsystem: cmake-ninja
 sources:
   - type: git
     url: https://github.com/fcitx/fcitx5-chinese-addons
@@ -12,6 +12,7 @@ sources:
     sha256: 8eb128a9bfa43952e67cf2fcee1fd134c6f4cfd317bc2f6c38a615f5eb64e248
     dest: modules/pinyinhelper
 config-opts:
+  - -DCMAKE_BUILD_TYPE=Release
   - -DENABLE_OPENCC=Off
   - -DENABLE_GUI=Off
 cleanup:

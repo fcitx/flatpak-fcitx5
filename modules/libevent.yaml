@@ -1,6 +1,7 @@
 name: libevent
 buildsystem: cmake-ninja
 config-opts:
+  - -DCMAKE_BUILD_TYPE=Release
   - -DEVENT__LIBRARY_TYPE=SHARED
 sources:
   - type: git

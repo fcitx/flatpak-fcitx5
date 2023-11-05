@@ -33,6 +33,7 @@ modules:
     buildsystem: cmake-ninja
     builddir: true
     config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
       - -DBUILD_TEST=Off
       - -DENABLE_LOGGING=Off
     sources:
@@ -146,5 +147,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/fcitx/fcitx5-rime
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
     post-install:
       - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Rime --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Rime

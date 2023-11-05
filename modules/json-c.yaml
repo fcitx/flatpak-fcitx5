@@ -1,6 +1,7 @@
 name: json-c
 buildsystem: cmake-ninja
 config-opts:
+  - -DCMAKE_BUILD_TYPE=Release
   - -DENABLE_THREADING=ON
   - -DENABLE_RDRAND=OFF
 sources:

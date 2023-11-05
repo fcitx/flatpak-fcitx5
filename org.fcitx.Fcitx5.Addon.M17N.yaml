@@ -36,5 +36,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/fcitx/fcitx5-m17n
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
     post-install:
       - appstream-compose --basename=org.fcitx.Fcitx5.Addon.M17N --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.M17N

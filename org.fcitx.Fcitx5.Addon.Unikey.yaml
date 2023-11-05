@@ -20,6 +20,7 @@ modules:
   - name: fcitx5-unikey
     buildsystem: cmake-ninja
     config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
       - -DENABLE_QT=On
     sources:
       - type: git

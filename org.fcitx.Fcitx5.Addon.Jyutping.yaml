@@ -38,5 +38,7 @@ modules:
         url: https://download.fcitx-im.org/data/jyutping-model-20180103.tar.xz
         sha256: 4f07229e2080f0ee30ce51b016409f260af82a58dd406a01ea5981b59ca87071
         dest: data
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
     post-install:
       - appstream-compose --basename=org.fcitx.Fcitx5.Addon.ChineseAddons --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Jyutping

@@ -26,6 +26,7 @@ modules:
   - name: fcitx5-chinese-addons
     buildsystem: cmake-ninja
     config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
       - -DENABLE_TESTING=Off
       - -DENABLE_OPENCC=On
       - -DENABLE_GUI=On

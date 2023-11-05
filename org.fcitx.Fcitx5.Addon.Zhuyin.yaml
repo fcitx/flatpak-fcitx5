@@ -49,5 +49,7 @@ modules:
         url: http://download.fcitx-im.org/data/model.text.20161206.tar.gz
         sha256: 5c7024e5735389c471f54b867eda0d98c5a40a5e5e75333a9febac107508f704
         dest: data
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
     post-install:
       - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Zhuyin --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Zhuyin

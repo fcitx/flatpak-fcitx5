@@ -54,6 +54,7 @@ modules:
         url: https://github.com/fcitx/fcitx5-cskk
         disable-shallow-clone: true
     config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
       - -DSKK_DICT_DEFAULT_PATH=/app/addons/Cskk/share/skk/SKK-JISYO.L
     post-install:
       - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Cskk --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Cskk

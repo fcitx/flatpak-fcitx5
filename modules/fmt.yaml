@@ -1,6 +1,7 @@
 name: fmt
 buildsystem: cmake-ninja
 config-opts:
+  - -DCMAKE_BUILD_TYPE=Release
   - -DFMT_TEST=Off
   - -DBUILD_SHARED_LIBS=On
 sources:

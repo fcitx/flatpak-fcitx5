@@ -7,3 +7,5 @@ cleanup:
   - /include
   - /lib/pkgconfig
   - /lib/cmake
+config-opts:
+  - -DCMAKE_BUILD_TYPE=Release

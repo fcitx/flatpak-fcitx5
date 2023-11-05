@@ -26,5 +26,7 @@ modules:
       - type: git
         url: https://github.com/fcitx/fcitx5-bamboo
         branch: main
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
     post-install:
       - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Bamboo --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Bamboo

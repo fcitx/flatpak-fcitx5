@@ -68,6 +68,7 @@ modules:
   - name: fcitx5-skk
     buildsystem: cmake-ninja
     config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
       - -DSKK_DEFAULT_PATH=/app/addons/Skk/share/skk/SKK-JISYO.L
     sources:
       - type: git

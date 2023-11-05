@@ -5,5 +5,7 @@ sources:
     url: https://github.com/fcitx/fcitx5-lua
 modules:
   - ../shared-modules/lua5.3/lua-5.3.5.json
+config-opts:
+  - -DCMAKE_BUILD_TYPE=Release
 cleanup:
   - "*"
