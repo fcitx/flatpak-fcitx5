@@ -28,8 +28,8 @@ modules:
   - name: cskk
     sources:
       - type: archive
-        url: https://github.com/naokiri/cskk/archive/v2.0.0.tar.gz
-        sha512: 0e30c8f4e64fd2560d5b6c40de4aeaa01ab2951a5a073ca98ced08edb8853058b5209b4c6c3094c4e62c9ff9cfd0dce4c4c99c2e2ecaf98a74b5ba24449d9045
+        url: https://github.com/naokiri/cskk/archive/v3.0.0.tar.gz
+        sha512: 381695b00fbd8eb0e86d7c8413fcfb834952cfe0f70cd4128ac697e8ddd51b8e6ab22561667d841422a5cf7bf38c0fffd7cd211630639cf8878444c8041a6ee9
       - cskk-cargo-sources.json
     build-options:
       prepend-ld-library-path: /app/addons/Cskk/lib
