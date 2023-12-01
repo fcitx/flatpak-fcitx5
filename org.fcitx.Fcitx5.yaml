@@ -1,6 +1,6 @@
 app-id: org.fcitx.Fcitx5
 branch: master
-base: org.kde.Platform
+base: io.qt.qtwebengine.BaseApp
 base-version: '6.6'
 runtime: org.kde.Platform
 runtime-version: '6.6'
