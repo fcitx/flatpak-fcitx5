@@ -57,7 +57,7 @@ modules:
         ACLOCAL_PATH: /app/addons/Kkc/share/aclocal
         VALAFLAGS: --vapidir /app/addons/Kkc/share/vala/vapi
         XDG_DATA_DIRS: /app/addons/Kkc/share:/app/share:/usr/share
-        PYTHONPATH: /app/addons/Kkc/lib/python3.10/site-packages
+        PYTHONPATH: /app/addons/Kkc/lib/python3.11/site-packages
       prepend-ld-library-path: /app/addons/Kkc/lib
     make-args:
       - V=1
@@ -71,7 +71,7 @@ modules:
         strip-components: 4
     build-options:
       env:
-        PYTHONPATH: /app/addons/Kkc/lib/python3.10/site-packages
+        PYTHONPATH: /app/addons/Kkc/lib/python3.11/site-packages
       prepend-ld-library-path: /app/addons/Kkc/lib
   - name: skk-jisyo
     buildsystem: simple
