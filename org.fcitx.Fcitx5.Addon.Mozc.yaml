@@ -4,15 +4,24 @@ runtime: org.fcitx.Fcitx5
 runtime-version: master
 sdk: org.kde.Sdk//6.6
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.llvm14
+  - org.freedesktop.Sdk.Extension.llvm16
+  - org.freedesktop.Sdk.Extension.bazel
 build-extension: true
 appstream-compose: false
 separate-locales: false
 build-options:
   prefix: /app/addons/Mozc
   prepend-pkg-config-path: /app/addons/Mozc/lib/pkgconfig
-  prepend-path: /usr/lib/sdk/llvm14/bin
-  prepend-ld-library-path: /usr/lib/sdk/llvm14/lib
+  prepend-path: /usr/lib/sdk/llvm16/bin:/usr/lib/sdk/bazel/bin
+  prepend-ld-library-path: /usr/lib/sdk/llvm16/lib
+  build-args:
+    - --share=network
+  env:
+    - _bldtype=Release
+    - server_dir=/app/addons/Mozc/lib/mozc
+    - document_dir=/app/ime/mozc/licenses/mozc
+    - icons_dir=/app/share/icons/mozc
+    - LOCALE=C.UTF-8
 cleanup:
   - /bin
   - /include
@@ -23,11 +32,9 @@ modules:
     buildsystem: simple
     subdir: src
     build-commands:
-      - GYP_DEFINES="document_dir=/app/ime/mozc/licenses/mozc use_libzinnia=1 enable_gtk_renderer=0 use_fcitx5=YES use_fcitx=0" python build_mozc.py gyp
-          --server_dir=/app/addons/Mozc/lib/mozc
-      - python build_mozc.py build -c Release server/server.gyp:mozc_server gui/gui.gyp:mozc_tool unix/fcitx5/fcitx5.gyp:fcitx5-mozc
-      - _bldtype=Release PREFIX=${FLATPAK_DEST} ../scripts/install_server
-      - _bldtype=Release PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5
+      - bazel build --config oss_linux --compilation_mode opt --copt "-fPIC" --linkopt "${LDFLAGS} -fuse-ld=lld -Wl,-z,relro,-z,now" unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool &&
+        _bldtype=Release PREFIX=${FLATPAK_DEST} ../scripts/install_server_bazel &&
+        _bldtype=Release PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5_bazel
     sources:
       - type: git
         url: https://github.com/fcitx/mozc
@@ -36,5 +43,7 @@ modules:
       - type: shell
         commands:
           - sed "/stdlib=libc++/d;/-lc++/d" -i src/gyp/common.gypi
+          - sed 's|nm \(.*\)\-f p |nm \1-f posix |' -i src/third_party/gyp/pylib/gyp/generator/ninja.py
+          - sed -e "s|LINUX_MOZC_DOCUMENT_DIR = \(.*\)|LINUX_MOZC_DOCUMENT_DIR = \"${document_dir}\"|" -e "s|LINUX_MOZC_SERVER_DIR = \(.*\)|LINUX_MOZC_SERVER_DIR = \"${server_dir}\"|" -e "s|LINUX_MOZC_ICONS_DIR = \(.*\)|LINUX_MOZC_ICONS_DIR = \"${icons_dir}\"|" -i src/config.bzl
     post-install:
       - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Mozc --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Mozc
