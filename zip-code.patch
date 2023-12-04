@@ -1,0 +1,17 @@
+diff --git a/src/WORKSPACE.bazel b/src/WORKSPACE.bazel
+index 4cc53489d..446d64d00 100644
+--- a/src/WORKSPACE.bazel
++++ b/src/WORKSPACE.bazel
+@@ -230,10 +230,12 @@ http_archive(
+     name = "zip_code_ken_all",
+     build_file_content = "exports_files([\"KEN_ALL.CSV\"])",
+     url = "https://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip",
++    sha256 = "f270616ced1cb3af28370b4735eaa62f700394a17a24d386d6788cafffb6acb9"
+ )
+ 
+ http_archive(
+     name = "zip_code_jigyosyo",
+     build_file_content = "exports_files([\"JIGYOSYO.CSV\"])",
+     url = "https://www.post.japanpost.jp/zipcode/dl/jigyosyo/zip/jigyosyo.zip",
++    sha256 = "e71032a268b18803d8c9ea7112656ccb348475386bc6e18ef405afc9eb800ab3"
+ )

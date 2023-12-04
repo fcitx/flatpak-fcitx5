@@ -4,7 +4,7 @@ runtime: org.fcitx.Fcitx5
 runtime-version: master
 sdk: org.kde.Sdk//6.6
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.llvm16
+  - org.freedesktop.Sdk.Extension.llvm17
   - org.freedesktop.Sdk.Extension.bazel
 build-extension: true
 appstream-compose: false
@@ -13,9 +13,7 @@ build-options:
   prefix: /app/addons/Mozc
   prepend-pkg-config-path: /app/addons/Mozc/lib/pkgconfig
   prepend-path: /usr/lib/sdk/llvm16/bin:/usr/lib/sdk/bazel/bin
-  prepend-ld-library-path: /usr/lib/sdk/llvm16/lib
-  build-args:
-    - --share=network
+  prepend-ld-library-path: /usr/lib/sdk/llvm17/lib
   env:
     - _bldtype=Release
     - server_dir=/app/addons/Mozc/lib/mozc
@@ -32,7 +30,7 @@ modules:
     buildsystem: simple
     subdir: src
     build-commands:
-      - bazel build --config oss_linux --compilation_mode opt --copt "-fPIC" --linkopt "${LDFLAGS} -fuse-ld=lld -Wl,-z,relro,-z,now" unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool &&
+      - bazel build --distdir=$PWD/../bazel-deps --config oss_linux --compilation_mode opt --copt "-fPIC" --linkopt "${LDFLAGS} -fuse-ld=lld -Wl,-z,relro,-z,now" unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool &&
         _bldtype=Release PREFIX=${FLATPAK_DEST} ../scripts/install_server_bazel &&
         _bldtype=Release PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5_bazel
     sources:
@@ -40,10 +38,11 @@ modules:
         url: https://github.com/fcitx/mozc
         branch: fcitx
         disable-shallow-clone: true
+      - type: patch
+        path: zip-code.patch
       - type: shell
         commands:
-          - sed "/stdlib=libc++/d;/-lc++/d" -i src/gyp/common.gypi
-          - sed 's|nm \(.*\)\-f p |nm \1-f posix |' -i src/third_party/gyp/pylib/gyp/generator/ninja.py
           - sed -e "s|LINUX_MOZC_DOCUMENT_DIR = \(.*\)|LINUX_MOZC_DOCUMENT_DIR = \"${document_dir}\"|" -e "s|LINUX_MOZC_SERVER_DIR = \(.*\)|LINUX_MOZC_SERVER_DIR = \"${server_dir}\"|" -e "s|LINUX_MOZC_ICONS_DIR = \(.*\)|LINUX_MOZC_ICONS_DIR = \"${icons_dir}\"|" -i src/config.bzl
+      - mozc-deps.yaml
     post-install:
       - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Mozc --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Mozc
