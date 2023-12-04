@@ -30,7 +30,7 @@ modules:
     buildsystem: simple
     subdir: src
     build-commands:
-      - bazel build --distdir=$PWD/../bazel-deps --config oss_linux --compilation_mode opt --copt "-fPIC" --linkopt "${LDFLAGS} -fuse-ld=lld -Wl,-z,relro,-z,now" unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool &&
+      - bazel build --distdir=$PWD/../bazel-deps --config oss_linux --compilation_mode opt --copt "-fPIC" --linkopt "${LDFLAGS}" unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool &&
         _bldtype=Release PREFIX=${FLATPAK_DEST} ../scripts/install_server_bazel &&
         _bldtype=Release PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5_bazel
     sources:
