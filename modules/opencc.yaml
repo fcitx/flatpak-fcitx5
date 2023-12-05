@@ -7,4 +7,8 @@ sources:
     tag: ver.1.1.6
 config-opts:
   - -DCMAKE_BUILD_TYPE=Release
-
+cleanup:
+  - /bin
+  - /include
+  - /lib/cmake
+  - /lib/pkgconfig
