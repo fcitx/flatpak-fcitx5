@@ -12,7 +12,7 @@ separate-locales: false
 build-options:
   prefix: /app/addons/Mozc
   prepend-pkg-config-path: /app/addons/Mozc/lib/pkgconfig
-  prepend-path: /usr/lib/sdk/llvm16/bin:/usr/lib/sdk/bazel/bin
+  prepend-path: /usr/lib/sdk/llvm17/bin:/usr/lib/sdk/bazel/bin
   prepend-ld-library-path: /usr/lib/sdk/llvm17/lib
   env:
     - _bldtype=Release
