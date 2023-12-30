@@ -30,7 +30,7 @@ finish-args:
 modules:
   - modules/fmt.yaml
   - modules/xcb-imdkit.yaml
-  - modules/libevent.yaml
+  - modules/libuv.yaml
   - modules/json-c.yaml
 
   - name: extra-cmake-modules

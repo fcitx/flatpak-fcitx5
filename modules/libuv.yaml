@@ -1,14 +1,14 @@
-name: libevent
+name: libuv
 buildsystem: cmake-ninja
 config-opts:
   - -DCMAKE_BUILD_TYPE=Release
-  - -DEVENT__LIBRARY_TYPE=SHARED
 sources:
   - type: git
-    url: https://github.com/libevent/libevent/
-    tag: release-2.1.12-stable
+    url: https://github.com/libuv/libuv/
+    tag: v1.47.0
 cleanup:
   - /bin
   - /include
   - /lib/pkgconfig
   - /lib/cmake
+  - /lib/*.a
