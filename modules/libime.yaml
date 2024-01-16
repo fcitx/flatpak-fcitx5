@@ -12,8 +12,8 @@ sources:
     sha256: f05fccaff9687900aac3d9ad5a81b20888b573201403fbcd9bbc7907d9e97507
     dest: data
   - type: file
-    url: https://download.fcitx-im.org/data/table.tar.gz
-    sha256: 6196053c724125e3ae3d8bd6b2f9172d0c83b65b0d410d3cde63b7a8d6ab87b7
+    url: https://download.fcitx-im.org/data/table-20240108.tar.gz
+    sha256: 729c596d86907de727c74d0fc3fd241c406c5debd2b4cb74eefe022387ee9dae
     dest: data
 config-opts:
   - -DCMAKE_BUILD_TYPE=Release
