@@ -33,15 +33,6 @@ modules:
   - modules/libuv.yaml
   - modules/json-c.yaml
 
-  - name: extra-cmake-modules
-    buildsystem: cmake-ninja
-    sources:
-      - type: git
-        url: https://invent.kde.org/frameworks/extra-cmake-modules.git
-        tag: v5.246.0
-    config-opts:
-      - -DBUILD_TESTING=Off
-
   - name: fcitx5
     buildsystem: cmake-ninja
     config-opts:
@@ -75,24 +66,6 @@ modules:
       - type: git
         url: https://github.com/fcitx/fcitx5-qt
 
-  - name: kwidgetaddons
-    buildsystem: cmake-ninja
-    sources:
-      - type: git
-        url: https://invent.kde.org/frameworks/kwidgetsaddons.git
-        tag: v5.246.0
-    config-opts:
-      - -DCMAKE_BUILD_TYPE=Release
-      - -DBUILD_TESTING=Off
-  - name: kitemviews
-    buildsystem: cmake-ninja
-    sources:
-      - type: git
-        url: https://invent.kde.org/frameworks/kitemviews.git
-        tag: v5.246.0
-    config-opts:
-      - -DCMAKE_BUILD_TYPE=Release
-      - -DBUILD_TESTING=Off
   - name: fcitx5-configtool
     buildsystem: cmake-ninja
     builddir: true
