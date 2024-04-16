@@ -20,6 +20,7 @@ finish-args:
   - --socket=x11
   - --share=ipc
   - --socket=wayland
+  - --socket=inherit-wayland-socket
   - --share=network
   - --filesystem=xdg-config/kxkbrc:rw
   - --filesystem=xdg-config/fontconfig:ro
