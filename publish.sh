@@ -18,11 +18,7 @@ update_tag() {
             yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/fcitx/'$k'")) .tag = "'${repo_info/tag:/}'"' $1
             yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/fcitx/'$k'")) |= del(.branch)' $1
         elif [[ "$repo_info" =~ ^commit: ]]; then
-            echo ABCD
-            echo yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/fcitx/'$k'")) .commit = "'${repo_info/commit:/}'"' $1
             yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/fcitx/'$k'")) .commit = "'${repo_info/commit:/}'"' $1
-            echo DEFG
-            echo yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/fcitx/'$k'")) |= del(.branch)' $1
             yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/fcitx/'$k'")) |= del(.branch)' $1
         fi
     done
