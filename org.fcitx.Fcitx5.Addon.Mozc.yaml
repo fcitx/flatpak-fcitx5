@@ -5,17 +5,15 @@ runtime-version: master
 sdk: org.kde.Sdk//6.6
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.llvm17
-  - org.freedesktop.Sdk.Extension.bazel
 build-extension: true
 appstream-compose: false
 separate-locales: false
 build-options:
   prefix: /app/addons/Mozc
+  prepend-path: /app/addons/Mozc/bin
   prepend-pkg-config-path: /app/addons/Mozc/lib/pkgconfig
-  prepend-path: /usr/lib/sdk/llvm17/bin:/usr/lib/sdk/bazel/bin
   prepend-ld-library-path: /usr/lib/sdk/llvm17/lib
   env:
-    - _bldtype=Release
     - server_dir=/app/addons/Mozc/lib/mozc
     - document_dir=/app/ime/mozc/licenses/mozc
     - icons_dir=/app/share/icons/mozc
@@ -26,13 +24,14 @@ cleanup:
   - /lib/pkgconfig
   - '*.la'
 modules:
+  - modules/bazel.yaml
   - name: mozc
     buildsystem: simple
     subdir: src
     build-commands:
-      - bazel build --distdir=$PWD/../bazel-deps --config oss_linux --compilation_mode opt --copt "-fPIC" --linkopt "${LDFLAGS}" unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool &&
-        _bldtype=Release PREFIX=${FLATPAK_DEST} ../scripts/install_server_bazel &&
-        _bldtype=Release PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5_bazel
+      - ../scripts/build_fcitx5_bazel --distdir=$PWD/../bazel-deps --linkopt "${LDFLAGS}" &&
+        PREFIX=${FLATPAK_DEST} ../scripts/install_server_bazel &&
+        PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5_bazel
     sources:
       - type: git
         url: https://github.com/fcitx/mozc
