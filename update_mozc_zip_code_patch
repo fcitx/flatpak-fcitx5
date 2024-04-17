@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for url in "https://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip" "https://www.post.japanpost.jp/zipcode/dl/jigyosyo/zip/jigyosyo.zip"; do
+
+new_sha256=`yq -r '.[] | select(.url|endswith("'$url'")) .sha256' mozc-deps.yaml`
+awk -i inplace -v url="$url" -v new_sha256="$new_sha256" '$0 ~ url { flag = 1; } /sha256/ { if (flag == 1) { flag = 0; print "+    sha256 = \""new_sha256"\","; next} }  { print $0}' zip-code.patch
+
+done

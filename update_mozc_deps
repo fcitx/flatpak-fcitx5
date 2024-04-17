@@ -1,0 +1,44 @@
+#!/bin/bash
+
+BASE=$PWD
+pushd .
+if [ ! -d mozc ]; then
+    git clone https://github.com/fcitx/mozc/
+fi
+
+cd mozc/src/
+git fetch --all
+git checkout origin/fcitx
+git submodule update --init
+
+set -e
+
+rm -rf $HOME/.cache/bazel
+
+_MOZC_BAZEL_CACHE=/tmp/mozc_cache
+
+rm -rf $_MOZC_BAZEL_CACHE
+for target in unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool; do
+    # Only cquery accepts --config and it can also trigger the cache update
+    bazel cquery --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux $target
+done
+
+pushd .
+cd $_MOZC_BAZEL_CACHE
+for f in `find -name 'id*'` ; do
+    echo "- type: file"
+    echo -n "  url: "
+    awk '{print $1}' $f
+    echo "  dest: bazel-deps"
+    sha=`dirname $f`
+    sha=`basename $sha`
+    echo "  sha256: $sha"
+done > $BASE/mozc-deps.yaml
+popd
+
+yq -y -i 'sort_by(.url)' $BASE/mozc-deps.yaml
+
+rm -rf $_MOZC_BAZEL_CACHE
+
+popd
+$BASE/update_mozc_zip_code_patch

@@ -6,12 +6,12 @@ index 4cc53489d..446d64d00 100644
      name = "zip_code_ken_all",
      build_file_content = "exports_files([\"KEN_ALL.CSV\"])",
      url = "https://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip",
-+    sha256 = "d890bd17c3d95dd832f9c1cd97619c255df2e0cb066f14edbde30494192ab540",
++    sha256 = "5732e66997da0fac1ec86aa607473486bd37523fa47961e2e0e0911815d00f6f",
  )
  
  http_archive(
      name = "zip_code_jigyosyo",
      build_file_content = "exports_files([\"JIGYOSYO.CSV\"])",
      url = "https://www.post.japanpost.jp/zipcode/dl/jigyosyo/zip/jigyosyo.zip",
-+    sha256 = "4653044416ad81ca411ee77328ad61a12f51d81543e2bfeb886013299804dbb3",
++    sha256 = "7aa225907179c6653682bd111aee755a1b0216543e3acba687d8eb186f8a5fcb",
  )
