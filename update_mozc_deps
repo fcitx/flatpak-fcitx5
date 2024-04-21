@@ -3,11 +3,11 @@
 BASE=$PWD
 pushd .
 if [ ! -d mozc ]; then
-    git clone https://github.com/fcitx/mozc/
+    git clone --depth 1 https://github.com/fcitx/mozc/
 fi
 
 cd mozc/src/
-git fetch --all
+git fetch --all --prune --filter=tree:0
 git checkout origin/fcitx
 git submodule update --init
 
