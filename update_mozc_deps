@@ -15,12 +15,12 @@ set -e
 
 rm -rf $HOME/.cache/bazel
 
-_MOZC_BAZEL_CACHE=/tmp/mozc_cache
+_MOZC_BAZEL_CACHE=$TMPDIR/mozc_cache
 
 rm -rf $_MOZC_BAZEL_CACHE
 for target in unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool; do
     # Only cquery accepts --config and it can also trigger the cache update
-    bazel cquery --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux $target
+    flatpak run --share=network --filesystem=host --runtime=org.kde.Sdk//6.6 --command=sh --env=PKG_CONFIG_PATH=/app/lib/pkgconfig org.fcitx.Fcitx5 -c "/usr/lib/sdk/bazel/bin/bazel cquery --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux $target"
 done
 
 pushd .
