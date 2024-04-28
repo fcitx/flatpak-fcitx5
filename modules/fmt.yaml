@@ -8,5 +8,10 @@ sources:
   - type: git
     url: https://github.com/fmtlib/fmt
     tag: 9.1.0
+    x-checker-data:
+      type: anitya
+      project-id: 11526
+      stable-only: true
+      tag-template: ${version}
 cleanup:
   - "*"

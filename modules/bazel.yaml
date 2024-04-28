@@ -11,12 +11,22 @@ sources:
     url: https://github.com/bazelbuild/bazel/releases/download/7.1.1/bazel-7.1.1-linux-x86_64
     sha256: d93508529d41136065c7b1e5ff555fbfb9d18fd00e768886f2fc7dfb53b05b43
     dest-filename: bazel
+    x-checker-data:
+      type: anitya
+      project-id: 15227
+      stable-only: true
+      url-template: https://github.com/bazelbuild/bazel/releases/download/${version}/bazel-${version}-linux-x86_64
   - type: file
     only-arches:
       - aarch64
     url: https://github.com/bazelbuild/bazel/releases/download/7.1.1/bazel-7.1.1-linux-arm64
     sha256: 37c2d1c8ff917eba88fc68a9fc7ac0b96014f1bed653f1621de0eabc79ed0d2b
     dest-filename: bazel
+    x-checker-data:
+      type: anitya
+      project-id: 15227
+      stable-only: true
+      url-template: https://github.com/bazelbuild/bazel/releases/download/${version}/bazel-${version}-linux-arm64
 build-commands:
   - install -D -m755 bazel ${FLATPAK_DEST}/bin/bazel
 cleanup:

@@ -6,6 +6,11 @@ sources:
   - type: git
     url: https://github.com/libuv/libuv/
     tag: v1.47.0
+    x-checker-data:
+      type: anitya
+      project-id: 10784
+      stable-only: true
+      tag-template: v${version}
 cleanup:
   - /bin
   - /include

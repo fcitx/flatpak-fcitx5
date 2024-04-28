@@ -4,6 +4,11 @@ sources:
   - type: archive
     url: https://downloads.sourceforge.net/boost/boost/1.83.0/boost_1_83_0.tar.bz2
     sha256: 6478edfe2f3305127cffe8caf73ea0176c53769f4bf1585be237eb30798c3b8e
+    x-checker-data:
+      type: anitya
+      project-id: 6845
+      stable-only: true
+      url-template: https://boostorg.jfrog.io/artifactory/main/release/$version/source/boost_${major}_${minor}_${patch}.tar.bz2
 build-commands:
   - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=iostreams,regex,filesystem,system,locale
   - ./b2 headers

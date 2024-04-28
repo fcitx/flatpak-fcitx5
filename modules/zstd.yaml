@@ -9,6 +9,11 @@ sources:
   - type: git
     url: https://github.com/facebook/zstd.git
     tag: "v1.5.2"
+    x-checker-data:
+      type: anitya
+      project-id: 12083
+      stable-only: true
+      tag-template: v${version}
 cleanup:
   - /include
   - /lib/cmake

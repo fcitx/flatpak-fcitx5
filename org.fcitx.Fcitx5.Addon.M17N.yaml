@@ -23,6 +23,11 @@ modules:
       - type: archive
         url: https://download.savannah.gnu.org/releases/m17n/m17n-lib-1.8.0.tar.gz
         sha256: 78bacae7451822dfff62482ce4f9433c5ae82846e4c64b590541e29e800fe64a
+        x-checker-data:
+          type: anitya
+          project-id: 1870
+          stable-only: true
+          url-template: https://download.savannah.gnu.org/releases/m17n/m17n-lib-${version}.tar.gz
       - type: shell
         commands:
           - sed -i "s/freetype-config/pkg-config freetype2/" configure
@@ -31,6 +36,11 @@ modules:
       - type: archive
         url: https://download.savannah.gnu.org/releases/m17n/m17n-db-1.8.0.tar.gz
         sha256: 657f23835b6655e7a63a362bac66260454ee356da4855eadb9366911d33fdc6d
+        x-checker-data:
+          type: anitya
+          project-id: 1869
+          stable-only: true
+          url-template: https://download.savannah.gnu.org/releases/m17n/m17n-db-${version}.tar.gz
   - name: fcitx5-m17n
     buildsystem: cmake-ninja
     sources:

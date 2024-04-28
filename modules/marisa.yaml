@@ -3,6 +3,11 @@ sources:
   - type: archive
     url: https://github.com/s-yata/marisa-trie/archive/v0.2.6.tar.gz
     sha256: 1063a27c789e75afa2ee6f1716cc6a5486631dcfcb7f4d56d6485d2462e566de
+    x-checker-data:
+      type: anitya
+      project-id: 242978
+      stable-only: true
+      url-template: https://github.com/s-yata/marisa-trie/archive/v${version}.tar.gz
   - type: shell
     commands:
       - autoreconf -i

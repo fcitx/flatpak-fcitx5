@@ -5,6 +5,11 @@ sources:
   - type: git
     url: https://github.com/BYVoid/OpenCC/
     tag: ver.1.1.6
+    x-checker-data:
+      type: anitya
+      project-id: 7230
+      stable-only: true
+      tag-template: ver.${version}
 config-opts:
   - -DCMAKE_BUILD_TYPE=Release
 cleanup:

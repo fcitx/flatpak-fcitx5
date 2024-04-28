@@ -8,3 +8,8 @@ sources:
   - type: archive
     url: https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-0.7.0.tar.gz
     sha256: 43e6a9fcb146ad871515f0d0873947e5d497a1c9c60c58cb102a97b47208b7c3
+    x-checker-data:
+      type: anitya
+      project-id: 5284
+      stable-only: true
+      url-template: https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-${version}.tar.gz

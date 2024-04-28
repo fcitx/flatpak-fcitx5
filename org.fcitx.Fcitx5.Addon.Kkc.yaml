@@ -29,20 +29,8 @@ cleanup:
   - "*.la"
 
 modules:
-  - name: gnome-common
-    rm-configure: true
-    config-opts:
-      - --enable-maintainer-mode
-    sources:
-      - type: archive
-        url: https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
-        sha256: 22569e370ae755e04527b76328befc4c73b62bfd4a572499fde116b8318af8cf
-    cleanup: ['*']
-  - name: intltool
-    sources:
-      - type: archive
-        url: https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
-        md5: 12e517cac2b57a0121cda351570f1e63
+  - modules/gnome-common.yaml
+  - modules/intltool.yaml
   - modules/libgee.yaml
   - modules/marisa.yaml
   - name: libkkc
@@ -50,6 +38,11 @@ modules:
       - type: archive
         url: https://github.com/ueno/libkkc/releases/download/v0.3.5/libkkc-0.3.5.tar.gz
         sha512: f611c3104a22ad38af29746870849d8937b6af2a7fee0952cc25f36ef845b5617a192df7ca63ff2a507384f7a6a13c9c1b4fa3b9a34f3f041bee8793d04b9236
+        x-checker-data:
+          type: anitya
+          project-id: 228901
+          stable-only: true
+          url-template: https://github.com/ueno/libkkc/releases/download/v${version}/libkkc-${version}.tar.gz
       - type: patch
         path: libkkc-python3.patch
     build-options:

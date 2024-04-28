@@ -21,7 +21,12 @@ modules:
     sources:
       - type: git
         url: https://github.com/fujiwarat/anthy-unicode/
-        branch: 1.0.0.20201109
+        tag: 1.0.0.20201109
+        x-checker-data:
+          type: anitya
+          project-id: 242970
+          stable-only: true
+          tag-template: ${version}
   - name: fcitx5-anthy
     buildsystem: cmake-ninja
     sources:

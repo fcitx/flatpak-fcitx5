@@ -7,3 +7,8 @@ sources:
   - type: git
     url: https://github.com/capnproto/capnproto
     tag: v0.10.4
+    x-checker-data:
+      type: anitya
+      project-id: 11515
+      stable-only: true
+      tag-template: v${version}

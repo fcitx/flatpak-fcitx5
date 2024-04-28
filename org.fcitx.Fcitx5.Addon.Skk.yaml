@@ -29,26 +29,19 @@ cleanup:
   - "*.la"
 
 modules:
-  - name: gnome-common
-    rm-configure: true
-    config-opts:
-      - --enable-maintainer-mode
-    sources:
-      - type: archive
-        url: https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
-        sha256: 22569e370ae755e04527b76328befc4c73b62bfd4a572499fde116b8318af8cf
-    cleanup: ['*']
-  - name: intltool
-    sources:
-      - type: archive
-        url: https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
-        md5: 12e517cac2b57a0121cda351570f1e63
+  - modules/gnome-common.yaml
+  - modules/intltool.yaml
   - modules/libgee.yaml
   - name: libskk
     sources:
       - type: archive
         url: https://github.com/ueno/libskk/archive/1.0.5.tar.gz
         sha512: 50b07b244e1fbec13764ca00b90ede2584c53dd5c16783c9bb9114f69f43dbebd352653f335f1c3584b8c42ef4184e891e0ca7427c38afc99131196721e1c1c1
+        x-checker-data:
+          type: anitya
+          project-id: 228903
+          stable-only: true
+          url-template: https://github.com/ueno/libskk/archive/${version}.tar.gz
     build-options:
       env:
         ACLOCAL_PATH: /app/addons/Skk/share/aclocal
