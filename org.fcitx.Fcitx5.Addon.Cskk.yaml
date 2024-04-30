@@ -27,9 +27,8 @@ cleanup:
 modules:
   - name: cskk
     sources:
-      - type: archive
-        url: https://github.com/naokiri/cskk/archive/v3.0.0.tar.gz
-        sha512: 381695b00fbd8eb0e86d7c8413fcfb834952cfe0f70cd4128ac697e8ddd51b8e6ab22561667d841422a5cf7bf38c0fffd7cd211630639cf8878444c8041a6ee9
+      - type: git
+        url: https://github.com/naokiri/cskk
       - cskk-cargo-sources.json
     build-options:
       prepend-ld-library-path: /app/addons/Cskk/lib
