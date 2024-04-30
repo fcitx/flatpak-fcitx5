@@ -15,6 +15,7 @@ build-options:
   prepend-pkg-config-path: /app/addons/Chewing/lib/pkgconfig
 modules:
   - name: libchewing
+    buildsystem: cmake-ninja
     sources:
       - type: git
         url: https://github.com/chewing/libchewing
@@ -25,6 +26,8 @@ modules:
           stable-only: true
           tag-template: v${version}
         commit: b543774334a4ceeaccddba39bd26afd63e86c937
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
   - name: fcitx5-chewing
     buildsystem: cmake-ninja
     sources:
