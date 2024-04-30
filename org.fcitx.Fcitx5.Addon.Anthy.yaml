@@ -14,19 +14,20 @@ cleanup:
   - /bin
   - /include
   - /lib/pkgconfig
-  - "*.la"
+  - '*.la'
 
 modules:
   - name: anthy-unicode
     sources:
       - type: git
         url: https://github.com/fujiwarat/anthy-unicode/
-        tag: 1.0.0.20201109
+        tag: 1.0.0.20211224
         x-checker-data:
           type: anitya
           project-id: 242970
           stable-only: true
           tag-template: ${version}
+        commit: 8203577deeec5ceefac5665e8773477d9b6ed862
   - name: fcitx5-anthy
     buildsystem: cmake-ninja
     sources:
@@ -35,4 +36,5 @@ modules:
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
     post-install:
-      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Anthy --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Anthy
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Anthy --prefix=${FLATPAK_DEST}
+        --origin=flatpak org.fcitx.Fcitx5.Addon.Anthy

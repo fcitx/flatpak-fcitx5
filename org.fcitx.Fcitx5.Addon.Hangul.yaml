@@ -14,7 +14,7 @@ cleanup:
   - /bin
   - /include
   - /lib/pkgconfig
-  - "*.la"
+  - '*.la'
 
 modules:
   - name: libhangul
@@ -27,6 +27,7 @@ modules:
           project-id: 1630
           stable-only: true
           tag-template: libhangul-${version}
+        commit: 9fe2d4e8c225b1797d2c5bb78ccfdc703af7b886
     buildsystem: simple
     build-commands:
       - ./autogen.sh
@@ -43,4 +44,5 @@ modules:
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
     post-install:
-      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Hangul --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Hangul
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Hangul --prefix=${FLATPAK_DEST}
+        --origin=flatpak org.fcitx.Fcitx5.Addon.Hangul

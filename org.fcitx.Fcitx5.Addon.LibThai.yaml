@@ -13,13 +13,13 @@ cleanup:
   - /bin
   - /include
   - /lib/pkgconfig
-  - "*.la"
+  - '*.la'
 modules:
   - name: libdatrie
     sources:
       - type: archive
-        url: https://linux.thai.net/pub/thailinux/software/libthai/libdatrie-0.2.12.tar.xz
-        sha256: 452dcc4d3a96c01f80f7c291b42be11863cd1554ff78b93e110becce6e00b149
+        url: https://linux.thai.net/pub/thailinux/software/libthai/libdatrie-0.2.13.tar.xz
+        sha256: 12231bb2be2581a7f0fb9904092d24b0ed2a271a16835071ed97bed65267f4be
         x-checker-data:
           type: anitya
           project-id: 7342
@@ -31,8 +31,8 @@ modules:
   - name: libthai
     sources:
       - type: archive
-        url: https://linux.thai.net/pub/thailinux/software/libthai/libthai-0.1.28.tar.xz
-        sha256: ffe0a17b4b5aa11b153c15986800eca19f6c93a4025ffa5cf2cab2dcdf1ae911
+        url: https://linux.thai.net/pub/thailinux/software/libthai/libthai-0.1.29.tar.xz
+        sha256: fc80cc7dcb50e11302b417cebd24f2d30a8b987292e77e003267b9100d0f4bcd
         x-checker-data:
           type: anitya
           project-id: 1737
@@ -46,4 +46,5 @@ modules:
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
     post-install:
-      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.LibThai --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.LibThai
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.LibThai --prefix=${FLATPAK_DEST}
+        --origin=flatpak org.fcitx.Fcitx5.Addon.LibThai

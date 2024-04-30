@@ -8,7 +8,7 @@ appstream-compose: false
 separate-locales: false
 cleanup:
   - /include
-  - "*.la"
+  - '*.la'
   - /lib/pkgconfig
 build-options:
   prefix: /app/addons/Chewing
@@ -18,12 +18,13 @@ modules:
     sources:
       - type: git
         url: https://github.com/chewing/libchewing
-        tag: v0.5.1
+        tag: v0.7.0
         x-checker-data:
           type: anitya
           project-id: 1577
           stable-only: true
           tag-template: v${version}
+        commit: b543774334a4ceeaccddba39bd26afd63e86c937
   - name: fcitx5-chewing
     buildsystem: cmake-ninja
     sources:
@@ -32,4 +33,5 @@ modules:
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
     post-install:
-      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Chewing --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Chewing
+      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Chewing --prefix=${FLATPAK_DEST}
+        --origin=flatpak org.fcitx.Fcitx5.Addon.Chewing
