@@ -16,11 +16,9 @@ add-extensions:
 separate-locales: false
 command: fcitx5
 finish-args:
-  - --socket=session-bus
-  - --socket=x11
+  # Manually set sockets metadata, so we can bypass the validity check of --socket
+  - --metadata=Context=sockets=x11;wayland;session-bus;inherit-wayland-socket;
   - --share=ipc
-  - --socket=wayland
-  - --socket=inherit-wayland-socket
   - --share=network
   - --filesystem=xdg-config/kxkbrc:rw
   - --filesystem=xdg-config/fontconfig:ro
