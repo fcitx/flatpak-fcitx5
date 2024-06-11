@@ -37,6 +37,8 @@ modules:
         url: https://github.com/fcitx/mozc
         branch: fcitx
         disable-shallow-clone: true
+      - type: patch
+        path: zip-code.patch
       - type: shell
         commands:
           - sed -e "s|LINUX_MOZC_DOCUMENT_DIR = \(.*\)|LINUX_MOZC_DOCUMENT_DIR = \"${document_dir}\"|" -e "s|LINUX_MOZC_SERVER_DIR = \(.*\)|LINUX_MOZC_SERVER_DIR = \"${server_dir}\"|" -e "s|LINUX_MOZC_ICONS_DIR = \(.*\)|LINUX_MOZC_ICONS_DIR = \"${icons_dir}\"|" -i src/config.bzl
