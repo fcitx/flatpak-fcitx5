@@ -1,7 +1,7 @@
 - type: file
-  url: https://github.com/bazelbuild/apple_support/releases/download/1.11.1/apple_support.1.11.1.tar.gz
+  url: https://github.com/bazelbuild/apple_support/releases/download/1.12.0/apple_support.1.12.0.tar.gz
   dest: bazel-deps
-  sha256: cf4d63f39c7ba9059f70e995bf5fe1019267d3f77379c2028561a5d7645ef67c
+  sha256: 100d12617a84ebc7ee7a10ecf3b3e2fdadaebc167ad93a21f820a6cb60158ead
 - type: file
   url: https://github.com/bazelbuild/rules_android/archive/v0.1.1.zip
   dest: bazel-deps
@@ -18,10 +18,6 @@
   url: https://github.com/bazelbuild/rules_cc/archive/c8c38f8c710cbbf834283e4777916b68261b359c.zip
   dest: bazel-deps
   sha256: 5f862a44bbd032e1b48ed53c9c211ba2a1da60e10c5baa01c97369c249299ecb
-- type: file
-  url: https://github.com/bazelbuild/rules_java/releases/download/6.0.0/rules_java-6.0.0.tar.gz
-  dest: bazel-deps
-  sha256: 469b7f3b580b4fcf8112f4d6d0d5a4ce8e1ad5e21fee67d8e8335d5f8b3debab
 - type: file
   url: https://github.com/bazelbuild/rules_license/releases/download/0.0.7/rules_license-0.0.7.tar.gz
   dest: bazel-deps
@@ -57,8 +53,8 @@
 - type: file
   url: https://www.post.japanpost.jp/zipcode/dl/jigyosyo/zip/jigyosyo.zip
   dest: bazel-deps
-  sha256: 4697485041e31016600044a77fe9ae7358e74ffdab06e934e996e253d02a109f
+  sha256: ef1505916652d7612a74ef94bafe93361f207c8a33ed4b8153c5eeb378d25514
 - type: file
   url: https://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip
   dest: bazel-deps
-  sha256: 0da4d242a0d3a2abd896b639dab286f0676490248195d9fb80b4817945d6ee1b
+  sha256: 29788f5b893befa748de333551884596437f2fa4233c53e9121b56f6f7dff109
