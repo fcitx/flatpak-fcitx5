@@ -7,12 +7,12 @@ config-opts:
 sources:
   - type: git
     url: https://github.com/fmtlib/fmt
-    tag: 10.2.1
+    tag:  11.0.1
     x-checker-data:
       type: anitya
       project-id: 11526
       stable-only: true
       tag-template: ${version}
-    commit: e69e5f977d458f2650bb346dadf2ad30c5320281
+    commit: b50e685db996c167e6c831dcef582aba6e14276a
 cleanup:
   - '*'
