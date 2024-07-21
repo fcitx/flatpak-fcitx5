@@ -8,8 +8,8 @@ sources:
     sha256: c3d09cea4f61c751887751f29f9421d0757ed0faea5bd49ccd4451d01674c856
     dest: data
   - type: file
-    url: https://download.fcitx-im.org/data/dict-20240416.tar.zst
-    sha256: 9c262cbfa306cb4c3b055991b7e22b453e0f267f20ceb5d9d9e5f8fbe4f2d367
+    url: https://download.fcitx-im.org/data/dict-20240615.tar.zst
+    sha256: f9dd5f39e9bae557b179b8757c07be7e715e73c50f5a59cb0b5799103882110e
     dest: data
   - type: file
     url: https://download.fcitx-im.org/data/table-20240108.tar.gz
