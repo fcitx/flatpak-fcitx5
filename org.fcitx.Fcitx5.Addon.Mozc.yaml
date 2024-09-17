@@ -29,7 +29,7 @@ modules:
     buildsystem: simple
     subdir: src
     build-commands:
-      - ../scripts/build_fcitx5_bazel --distdir=$PWD/../bazel-deps --linkopt "${LDFLAGS}" &&
+      - ../scripts/build_fcitx5_bazel --config release_build --noenable_bzlmod --distdir=$PWD/../bazel-deps --linkopt "${LDFLAGS}" &&
         PREFIX=${FLATPAK_DEST} ../scripts/install_server_bazel &&
         PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5_bazel
     sources:

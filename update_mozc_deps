@@ -3,7 +3,7 @@
 BASE=$PWD
 pushd .
 if [ ! -d mozc ]; then
-    git clone https://github.com/fcitx/mozc/
+    git clone --filter=tree:0 https://github.com/fcitx/mozc/
 fi
 
 cd mozc/src/
@@ -13,14 +13,14 @@ git submodule update --init
 
 set -e
 
-rm -rf $HOME/.cache/bazel
+bazel clean --expunge
 
 _MOZC_BAZEL_CACHE=/tmp/mozc_cache
 
 rm -rf $_MOZC_BAZEL_CACHE
 for target in unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool; do
     # Only cquery accepts --config and it can also trigger the cache update
-    bazel cquery --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux $target
+    bazel cquery --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build --noenable_bzlmod $target
 done
 
 pushd .
