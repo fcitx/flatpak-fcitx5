@@ -29,7 +29,9 @@ modules:
     buildsystem: simple
     subdir: src
     build-commands:
-      - ../scripts/build_fcitx5_bazel --distdir=$PWD/../bazel-deps --linkopt "${LDFLAGS}" &&
+      - BAZEL_VER=$(bazel --version|cut -f2 -d" ") &&
+        [[ "$BAZEL_VER" > "7.1.2" ]] && bazel_flags="--config workspace" || bazel_flags="--config workspace";
+        ../scripts/build_fcitx5_bazel --config release_build $bazel_flags --distdir=$PWD/../bazel-deps --linkopt "${LDFLAGS}" &&
         PREFIX=${FLATPAK_DEST} ../scripts/install_server_bazel &&
         PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5_bazel
     sources:
