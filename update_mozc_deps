@@ -13,15 +13,13 @@ git submodule update --init
 
 set -e
 
-bazel clean --expunge
+flatpak run --share=network --filesystem=host --filesystem=xdg-cache --filesystem=/tmp --runtime=org.kde.Sdk//6.6 --command=sh --env=PKG_CONFIG_PATH=/app/lib/pkgconfig org.fcitx.Fcitx5 -c "/usr/lib/sdk/bazel/bin/bazel clean --expunge"
 
 _MOZC_BAZEL_CACHE=/tmp/mozc_cache
 
 rm -rf $_MOZC_BAZEL_CACHE
 target="unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool"
-    # Only cquery accepts --config and it can also trigger the cache update
-    bazel build --nobuild --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build --noenable_bzlmod $target
-
+    flatpak run --env=CC=/usr/bin/clang --env=CXX=/usr/bin/clang++ --share=network --filesystem=host --filesystem=xdg-cache --filesystem=/tmp --runtime=org.kde.Sdk//6.6 --command=sh --env=PKG_CONFIG_PATH=/app/lib/pkgconfig org.fcitx.Fcitx5 -c "/usr/lib/sdk/bazel/bin/bazel build --nobuild --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build --noenable_bzlmod $target"
 
 pushd .
 cd $_MOZC_BAZEL_CACHE
