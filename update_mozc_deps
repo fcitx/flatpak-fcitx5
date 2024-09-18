@@ -18,9 +18,7 @@ _MOZC_BAZEL_CACHE=/tmp/mozc_cache
 #BAZEL_VER=$(bazel --version|cut -f2 -d" ")
 BAZEL_VER=$(flatpak info org.freedesktop.Sdk.Extension.bazel|awk '{if ($1=="Version:") print $2}')
 if [[ "$BAZEL_VER" > "7.1.2" ]];then
-	# require network
-	#bazel_flags="--config bzlmod"
-	bazel_flags="--config workspace"
+	bazel_flags="--config bzlmod"
 else
 	bazel_flags="--config workspace"
 fi

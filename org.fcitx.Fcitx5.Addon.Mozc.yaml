@@ -10,6 +10,8 @@ build-extension: true
 appstream-compose: false
 separate-locales: false
 build-options:
+  build-args:
+    - --share=network
   prefix: /app/addons/Mozc
   prepend-path: /usr/lib/sdk/llvm17/bin:/usr/lib/sdk/bazel/bin
   prepend-pkg-config-path: /app/addons/Mozc/lib/pkgconfig
@@ -30,7 +32,7 @@ modules:
     subdir: src
     build-commands:
       - BAZEL_VER=$(bazel --version|cut -f2 -d" ") &&
-        [[ "$BAZEL_VER" > "7.1.2" ]] && bazel_flags="--config workspace" || bazel_flags="--config workspace";
+        [[ "$BAZEL_VER" > "7.1.2" ]] && bazel_flags="--config bzlmod" || bazel_flags="--config workspace";
         ../scripts/build_fcitx5_bazel --config release_build $bazel_flags --distdir=$PWD/../bazel-deps --linkopt "${LDFLAGS}" &&
         PREFIX=${FLATPAK_DEST} ../scripts/install_server_bazel &&
         PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5_bazel
