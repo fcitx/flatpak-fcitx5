@@ -6,7 +6,6 @@ sdk: org.kde.Sdk//6.6
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.golang
 build-extension: true
-appstream-compose: false
 separate-locales: false
 build-options:
   prefix: /app/addons/Bamboo
@@ -28,5 +27,3 @@ modules:
         branch: main
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
-    post-install:
-      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Bamboo --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Bamboo
