@@ -4,7 +4,6 @@ runtime: org.fcitx.Fcitx5
 runtime-version: master
 sdk: org.kde.Sdk//6.6
 build-extension: true
-appstream-compose: false
 separate-locales: false
 build-options:
   prefix: /app/addons/Sayura
@@ -24,5 +23,3 @@ modules:
         url: https://github.com/fcitx/fcitx5-sayura
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
-    post-install:
-      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Sayura --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Sayura

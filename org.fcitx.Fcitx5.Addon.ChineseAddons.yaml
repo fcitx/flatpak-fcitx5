@@ -4,7 +4,6 @@ runtime: org.fcitx.Fcitx5
 runtime-version: master
 sdk: org.kde.Sdk//6.6
 build-extension: true
-appstream-compose: false
 separate-locales: false
 build-options:
   prefix: /app/addons/ChineseAddons
@@ -42,5 +41,3 @@ modules:
         url: https://download.fcitx-im.org/data/py_stroke-20121124.tar.gz
         sha256: 8eb128a9bfa43952e67cf2fcee1fd134c6f4cfd317bc2f6c38a615f5eb64e248
         dest: modules/pinyinhelper
-    post-install:
-      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.ChineseAddons --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.ChineseAddons

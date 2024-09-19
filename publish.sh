@@ -118,7 +118,7 @@ fi
 
 if [[ "$2" != "new" ]] && [[ "$2" != dry ]]; then
     git checkout -b pr-$LABEL
-    git commit -a -m "Update $PACKAGE"
+    git commit -a -m "Update $PACKAGE to $LABEL"
     git push origin --force pr-$LABEL
-    gh pr create --base master --title "Update $LABEL" --body ""
+    gh pr create --base master --title "Update to $LABEL" --body ""
 fi

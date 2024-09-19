@@ -6,7 +6,6 @@ sdk: org.kde.Sdk//6.6
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.vala
 build-extension: true
-appstream-compose: false
 separate-locales: false
 build-options:
   prefix: /app/addons/Kkc
@@ -83,5 +82,3 @@ modules:
     sources:
       - type: git
         url: https://github.com/fcitx/fcitx5-kkc
-    post-install:
-      - appstream-compose --basename=org.fcitx.Fcitx5.Addon.Kkc --prefix=${FLATPAK_DEST} --origin=flatpak org.fcitx.Fcitx5.Addon.Kkc
