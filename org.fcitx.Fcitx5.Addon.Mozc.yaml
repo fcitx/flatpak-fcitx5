@@ -10,8 +10,6 @@ build-extension: true
 appstream-compose: false
 separate-locales: false
 build-options:
-  build-args:
-    - --share=network
   prefix: /app/addons/Mozc
   prepend-path: /usr/lib/sdk/llvm17/bin:/usr/lib/sdk/bazel/bin
   prepend-pkg-config-path: /app/addons/Mozc/lib/pkgconfig
