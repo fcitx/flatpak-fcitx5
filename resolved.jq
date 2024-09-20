@@ -15,19 +15,26 @@
     sha256: (
       .attributes.sha256 // ""
     ),
+    remote_patches: (
+      .attributes.remote_patches // null
+    ),
+    patch_args: (
+      .attributes.patch_args // null
+    ),
     downloaded_file_path: (
       .attributes.downloaded_file_path // null
-    )
+    ),
   } |
   select(.url != "") |
   {
     type: "file",
     url: .url,
     dest: "bazel-deps",
-    "dest-filename": (
-        .downloaded_file_path // .url | split("/") | last
-    ),
-    sha256: .sha256
+    } + (
+    if .downloaded_file_path != "" and .downloaded_file_path != null then
+        { "dest-filename": .downloaded_file_path, } else {} end
+    ) + {
+    sha256: .sha256,
   }
 ]
 
