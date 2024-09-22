@@ -3,14 +3,11 @@ branch: master
 runtime: org.fcitx.Fcitx5
 runtime-version: master
 sdk: org.kde.Sdk//6.6
-sdk-extensions:
-  - org.freedesktop.Sdk.Extension.llvm17
-  - org.freedesktop.Sdk.Extension.bazel
 build-extension: true
 separate-locales: false
 build-options:
   prefix: /app/addons/Mozc
-  prepend-path: /usr/lib/sdk/llvm17/bin:/usr/lib/sdk/bazel/bin
+  prepend-path: /app/addons/Mozc/bazel/bin
   prepend-pkg-config-path: /app/addons/Mozc/lib/pkgconfig
   prepend-ld-library-path: /usr/lib/sdk/llvm17/lib
   env:
@@ -22,13 +19,32 @@ cleanup:
   - /bin
   - /include
   - /lib/pkgconfig
+  - /app/addons/Mozc/bazel
   - '*.la'
 modules:
+  - name: bazel
+    buildsystem: simple
+    build-commands:
+      - install -D bazel ${FLATPAK_DEST}/bazel/bin/bazel
+    sources:
+      - type: file
+        only-arches:
+          - x86_64
+        url: https://github.com/bazelbuild/bazel/releases/download/7.3.1/bazel-7.3.1-linux-x86_64
+        sha256: 794f58b5a5c28c4729f04db0bd1238eaf827105bb49946238b00f681a1da377c
+        dest-filename: bazel
+      - type: file
+        only-arches:
+          - aarch64
+        url: https://github.com/bazelbuild/bazel/releases/download/7.3.1/bazel-7.3.1-linux-arm64
+        sha256: 95871a3dc9db88043fb54752ce2155d702bbad809b0e5f0c428a67c0522e5944
+        dest-filename: bazel
+
   - name: mozc
     buildsystem: simple
     subdir: src
     build-commands:
-      - ../scripts/build_fcitx5_bazel --config release_build --noenable_bzlmod --distdir=$PWD/../bazel-deps --linkopt "${LDFLAGS}" &&
+      - ../scripts/build_fcitx5_bazel --config release_build --linkopt "${LDFLAGS}" --registry=file:///$PWD/../bcr --distdir=$PWD/../bazel-deps &&
         PREFIX=${FLATPAK_DEST} ../scripts/install_server_bazel &&
         PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5_bazel
     sources:
@@ -36,6 +52,10 @@ modules:
         url: https://github.com/fcitx/mozc
         branch: fcitx
         disable-shallow-clone: true
+      - type: git
+        url: https://github.com/bazelbuild/bazel-central-registry
+        branch: main
+        dest: bcr
       - type: patch
         path: zip-code.patch
       - type: shell
