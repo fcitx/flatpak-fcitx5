@@ -9,7 +9,6 @@ build-options:
   prefix: /app/addons/Mozc
   prepend-path: /app/addons/Mozc/bazel/bin
   prepend-pkg-config-path: /app/addons/Mozc/lib/pkgconfig
-  prepend-ld-library-path: /usr/lib/sdk/llvm18/lib
   env:
     - server_dir=/app/addons/Mozc/lib/mozc
     - document_dir=/app/ime/mozc/licenses/mozc

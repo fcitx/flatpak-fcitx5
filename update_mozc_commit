@@ -1,0 +1,47 @@
+#!/bin/bash
+
+function UpdateGitCommit() {
+    local url=$1
+    local new_commit=$2
+    temp_file=$(mktemp)
+    jq '
+    def update_git_commit(url; new_commit):
+    walk(
+        if type == "object" and .type == "git" and .url == url then
+            del(.branch) | .commit = new_commit
+        else
+            .
+        end
+    );
+
+    update_git_commit("'$url'" ; "'$new_commit'")
+    ' input.json > ${temp_file}
+    mv ${temp_file} input.json
+    sync
+}
+
+
+# commit update of git source
+
+# Fcitx5
+yq "." org.fcitx.Fcitx5.Addon.Mozc.yaml > input.json
+pushd .
+GIT_URL=https://github.com/fcitx/mozc
+[[ ! -d mozc ]] && git clone --filter=tree:0 $GIT_URL
+cd mozc/src
+git fetch --all
+GIT_COMMIT=$(git log -1 --pretty=%H)
+popd
+UpdateGitCommit $GIT_URL $GIT_COMMIT
+
+# bcr
+pushd .
+GIT_URL=https://github.com/bazelbuild/bazel-central-registry
+[[ ! -d bcr ]] && git clone --filter=tree:0 $GIT_URL bcr
+cd bcr
+git fetch --all
+GIT_COMMIT=$(git log -1 --pretty=%H)
+popd
+UpdateGitCommit $GIT_URL $GIT_COMMIT
+
+yq -y "." input.json > org.fcitx.Fcitx5.Addon.Mozc.yaml
