@@ -43,7 +43,7 @@ modules:
     buildsystem: simple
     subdir: src
     build-commands:
-      - ../scripts/build_fcitx5_bazel --config release_build --linkopt "${LDFLAGS}" --registry=file:///$PWD/../bcr --distdir=$PWD/../bazel-deps &&
+      - ../scripts/build_fcitx5_bazel --config release_build --registry=file:///$PWD/../bcr --distdir=$PWD/../bazel-deps $(echo "${LDFLAGS}"|xargs -n1 echo "--linkopt") &&
         PREFIX=${FLATPAK_DEST} ../scripts/install_server_bazel &&
         PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5_bazel
     sources:
