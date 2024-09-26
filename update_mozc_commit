@@ -30,6 +30,7 @@ GIT_URL=https://github.com/fcitx/mozc
 [[ ! -d mozc ]] && git clone --filter=tree:0 $GIT_URL
 cd mozc/src
 git fetch --all
+git checkout origin/fcitx
 GIT_COMMIT=$(git log -1 --pretty=%H)
 popd
 UpdateGitCommit $GIT_URL $GIT_COMMIT
@@ -40,6 +41,7 @@ GIT_URL=https://github.com/bazelbuild/bazel-central-registry
 [[ ! -d bcr ]] && git clone --filter=tree:0 $GIT_URL bcr
 cd bcr
 git fetch --all
+git checkout origin/main
 GIT_COMMIT=$(git log -1 --pretty=%H)
 popd
 UpdateGitCommit $GIT_URL $GIT_COMMIT

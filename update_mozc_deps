@@ -8,12 +8,12 @@ fi
 [[ ! -d bcr ]] && git clone --filter=tree:0 https://github.com/bazelbuild/bazel-central-registry bcr
 cd bcr
 git fetch --all
+git checkout origin/main
 cd ..
 
 cd mozc/src/
 git fetch --all
 git checkout origin/fcitx
-git restore .
 git submodule update --init
 
 set -e
