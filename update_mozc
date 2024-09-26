@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SCRIPT_PATH="$(realpath "${BASH_SOURCE[-1]}")"
+SCRIPT_DIRECTORY="$(dirname "$SCRIPT_PATH")"
+
+$SCRIPT_DIRECTORY/update_mozc_deps
+$SCRIPT_DIRECTORY/update_mozc_commit
+$SCRIPT_DIRECTORY/update_mozc_zip_code_patch

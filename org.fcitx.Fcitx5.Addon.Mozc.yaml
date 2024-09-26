@@ -5,12 +5,11 @@ runtime-version: master
 sdk: org.kde.Sdk//6.6
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.llvm18
-  - org.freedesktop.Sdk.Extension.bazel
 build-extension: true
 separate-locales: false
 build-options:
   prefix: /app/addons/Mozc
-  prepend-path: /usr/lib/sdk/llvm18/bin:/usr/lib/sdk/bazel/bin
+  prepend-path: /usr/lib/sdk/llvm18/bin:/app/addons/Mozc/bin
   prepend-pkg-config-path: /app/addons/Mozc/lib/pkgconfig
   prepend-ld-library-path: /usr/lib/sdk/llvm18/lib
   env:
@@ -18,27 +17,38 @@ build-options:
     - document_dir=/app/ime/mozc/licenses/mozc
     - icons_dir=/app/share/icons/mozc
     - LOCALE=C.UTF-8
+    - CC=clang
+    - CXX=clang++
 cleanup:
   - /bin
   - /include
   - /lib/pkgconfig
   - '*.la'
 modules:
+  - modules/bazel.yaml
   - name: mozc
     buildsystem: simple
     subdir: src
     build-commands:
-      - ../scripts/build_fcitx5_bazel --distdir=$PWD/../bazel-deps --linkopt "${LDFLAGS}" &&
-        PREFIX=${FLATPAK_DEST} ../scripts/install_server_bazel &&
-        PREFIX=${FLATPAK_DEST} ../scripts/install_fcitx5_bazel
+      - ../scripts/build_fcitx5_bazel --config release_build --distdir=$PWD/../bazel-deps
+        --registry=file:///$PWD/../bcr $(echo "${LDFLAGS}"|xargs -n1 echo "--linkopt")
+        && PREFIX=${FLATPAK_DEST} ../scripts/install_server_bazel && PREFIX=${FLATPAK_DEST}
+        ../scripts/install_fcitx5_bazel
     sources:
       - type: git
         url: https://github.com/fcitx/mozc
         branch: fcitx
         disable-shallow-clone: true
+      - type: git
+        url: https://github.com/bazelbuild/bazel-central-registry
+        dest: bcr
+        tag: 85523968142137ee5b691a1937efcdb1f7353082
       - type: patch
         path: zip-code.patch
       - type: shell
         commands:
-          - sed -e "s|LINUX_MOZC_DOCUMENT_DIR = \(.*\)|LINUX_MOZC_DOCUMENT_DIR = \"${document_dir}\"|" -e "s|LINUX_MOZC_SERVER_DIR = \(.*\)|LINUX_MOZC_SERVER_DIR = \"${server_dir}\"|" -e "s|LINUX_MOZC_ICONS_DIR = \(.*\)|LINUX_MOZC_ICONS_DIR = \"${icons_dir}\"|" -i src/config.bzl
+          - sed -e "s|LINUX_MOZC_DOCUMENT_DIR = \(.*\)|LINUX_MOZC_DOCUMENT_DIR = \"${document_dir}\"|"
+            -e "s|LINUX_MOZC_SERVER_DIR = \(.*\)|LINUX_MOZC_SERVER_DIR = \"${server_dir}\"|"
+            -e "s|LINUX_MOZC_ICONS_DIR = \(.*\)|LINUX_MOZC_ICONS_DIR = \"${icons_dir}\"|"
+            -i src/config.bzl
       - mozc-deps.yaml

@@ -1,12 +1,34 @@
 diff --git a/src/config.bzl b/src/config.bzl
-index 11bb88ea8..cdb2e6269 100644
+index 2675e04..7336fbe 100644
 --- a/src/config.bzl
 +++ b/src/config.bzl
-@@ -60,5 +60,5 @@ MACOS_QT_PATH = "/usr/local/Qt-6.5.2"
+@@ -71,5 +71,5 @@ MACOS_QT_PATH = "/usr/local/Qt-6.5.2"
  ## SHA256 of zip code files.
  # When zip code files are prefetched and used via --repository_cache for offline build,
  # SHA256 values should be specified.
 -SHA256_ZIP_CODE_KEN_ALL = None
 -SHA256_ZIP_CODE_JIGYOSYO = None
-+SHA256_ZIP_CODE_KEN_ALL = "29788f5b893befa748de333551884596437f2fa4233c53e9121b56f6f7dff109"
-+SHA256_ZIP_CODE_JIGYOSYO = "ef1505916652d7612a74ef94bafe93361f207c8a33ed4b8153c5eeb378d25514"
++SHA256_ZIP_CODE_KEN_ALL = "85f13da74bf178ecb18083ec6d31e63bc4395c7817c3bb3587c7e86707609d2a"
++SHA256_ZIP_CODE_JIGYOSYO = "1ef5d43b5e5bf059117a2570fe95e0a9e3cf8a27f3e3882da283ad18460d2264"
+diff --git a/src/MODULE.bazel b/src/MODULE.bazel
+index 577917e..ac6f1c9 100644
+--- a/src/MODULE.bazel
++++ b/src/MODULE.bazel
+@@ -261,7 +261,7 @@ http_archive(
+ #
+ # SHA256 as of 2024-08-14
+ # SHA256_ZIP_CODE_KEN_ALL = "d2d177ef64b9459a618d8aaa96b6c5f081cb3f37f6e9c00ba912001e66b81f3e"
+-SHA256_ZIP_CODE_KEN_ALL = None
++SHA256_ZIP_CODE_KEN_ALL = "85f13da74bf178ecb18083ec6d31e63bc4395c7817c3bb3587c7e86707609d2a"
+ http_archive(
+     name = "zip_code_ken_all",
+     build_file_content = "exports_files([\"KEN_ALL.CSV\"])",
+@@ -270,7 +270,7 @@ http_archive(
+ )
+ # SHA256 as of 2024-08-14
+ # SHA256_ZIP_CODE_JIGYOSYO="ab6fd92df35e63c4566d29f70456da1603d8178ce3fec073f7c27b28d0af2e10"
+-SHA256_ZIP_CODE_JIGYOSYO = None
++SHA256_ZIP_CODE_JIGYOSYO = "1ef5d43b5e5bf059117a2570fe95e0a9e3cf8a27f3e3882da283ad18460d2264"
+ http_archive(
+     name = "zip_code_jigyosyo",
+     build_file_content = "exports_files([\"JIGYOSYO.CSV\"])",
