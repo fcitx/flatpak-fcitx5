@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cleanup() {
-    pkill -P $$
+    pkill -P $$ || true
 }
 
 trap cleanup EXIT
@@ -44,11 +44,73 @@ PROXY_PID=$!
 popd
 [[ -z $PROXY_PID ]] && exit 1
 
-bazel clean --expunge
-
 BUILD_TARGET="unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool"
-echo bazel build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $BUILD_TARGET
-bazel build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $BUILD_TARGET
+
+build_native() {
+    echo bazel build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $BUILD_TARGET
+    bazel clean --expunge
+    bazel build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $BUILD_TARGET
+}
+
+build_x86_64() {
+    # x86_64 flatpak
+    flatpak run --arch=x86_64 --command=sh \
+        --env=BASE="$BASE" \
+        --env=TMPDIR="$TMPDIR" \
+        --env=PKG_CONFIG_PATH=/app/lib/pkgconfig \
+        --env=SCRIPT_DIRECTORY="$SCRIPT_DIRECTORY" \
+        --env=_MOZC_BAZEL_CACHE="$_MOZC_BAZEL_CACHE" \
+        --env=BUILD_TARGET="$BUILD_TARGET" \
+        --share=network --filesystem=xdg-cache \
+        --filesystem="$SCRIPT_DIRECTORY" --filesystem="$TMPDIR" \
+        --runtime=org.kde.Sdk/x86_64/6.6 org.fcitx.Fcitx5/x86_64/stable \
+        -c "\
+            PATH=$PATH:/usr/lib/sdk/bazel/bin:/usr/lib/sdk/llvm18/bin ; \
+            CC=clang ; CXX=clang++ ; clang --version ; bazel --version ;\
+            bazel clean --expunge ; \
+            bazel build --nobuild --experimental_downloader_config="\$SCRIPT_DIRECTORY/downloader.cfg" \
+            --registry=file://\$BASE/bcr \
+            --repository_cache="\$_MOZC_BAZEL_CACHE" \
+            --config oss_linux --config release_build \${BUILD_TARGET}
+        "
+}
+
+build_aarch64() {
+    # aarch64 emulation flatpak with qemu-user-static-binfmt
+    flatpak run --arch=aarch64 --command=sh \
+        --env=BASE="$BASE" \
+        --env=TMPDIR="$TMPDIR" \
+        --env=PKG_CONFIG_PATH=/app/lib/pkgconfig \
+        --env=SCRIPT_DIRECTORY="$SCRIPT_DIRECTORY" \
+        --env=_MOZC_BAZEL_CACHE="$_MOZC_BAZEL_CACHE" \
+        --env=BUILD_TARGET="$BUILD_TARGET" \
+        --share=network --filesystem=xdg-cache \
+        --filesystem="$SCRIPT_DIRECTORY" --filesystem="$TMPDIR" \
+        --runtime=org.kde.Sdk/aarch64/6.6 org.fcitx.Fcitx5/aarch64/stable \
+        -c "\
+            PATH=$PATH:/usr/lib/sdk/bazel/bin:/usr/lib/sdk/llvm18/bin ; \
+            CC=clang ; CXX=clang++ ; clang --version ; bazel --version ;\
+            bazel clean --expunge ; \
+            bazel build --nobuild --experimental_downloader_config="\$SCRIPT_DIRECTORY/downloader.cfg" \
+            --registry=file://\$BASE/bcr \
+            --repository_cache="\$_MOZC_BAZEL_CACHE" \
+            --config oss_linux --config release_build \${BUILD_TARGET}
+        "
+}
+
+if [ "$1" = "aarch64" ]; then
+    build_aarch64
+elif [ "$1" = "x86_64" ]; then
+    build_x86_64
+elif [ "$1" = "multi_arch" ]; then
+    build_native
+    build_aarch64
+elif [ "$1" = "flatpak" ]; then
+    build_x86_64
+    build_aarch64
+else
+    build_native
+fi
 
 kill $PROXY_PID
 
@@ -66,6 +128,19 @@ for f in `find -type f` ; do
 done > $SCRIPT_DIRECTORY/mozc-deps.yaml
 popd
 
+# add only-arches for cpython x86_64 and aarch64
+yq -i -y '.[]|=
+  .url as $url |
+  if ($url | split("/")[-1] | contains("cpython") and contains("x86_64")) then
+    . += {"only-arches": ["x86_64"]}
+  elif ($url | split("/")[-1] | contains("cpython") and contains("aarch64")) then
+    . += {"only-arches": ["aarch64"]}
+  else
+    .
+  end
+' "$SCRIPT_DIRECTORY/mozc-deps.yaml"
+
 yq -y -i 'sort_by(.url)' "$SCRIPT_DIRECTORY/mozc-deps.yaml"
 
 rm -rf "$BASE"
+exit 0

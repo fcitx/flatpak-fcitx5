@@ -1,0 +1,442 @@
+name: Generate Mozc Dependencies
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        options:
+          - 'flatpak'
+          - 'flatpak-serially'
+
+jobs:
+  Mozc-Dependency-x86_64:
+    if: inputs.environment != 'flatpak' && inputs.environment != 'flatpak-serially'
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:noble
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set custom apt cache directory
+        run: |
+          mkdir -p /home/runner/.apt-cache/
+          echo 'Dir::Cache::Archives "/home/runner/.apt-cache/";' | tee /etc/apt/apt.conf.d/01custom-cache
+
+      - name: Generate initial apt cache hash
+        id: initial-cache-hash
+        run: |
+          HASH=$(find /home/runner/.apt-cache -type f -name "*.deb" -exec sha256sum {} + | sort | sha256sum | cut -d ' ' -f1)
+          echo "INITIAL_CACHE_HASH=${HASH}" >> $GITHUB_OUTPUT
+
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/.apt-cache
+          key: ${{ runner.os }}-noble-apt-${{ steps.initial-cache-hash.outputs.INITIAL_CACHE_HASH }}
+
+      - name: Preparing
+        run: |
+          apt-get update
+          apt-get install -y sudo apt-utils wget unzip
+
+      - name: Non-Root User Setup for Container
+        run: |
+          sudo useradd -m -d /home/nonroot/ -s /usr/bin/bash nonroot
+          sudo chown -R nonroot:nonroot /home/nonroot
+          sudo -u nonroot whoami
+          sudo -u nonroot id
+          whoami
+          id
+
+      - name: Install Bazel
+        run: |
+          sudo wget -qO /usr/local/bin/bazel https://github.com/bazelbuild/bazel/releases/download/7.3.2/bazel-7.3.2-linux-x86_64
+          sudo chmod a+x /usr/local/bin/bazel
+
+      - name: Install Build Dependency
+        run: |
+          # mantic, lunar, jammy
+          sudo sed 's/^.*deb-src /deb-src /' -i /etc/apt/sources.list||true
+          # noble
+          sudo sed 's/Types: deb *$/Types: deb deb-src/' -i /etc/apt/sources.list.d/ubuntu.sources||true
+          sudo apt-get update
+          sudo apt-get build-dep -y mozc
+          sudo apt-get install -y build-essential dpkg-dev make git qt6-base-dev libfcitx5-qt6-dev curl jq yq
+
+      - name: Adjust permissions after apt operations
+        run: |
+          sudo chown -R $(id -u):$(id -g) /home/runner/.apt-cache
+          sudo chmod -R 700 /home/runner/.apt-cache
+          sudo rm -f /home/runner/.apt-cache/lock /home/runner/.apt-cache/partial/*
+
+      - name: Generate final apt cache hash
+        id: final-cache-hash
+        run: |
+          HASH=$(find /home/runner/.apt-cache -type f -name "*.deb" -exec sha256sum {} + | sort | sha256sum | cut -d ' ' -f1)
+          echo "FINAL_CACHE_HASH=${HASH}" >> $GITHUB_OUTPUT
+
+      - name: Update cache if changed
+        if: steps.initial-cache-hash.outputs.INITIAL_CACHE_HASH != steps.final-cache-hash.outputs.FINAL_CACHE_HASH
+        uses: actions/cache/save@v4
+        with:
+          path: /home/runner/.apt-cache
+          key: ${{ runner.os }}-noble-apt-${{ steps.final-cache-hash.outputs.FINAL_CACHE_HASH }}
+
+      - name: Generate Mozc Dependency
+        run: |
+          # prevent timeout
+          sed -i 's|bazel clean.*|rm -rf $HOME/.cache/bazel|' update_mozc_deps
+          sudo -u nonroot cp ./update_mozc_deps ./bazel_mirror.py downloader.cfg /home/nonroot/
+          WORKSPACE=$PWD
+          cd /home/nonroot
+          sudo -u nonroot PATH=$PATH:/usr/local/bin TMPDIR=/home/nonroot/tmp/ ./update_mozc_deps
+          cp ./mozc-deps.yaml $GITHUB_WORKSPACE/deps_x86_64.yaml
+      - name: Upload deps file
+        uses: actions/upload-artifact@v4
+        with:
+          name: deps-x86_64
+          path: deps_x86_64.yaml
+
+  Mozc-Dependency-x86_64-flatpak:
+    if: inputs.environment == 'flatpak'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set custom apt cache directory
+        run: |
+          mkdir -p ${{ github.workspace }}/.apt-cache/
+          echo 'Dir::Cache::Archives "${{ github.workspace }}/.apt-cache/";' | sudo tee /etc/apt/apt.conf.d/01custom-cache
+
+      - name: Generate initial apt cache hash
+        id: initial-cache-hash
+        run: |
+          HASH=$(find ${{ github.workspace }}/.apt-cache -type f -name "*.deb" -exec sha256sum {} + | sort | sha256sum | cut -d ' ' -f1)
+          echo "INITIAL_CACHE_HASH=${HASH}" >> $GITHUB_OUTPUT
+
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.apt-cache
+          key: ${{ runner.os }}-apt-${{ steps.initial-cache-hash.outputs.INITIAL_CACHE_HASH }}
+
+      - name: Cache Flatpak
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/.local/share/flatpak
+          key: ${{ runner.os }}-x86_64-flatpak-${{ hashFiles('**/org.fcitx.Fcitx5.Addon.Mozc.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-x86_64-flatpak-${{ hashFiles('**/org.fcitx.Fcitx5.Addon.Mozc.yaml') }}
+
+      - name: Preparing
+        run: |
+          cat /etc/lsb-release
+          sudo apt-get update
+          sudo apt-get install -y sudo wget apt-utils
+          sudo apt-get install -y git curl unzip jq flatpak pipx
+          pipx install yq
+
+      - name: Adjust permissions after apt operations
+        run: |
+          sudo chown -R $(id -u):$(id -g) ${{ github.workspace }}/.apt-cache
+          sudo chmod -R 700 ${{ github.workspace }}/.apt-cache
+          sudo rm -f ${{ github.workspace }}/.apt-cache/lock ${{ github.workspace }}/.apt-cache/partial/*
+
+      - name: Generate final apt cache hash
+        id: final-cache-hash
+        run: |
+          HASH=$(find ${{ github.workspace }}/.apt-cache -type f -name "*.deb" -exec sha256sum {} + | sort | sha256sum | cut -d ' ' -f1)
+          echo "FINAL_CACHE_HASH=${HASH}" >> $GITHUB_OUTPUT
+
+      - name: Update cache if changed
+        if: steps.initial-cache-hash.outputs.INITIAL_CACHE_HASH != steps.final-cache-hash.outputs.FINAL_CACHE_HASH
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ github.workspace }}/.apt-cache
+          key: ${{ runner.os }}-apt-${{ steps.final-cache-hash.outputs.FINAL_CACHE_HASH }}
+
+      - name: Install Sdk and Runtime of Flatpak
+        run: |
+          flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user -y flathub org.fcitx.Fcitx5/x86_64/stable org.kde.Sdk/x86_64/6.6 org.freedesktop.Sdk/x86_64/23.08 org.freedesktop.Sdk.Extension.bazel/x86_64/23.08 org.freedesktop.Sdk.Extension.llvm18/x86_64/23.08
+          flatpak update -y
+
+      - name: Generate Mozc Dependency
+        run: |
+          # unset ANDROID_NDK_HOME
+          env $(printenv | grep '^ANDROID_NDK' | sed 's/=.*//;s/^/-u /') PATH=$PATH:/usr/local/bin TMPDIR=$PWD/tmp sh -c './update_mozc_deps x86_64'
+          cp ./mozc-deps.yaml $GITHUB_WORKSPACE/deps_x86_64-flatpak.yaml
+
+      - name: Upload deps file
+        uses: actions/upload-artifact@v4
+        with:
+          name: deps-x86_64-flatpak
+          path: deps_x86_64-flatpak.yaml
+
+  Mozc-Dependency-arm64-flatpak:
+    if: inputs.environment == 'flatpak' || inputs.environment != 'flatpak-serially'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set custom apt cache directory
+        run: |
+          mkdir -p ${{ github.workspace }}/.apt-cache/
+          echo 'Dir::Cache::Archives "${{ github.workspace }}/.apt-cache/";' | sudo tee /etc/apt/apt.conf.d/01custom-cache
+
+      - name: Generate initial apt cache hash
+        id: initial-cache-hash
+        run: |
+          HASH=$(find ${{ github.workspace }}/.apt-cache -type f -name "*.deb" -exec sha256sum {} + | sort | sha256sum | cut -d ' ' -f1)
+          echo "INITIAL_CACHE_HASH=${HASH}" >> $GITHUB_OUTPUT
+
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.apt-cache
+          key: ${{ runner.os }}-apt-${{ steps.initial-cache-hash.outputs.INITIAL_CACHE_HASH }}
+
+      - name: Cache Flatpak
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/.local/share/flatpak
+          key: ${{ runner.os }}-flatpak-${{ hashFiles('**/org.fcitx.Fcitx5.Addon.Mozc.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-flatpak-${{ hashFiles('**/org.fcitx.Fcitx5.Addon.Mozc.yaml') }}
+
+      - name: Preparing
+        run: |
+          cat /etc/lsb-release
+          sudo apt-get update
+          sudo apt-get install -y sudo wget apt-utils
+          sudo apt-get install -y git curl unzip jq flatpak pipx
+          pipx install yq
+
+      - name: Qemu and binfmt
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-user-static binfmt-support
+          sudo systemctl restart systemd-binfmt.service
+          systemctl status systemd-binfmt.service
+          sudo update-binfmts --enable qemu-aarch64
+
+      - name: Adjust permissions after apt operations
+        run: |
+          sudo chown -R $(id -u):$(id -g) ${{ github.workspace }}/.apt-cache
+          sudo chmod -R 700 ${{ github.workspace }}/.apt-cache
+          sudo rm -f ${{ github.workspace }}/.apt-cache/lock ${{ github.workspace }}/.apt-cache/partial/*
+
+      - name: Generate final apt cache hash
+        id: final-cache-hash
+        run: |
+          HASH=$(find ${{ github.workspace }}/.apt-cache -type f -name "*.deb" -exec sha256sum {} + | sort | sha256sum | cut -d ' ' -f1)
+          echo "FINAL_CACHE_HASH=${HASH}" >> $GITHUB_OUTPUT
+
+      - name: Update cache if changed
+        if: steps.initial-cache-hash.outputs.INITIAL_CACHE_HASH != steps.final-cache-hash.outputs.FINAL_CACHE_HASH
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ github.workspace }}/.apt-cache
+          key: ${{ runner.os }}-apt-${{ steps.final-cache-hash.outputs.FINAL_CACHE_HASH }}
+
+      - name: Install Sdk and Runtime of Flatpak
+        run: |
+          flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user -y flathub org.fcitx.Fcitx5/aarch64/stable org.kde.Sdk/aarch64/6.6 org.freedesktop.Sdk/aarch64/23.08 org.freedesktop.Sdk.Extension.bazel/aarch64/23.08 org.freedesktop.Sdk.Extension.llvm18/aarch64/23.08
+          flatpak update -y
+
+      - name: Generate Mozc Dependency
+        run: |
+          # unset ANDROID_NDK_HOME
+          env $(printenv | grep '^ANDROID_NDK' | sed 's/=.*//;s/^/-u /') PATH=$PATH:/usr/local/bin TMPDIR=$PWD/tmp sh -c './update_mozc_deps aarch64'
+          cp ./mozc-deps.yaml $GITHUB_WORKSPACE/deps_arm64-flatpak.yaml
+
+      - name: Upload deps file
+        uses: actions/upload-artifact@v4
+        with:
+          name: deps-arm64-flatpak
+          path: deps_arm64-flatpak.yaml
+
+  Mozc-Dependency-flatpak:
+    if: inputs.environment == 'flatpak-serially'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set custom apt cache directory
+        run: |
+          mkdir -p ${{ github.workspace }}/.apt-cache/
+          echo 'Dir::Cache::Archives "${{ github.workspace }}/.apt-cache/";' | sudo tee /etc/apt/apt.conf.d/01custom-cache
+
+      - name: Generate initial apt cache hash
+        id: initial-cache-hash
+        run: |
+          HASH=$(find ${{ github.workspace }}/.apt-cache -type f -name "*.deb" -exec sha256sum {} + | sort | sha256sum | cut -d ' ' -f1)
+          echo "INITIAL_CACHE_HASH=${HASH}" >> $GITHUB_OUTPUT
+
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.apt-cache
+          key: ${{ runner.os }}-apt-${{ steps.initial-cache-hash.outputs.INITIAL_CACHE_HASH }}
+
+      - name: Cache Flatpak
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/.local/share/flatpak
+          key: ${{ runner.os }}-multi_arch-flatpak-${{ hashFiles('**/org.fcitx.Fcitx5.Addon.Mozc.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-multi_arch-flatpak-${{ hashFiles('**/org.fcitx.Fcitx5.Addon.Mozc.yaml') }}
+
+      - name: Preparing
+        run: |
+          cat /etc/lsb-release
+          sudo apt-get update
+          sudo apt-get install -y sudo wget apt-utils
+          sudo apt-get install -y git curl unzip jq flatpak pipx
+          pipx install yq
+
+      - name: Qemu and binfmt
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-user-static binfmt-support
+          sudo systemctl restart systemd-binfmt.service
+          systemctl status systemd-binfmt.service
+          sudo update-binfmts --enable qemu-aarch64
+
+      - name: Adjust permissions after apt operations
+        run: |
+          sudo chown -R $(id -u):$(id -g) ${{ github.workspace }}/.apt-cache
+          sudo chmod -R 700 ${{ github.workspace }}/.apt-cache
+          sudo rm -f ${{ github.workspace }}/.apt-cache/lock ${{ github.workspace }}/.apt-cache/partial/*
+
+      - name: Generate final apt cache hash
+        id: final-cache-hash
+        run: |
+          HASH=$(find ${{ github.workspace }}/.apt-cache -type f -name "*.deb" -exec sha256sum {} + | sort | sha256sum | cut -d ' ' -f1)
+          echo "FINAL_CACHE_HASH=${HASH}" >> $GITHUB_OUTPUT
+
+      - name: Update cache if changed
+        if: steps.initial-cache-hash.outputs.INITIAL_CACHE_HASH != steps.final-cache-hash.outputs.FINAL_CACHE_HASH
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ github.workspace }}/.apt-cache
+          key: ${{ runner.os }}-apt-${{ steps.final-cache-hash.outputs.FINAL_CACHE_HASH }}
+
+      - name: Install Sdk and Runtime of Flatpak(x86_64)
+        run: |
+          flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user -y flathub org.fcitx.Fcitx5/x86_64/stable org.kde.Sdk/x86_64/6.6 org.freedesktop.Sdk/x86_64/23.08 org.freedesktop.Sdk.Extension.bazel/x86_64/23.08 org.freedesktop.Sdk.Extension.llvm18/x86_64/23.08
+          flatpak update -y
+
+      - name: Install Sdk and Runtime of Flatpak(aarch64)
+        run: |
+          flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user -y flathub org.fcitx.Fcitx5/aarch64/stable org.kde.Sdk/aarch64/6.6 org.freedesktop.Sdk/aarch64/23.08 org.freedesktop.Sdk.Extension.bazel/aarch64/23.08 org.freedesktop.Sdk.Extension.llvm18/aarch64/23.08
+          flatpak update -y
+
+      - name: Generate Mozc Dependency
+        run: |
+          # unset ANDROID_NDK_HOME
+          env $(printenv | grep '^ANDROID_NDK' | sed 's/=.*//;s/^/-u /') PATH=$PATH:/usr/local/bin TMPDIR=$PWD/tmp sh -c './update_mozc_deps flatpak'
+          cp ./mozc-deps.yaml $GITHUB_WORKSPACE/deps-flatpak.yaml
+
+      - name: Upload deps file
+        uses: actions/upload-artifact@v4
+        with:
+          name: deps-flatpak
+          path: deps-flatpak.yaml
+
+  combine-deps:
+    needs: [Mozc-Dependency-x86_64, Mozc-Dependency-x86_64-flatpak, Mozc-Dependency-arm64-flatpak, Mozc-Dependency-flatpak]
+    if: |
+      !failure() &&
+      (needs.Mozc-Dependency-x86_64.result == 'success' ||
+       needs.Mozc-Dependency-x86_64-flatpak.result == 'success' ||
+       needs.Mozc-Dependency-arm64-flatpak.result == 'success' ||
+       needs.Mozc-Dependency-flatpak.result == 'success')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Branch Name
+        run: |
+          if [ ${{ github.event_name }} == 'pull_request' ]
+          then
+            echo "BRANCH_NAME=${{ github.head_ref }}" >> $GITHUB_ENV
+          else
+            echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+          fi
+
+      - name: Chek Branch Name
+        run: echo "The branch name is ${{ env.BRANCH_NAME }}"
+
+      - name: Set custom apt cache directory
+        run: |
+          mkdir -p ${{ github.workspace }}/.apt-cache/
+          echo 'Dir::Cache::Archives "${{ github.workspace }}/.apt-cache/";' | sudo tee /etc/apt/apt.conf.d/01custom-cache
+
+      - name: Generate initial apt cache hash
+        id: initial-cache-hash
+        run: |
+          HASH=$(find ${{ github.workspace }}/.apt-cache -type f -name "*.deb" -exec sha256sum {} + | sort | sha256sum | cut -d ' ' -f1)
+          echo "INITIAL_CACHE_HASH=${HASH}" >> $GITHUB_OUTPUT
+
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.apt-cache
+          key: ${{ runner.os }}-apt-${{ steps.initial-cache-hash.outputs.INITIAL_CACHE_HASH }}
+
+      - name: Install jq and yq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq pipx
+          pipx install yq
+
+      - name: Adjust permissions after apt operations
+        run: |
+          sudo chown -R $(id -u):$(id -g) ${{ github.workspace }}/.apt-cache
+          sudo chmod -R 700 ${{ github.workspace }}/.apt-cache
+          sudo rm -f ${{ github.workspace }}/.apt-cache/lock ${{ github.workspace }}/.apt-cache/partial/*
+
+      - name: Generate final apt cache hash
+        id: final-cache-hash
+        run: |
+          HASH=$(find ${{ github.workspace }}/.apt-cache -type f -name "*.deb" -exec sha256sum {} + | sort | sha256sum | cut -d ' ' -f1)
+          echo "FINAL_CACHE_HASH=${HASH}" >> $GITHUB_OUTPUT
+
+      - name: Update cache if changed
+        if: steps.initial-cache-hash.outputs.INITIAL_CACHE_HASH != steps.final-cache-hash.outputs.FINAL_CACHE_HASH
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ github.workspace }}/.apt-cache
+          key: ${{ runner.os }}-apt-${{ steps.final-cache-hash.outputs.FINAL_CACHE_HASH }}
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: deps-*
+          path: deps
+
+      - name: Combine and Deduplicated
+        run: |
+          set -e
+          rm -f combined_deps.yaml
+          cat deps/deps-*/deps_*.yaml |tee -a combined_deps.yaml
+          yq -y 'unique_by(.url)|sort_by(.url)' combined_deps.yaml |tee mozc-deps.yaml
+
+      - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add mozc-deps.yaml
+           ./update_mozc_zip_code_patch
+          git diff --exit-code || {
+            git commit -m "Update mozc-deps.yaml and zip-code.patch with latest dependencies" -a
+            git push origin ${{ env.BRANCH_NAME }}
+          }
