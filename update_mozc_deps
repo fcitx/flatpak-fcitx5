@@ -1,44 +1,71 @@
 #!/bin/bash
 
-BASE=$PWD
-pushd .
+cleanup() {
+    pkill -P $$
+}
+
+trap cleanup EXIT
+
+SCRIPT_PATH="$(realpath "${BASH_SOURCE[-1]}")"
+SCRIPT_DIRECTORY="$(dirname "$SCRIPT_PATH")"
+
+set -e
+
+# TMPDIR
+[[ -z $TMPDIR ]] && TMPDIR=/tmp
+BASE="$TMPDIR/update_mozc"
+
+mkdir -p "$BASE"
+
+cd "$BASE"
 if [ ! -d mozc ]; then
-    git clone https://github.com/fcitx/mozc/
+    git clone --filter=tree:0 https://github.com/fcitx/mozc/
 fi
+[[ ! -d bcr ]] && git clone --filter=tree:0 https://github.com/bazelbuild/bazel-central-registry bcr
+cd bcr
+git fetch --all
+git checkout origin/main
+cd ..
 
 cd mozc/src/
 git fetch --all
 git checkout origin/fcitx
 git submodule update --init
 
-set -e
-
-rm -rf $HOME/.cache/bazel
-
-_MOZC_BAZEL_CACHE=/tmp/mozc_cache
-
-rm -rf $_MOZC_BAZEL_CACHE
-for target in unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool; do
-    # Only cquery accepts --config and it can also trigger the cache update
-    bazel cquery --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux $target
-done
+_MOZC_BAZEL_CACHE="$BASE/mozc_cache"
+_DOWNLOADER_CACHE="$BASE/downloader_cache"
+BAZEL_MIRROR="$SCRIPT_DIRECTORY/bazel_mirror.py"
 
 pushd .
-cd $_MOZC_BAZEL_CACHE
-for f in `find -name 'id*'` ; do
-    echo "- type: file"
-    echo -n "  url: "
-    awk '{print $1}' $f
-    echo "  dest: bazel-deps"
-    sha=`dirname $f`
-    sha=`basename $sha`
-    echo "  sha256: $sha"
-done > $BASE/mozc-deps.yaml
+mkdir -p "$_DOWNLOADER_CACHE"
+cd "$_DOWNLOADER_CACHE"
+python3 "$BAZEL_MIRROR" &
+PROXY_PID=$!
+popd
+[[ -z $PROXY_PID ]] && exit 1
+
+bazel clean --expunge
+
+BUILD_TARGET="unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool"
+echo bazel build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $BUILD_TARGET
+bazel build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $BUILD_TARGET
+
+kill $PROXY_PID
+
+pushd .
+cd $_DOWNLOADER_CACHE
+for f in `find -type f` ; do
+    if [[ ! "$f" =~ "./bcr.bazel.build/" ]];then
+        url="https://${f#*/}"
+        echo "- type: file"
+        echo "  url: $url"
+        echo "  dest: bazel-deps"
+        sha=`sha256sum $f|cut -f1 -d" "`
+        echo "  sha256: $sha"
+    fi
+done > $SCRIPT_DIRECTORY/mozc-deps.yaml
 popd
 
-yq -y -i 'sort_by(.url)' $BASE/mozc-deps.yaml
+yq -y -i 'sort_by(.url)' "$SCRIPT_DIRECTORY/mozc-deps.yaml"
 
-rm -rf $_MOZC_BAZEL_CACHE
-
-popd
-$BASE/update_mozc_zip_code_patch
+rm -rf "$BASE"

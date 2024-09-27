@@ -1,12 +1,8 @@
 #!/bin/bash
 
-get_tag() {
-    gh api repos/fcitx/$1/tags --jq .[].name --paginate | sort -r -V | head -n 1
-}
-
-get_commit() {
-    gh api repos/fcitx/$1/commits/$2 --jq .sha
-}
+SCRIPT_PATH="$(realpath "${BASH_SOURCE[-1]}")"
+SCRIPT_DIRECTORY="$(dirname "$SCRIPT_PATH")"
+source "${SCRIPT_DIRECTORY}/functions.sh"
 
 printarr() { declare -n __p="$1"; for k in "${!__p[@]}"; do printf "%s=%s\n" "$k" "${__p[$k]}" ; done ;  }
 
@@ -58,9 +54,9 @@ declare -A repo_tag
 REPO=
 while read repo package option; do
     if [[ "$option" =~ ^branch: ]]; then
-        repo_tag[$repo]=commit:$(get_commit $repo ${option/branch:/})
+        repo_tag[$repo]=commit:$(get_commit fcitx/$repo ${option/branch:/})
     else
-        repo_tag[$repo]=tag:$(get_tag $repo)
+        repo_tag[$repo]=tag:$(get_tag fcitx/$repo)
     fi
 
     if [[ "$package" == "$1" ]]; then
