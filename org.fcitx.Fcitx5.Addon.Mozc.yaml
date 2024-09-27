@@ -52,3 +52,4 @@ modules:
             -e "s|LINUX_MOZC_ICONS_DIR = \(.*\)|LINUX_MOZC_ICONS_DIR = \"${icons_dir}\"|"
             -i src/config.bzl
       - mozc-deps.yaml
+      - modules/cpython.yaml

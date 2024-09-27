@@ -1,0 +1,12 @@
+- type: file
+  only-arches:
+    - x86_64
+  url: https://github.com/indygreg/python-build-standalone/releases/download/20240415/cpython-3.11.9+20240415-x86_64-unknown-linux-gnu-install_only.tar.gz
+  dest: bazel-deps
+  sha256: 78b1c16a9fd032997ba92a60f46a64f795cd18ff335659dfdf6096df277b24d5
+- type: file
+  only-arches:
+    - aarch64
+  url: https://github.com/indygreg/python-build-standalone/releases/download/20240415/cpython-3.11.9+20240415-aarch64-unknown-linux-gnu-install_only.tar.gz
+  dest: bazel-deps
+  sha256: b3a7199ac2615d75fb906e5ba556432efcf24baf8651fc70370d9f052d4069ee
