@@ -1,23 +1,24 @@
-xcb-imdkit
-libime
-fcitx5 org.fcitx.Fcitx5
-fcitx5-anthy org.fcitx.Fcitx5.Addon.Anthy
-fcitx5-chewing org.fcitx.Fcitx5.Addon.Chewing
-fcitx5-kkc org.fcitx.Fcitx5.Addon.Kkc
-fcitx5-skk org.fcitx.Fcitx5.Addon.Skk
-fcitx5-zhuyin org.fcitx.Fcitx5.Addon.Zhuyin
-fcitx5-unikey org.fcitx.Fcitx5.Addon.Unikey
-fcitx5-hangul org.fcitx.Fcitx5.Addon.Hangul
-fcitx5-m17n org.fcitx.Fcitx5.Addon.M17N
-fcitx5-rime org.fcitx.Fcitx5.Addon.Rime
-fcitx5-libthai org.fcitx.Fcitx5.Addon.LibThai
-libime-jyutping org.fcitx.Fcitx5.Addon.Jyutping
-fcitx5-lua org.fcitx.Fcitx5.Addon.Lua
-fcitx5-chinese-addons org.fcitx.Fcitx5.Addon.ChineseAddons
-fcitx5-sayura org.fcitx.Fcitx5.Addon.Sayura
-mozc org.fcitx.Fcitx5.Addon.Mozc branch:fcitx
-fcitx5-table-extra org.fcitx.Fcitx5.Addon.TableExtra
-fcitx5-table-other org.fcitx.Fcitx5.Addon.TableOther
-fcitx5-bamboo org.fcitx.Fcitx5.Addon.Bamboo
-fcitx5-qt
-fcitx5-configtool
+fcitx/xcb-imdkit,,
+fcitx/libime,,
+fcitx/fcitx5,org.fcitx.Fcitx5,
+fcitx/fcitx5-anthy,org.fcitx.Fcitx5.Addon.Anthy,
+fcitx/fcitx5-chewing,org.fcitx.Fcitx5.Addon.Chewing,
+fcitx/fcitx5-kkc,org.fcitx.Fcitx5.Addon.Kkc,
+fcitx/fcitx5-skk,org.fcitx.Fcitx5.Addon.Skk,
+fcitx/fcitx5-zhuyin,org.fcitx.Fcitx5.Addon.Zhuyin,
+fcitx/fcitx5-unikey,org.fcitx.Fcitx5.Addon.Unikey,
+fcitx/fcitx5-hangul,org.fcitx.Fcitx5.Addon.Hangul,
+fcitx/fcitx5-m17n,org.fcitx.Fcitx5.Addon.M17N,
+fcitx/fcitx5-rime,org.fcitx.Fcitx5.Addon.Rime,
+fcitx/fcitx5-libthai,org.fcitx.Fcitx5.Addon.LibThai,
+fcitx/libime-jyutping,org.fcitx.Fcitx5.Addon.Jyutping,
+fcitx/fcitx5-lua,org.fcitx.Fcitx5.Addon.Lua,
+fcitx/fcitx5-chinese-addons,org.fcitx.Fcitx5.Addon.ChineseAddons,
+fcitx/fcitx5-sayura,org.fcitx.Fcitx5.Addon.Sayura,
+fcitx/mozc,org.fcitx.Fcitx5.Addon.Mozc,branch:fcitx,
+fcitx/fcitx5-table-extra,org.fcitx.Fcitx5.Addon.TableExtra,
+fcitx/fcitx5-table-other,org.fcitx.Fcitx5.Addon.TableOther,
+fcitx/fcitx5-bamboo,org.fcitx.Fcitx5.Addon.Bamboo
+fcitx/fcitx5-qt,,
+fcitx/fcitx5-configtool,,
+bazelbuild/bazel-central-registry,,branch:main

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-SCRIPT_PATH="$(realpath "${BASH_SOURCE[-1]}")"
-SCRIPT_DIRECTORY="$(dirname "$SCRIPT_PATH")"
-source "${SCRIPT_DIRECTORY}/functions.sh"
-
-GIT_COMMIT=$(get_commit bazelbuild/bazel-central-registry main)
-
-yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/bazelbuild/bazel-central-registry")) .tag = "'$GIT_COMMIT'"' org.fcitx.Fcitx5.Addon.Mozc.yaml

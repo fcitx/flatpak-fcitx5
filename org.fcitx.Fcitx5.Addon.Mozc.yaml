@@ -42,7 +42,7 @@ modules:
       - type: git
         url: https://github.com/bazelbuild/bazel-central-registry
         dest: bcr
-        tag: 85523968142137ee5b691a1937efcdb1f7353082
+        branch: main
       - type: patch
         path: zip-code.patch
       - type: shell

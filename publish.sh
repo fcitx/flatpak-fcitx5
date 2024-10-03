@@ -11,11 +11,11 @@ update_tag() {
     for k in "${!repo_tag[@]}"; do
         local repo_info="${repo_tag[$k]}"
         if [[ "$repo_info" =~ ^tag: ]]; then
-            yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/fcitx/'$k'")) .tag = "'${repo_info/tag:/}'"' $1
-            yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/fcitx/'$k'")) |= del(.branch)' $1
+            yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/'$k'")) .tag = "'${repo_info/tag:/}'"' $1
+            yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/'$k'")) |= del(.branch)' $1
         elif [[ "$repo_info" =~ ^commit: ]]; then
-            yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/fcitx/'$k'")) .commit = "'${repo_info/commit:/}'"' $1
-            yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/fcitx/'$k'")) |= del(.branch)' $1
+            yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/'$k'")) .commit = "'${repo_info/commit:/}'"' $1
+            yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/'$k'")) |= del(.branch)' $1
         fi
     done
 }
@@ -23,12 +23,13 @@ update_tag() {
 update_cherry_pick() {
     rm -f $GIT_REPO/cp-*.patch
 
-    if [[ ! -f cherry-picks/$REPO ]]; then
+    local CHERRY_PICK_LIST_FILE="${REPO/\//-}"
+    if [[ ! -f cherry-picks/${CHERRY_PICK_LIST_FILE} ]]; then
         return
     fi
 
-    for commit in `cat cherry-picks/$REPO`; do
-        wget https://github.com/fcitx/$REPO/commit/$commit.patch -O $GIT_REPO/cp-$commit.patch
+    for commit in `cat cherry-picks/${CHERRY_PICK_LIST_FILE}`; do
+        wget https://github.com/$REPO/commit/$commit.patch -O $GIT_REPO/cp-$commit.patch
         yq -y -i '(.. |select(.modules?) | .modules[]? | select(.name? == "fcitx5")).sources += [{"type": "patch", "path": "'cp-$commit.patch'", "use-git": true}] ' $1
     done
 }
@@ -52,11 +53,11 @@ fi
 declare -A repo_tag
 
 REPO=
-while read repo package option; do
+while IFS=, read repo package option; do
     if [[ "$option" =~ ^branch: ]]; then
-        repo_tag[$repo]=commit:$(get_commit fcitx/$repo ${option/branch:/})
+        repo_tag[$repo]=commit:$(get_commit $repo ${option/branch:/})
     else
-        repo_tag[$repo]=tag:$(get_tag fcitx/$repo)
+        repo_tag[$repo]=tag:$(get_tag $repo)
     fi
 
     if [[ "$package" == "$1" ]]; then
@@ -97,7 +98,7 @@ else
     yq -y -i '."add-extensions"."org.fcitx.Fcitx5.Addon".version = "stable"' $GIT_REPO/$PACKAGE.yaml
 fi
 
-if [[ $REPO == "mozc" ]]; then
+if [[ $REPO == "fcitx/mozc" ]]; then
     cp mozc-deps.yaml zip-code.patch $GIT_REPO/
 fi
 
