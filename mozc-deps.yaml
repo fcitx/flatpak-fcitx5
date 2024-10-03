@@ -1,11 +1,7 @@
 - type: file
-  url: https://github.com/JetBrains/kotlin/releases/download/v1.9.22/kotlin-compiler-1.9.22.zip
+  url: https://github.com/bazel-contrib/bazel_features/releases/download/v1.11.0/bazel_features-v1.11.0.tar.gz
   dest: bazel-deps
-  sha256: 88b39213506532c816ff56348c07bbeefe0c8d18943bffbad11063cf97cac3e6
-- type: file
-  url: https://github.com/bazel-contrib/bazel_features/releases/download/v1.13.0/bazel_features-v1.13.0.tar.gz
-  dest: bazel-deps
-  sha256: 5d7e4eb0bb17aee392143cd667b67d9044c270a9345776a5e5a3cccbc44aa4b3
+  sha256: 2cd9e57d4c38675d321731d65c15258f3a66438ad531ae09cb8bb14217dc8572
 - type: file
   url: https://github.com/bazelbuild/apple_support/releases/download/1.16.0/apple_support.1.16.0.tar.gz
   dest: bazel-deps
@@ -19,10 +15,6 @@
   dest: bazel-deps
   sha256: 218efe8ee736d26a3572663b374a253c012b716d8af0c07e842e82f238a0a7ee
 - type: file
-  url: https://github.com/bazelbuild/rules_android/releases/download/v0.5.1/rules_android-v0.5.1.tar.gz
-  dest: bazel-deps
-  sha256: b1599e4604c1594a1b0754184c5e50f895a68f444d1a5a82b688b2370d990ba0
-- type: file
   url: https://github.com/bazelbuild/rules_android_ndk/releases/download/v0.1.2/rules_android_ndk-v0.1.2.tar.gz
   dest: bazel-deps
   sha256: 65aedff0cd728bee394f6fb8e65ba39c4c5efb11b29b766356922d4a74c623f5
@@ -35,17 +27,9 @@
   dest: bazel-deps
   sha256: 2037875b9a4456dce4a79d112a8ae885bbc4aad968e6587dca6e64f3a0900cdf
 - type: file
-  url: https://github.com/bazelbuild/rules_go/releases/download/v0.48.0/rules_go-v0.48.0.zip
-  dest: bazel-deps
-  sha256: 33acc4ae0f70502db4b893c9fc1dd7a9bf998c23e7ff2c4517741d4049a976f8
-- type: file
   url: https://github.com/bazelbuild/rules_java/releases/download/7.9.0/rules_java-7.9.0.tar.gz
   dest: bazel-deps
   sha256: 41131de4417de70b9597e6ebd515168ed0ba843a325dc54a81b92d7af9a7b3ea
-- type: file
-  url: https://github.com/bazelbuild/rules_kotlin/releases/download/v1.9.5/rules_kotlin-v1.9.5.tar.gz
-  dest: bazel-deps
-  sha256: 34e8c0351764b71d78f76c8746e98063979ce08dcf1a91666f3f3bc2949a533d
 - type: file
   url: https://github.com/bazelbuild/rules_license/releases/download/0.0.7/rules_license-0.0.7.tar.gz
   dest: bazel-deps
@@ -55,9 +39,9 @@
   dest: bazel-deps
   sha256: 8a298e832762eda1830597d64fe7db58178aa84cd5926d76d5b744d6558941c2
 - type: file
-  url: https://github.com/bazelbuild/rules_proto/releases/download/6.0.0/rules_proto-6.0.0.tar.gz
+  url: https://github.com/bazelbuild/rules_proto/releases/download/6.0.0-rc1/rules_proto-6.0.0-rc1.tar.gz
   dest: bazel-deps
-  sha256: 303e86e722a520f6f326a50b41cfc16b98fe6d1955ce46642a5b7a67c11c0f5d
+  sha256: 904a8097fae42a690c8e08d805210e40cccb069f5f9a0f6727cf4faa7bed2c9c
 - type: file
   url: https://github.com/bazelbuild/rules_python/releases/download/0.34.0/rules_python-0.34.0.tar.gz
   dest: bazel-deps
@@ -66,6 +50,10 @@
   url: https://github.com/bazelbuild/rules_swift/releases/download/1.18.0/rules_swift.1.18.0.tar.gz
   dest: bazel-deps
   sha256: bb01097c7c7a1407f8ad49a1a0b1960655cf823c26ad2782d0b7d15b323838e2
+- type: file
+  url: https://github.com/indygreg/python-build-standalone/releases/download/20240415/cpython-3.11.9+20240415-aarch64-unknown-linux-gnu-install_only.tar.gz
+  dest: bazel-deps
+  sha256: b3a7199ac2615d75fb906e5ba556432efcf24baf8651fc70370d9f052d4069ee
 - type: file
   url: https://github.com/indygreg/python-build-standalone/releases/download/20240415/cpython-3.11.9+20240415-x86_64-unknown-linux-gnu-install_only.tar.gz
   dest: bazel-deps
@@ -77,8 +65,8 @@
 - type: file
   url: https://www.post.japanpost.jp/zipcode/dl/jigyosyo/zip/jigyosyo.zip
   dest: bazel-deps
-  sha256: 1ef5d43b5e5bf059117a2570fe95e0a9e3cf8a27f3e3882da283ad18460d2264
+  sha256: 5d52511ce6613fcc0c5b24ac59b463e927cff76ac466c2ae07a511a64bb5913f
 - type: file
   url: https://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip
   dest: bazel-deps
-  sha256: 85f13da74bf178ecb18083ec6d31e63bc4395c7817c3bb3587c7e86707609d2a
+  sha256: e5a32c0199ebc890ea5c48c06fd817a168b26d68ce1c3a86ba0ae1cdf6c2d1c4
