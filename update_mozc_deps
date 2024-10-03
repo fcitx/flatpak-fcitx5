@@ -4,33 +4,68 @@ cleanup() {
     pkill -P $$
 }
 
+check_bazel_binary() {
+    yq -r '.sources[] | select(.url | contains("'$1'")) | "\(.sha256) 'bazel-$1'"' "$SCRIPT_DIRECTORY/modules/bazel.yaml" | sha256sum --check -
+    return $?
+}
+
+check_and_download_bazel() {
+    # Extract bazel information from modules/bazel.yaml
+    local BAZEL_URL=`yq -r '.sources[].url | select(contains("'$1'"))' "$SCRIPT_DIRECTORY/modules/bazel.yaml"`
+    FILENAME="$(basename "$BAZEL_URL")"
+    if [ -f "bazel-$1" ]; then
+        if check_bazel_binary $1 ; then
+            return 0
+        else
+            rm -f "bazel-$1"
+        fi
+    fi
+    wget -O bazel-$1 ${BAZEL_URL}
+    check_bazel_binary $1
+    return $?
+}
+
+run_bazel() {
+    echo $1 clean --expunge
+    $1 clean --expunge
+    echo $1 build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $2
+    $1 build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $2
+}
+
 trap cleanup EXIT
 
 SCRIPT_PATH="$(realpath "${BASH_SOURCE[-1]}")"
 SCRIPT_DIRECTORY="$(dirname "$SCRIPT_PATH")"
+BAZEL_VERSION=7.3.2
 
 set -e
 
 # TMPDIR
-[[ -z $TMPDIR ]] && TMPDIR=/tmp
+[[ -z $TMPDIR ]] && TMPDIR=$PWD/tmp
 BASE="$TMPDIR/update_mozc"
 
 mkdir -p "$BASE"
 
 cd "$BASE"
-if [ ! -d mozc ]; then
-    git clone --filter=tree:0 https://github.com/fcitx/mozc/
-fi
+[[ ! -d mozc ]] && git clone --filter=tree:0 https://github.com/fcitx/mozc/
 [[ ! -d bcr ]] && git clone --filter=tree:0 https://github.com/bazelbuild/bazel-central-registry bcr
+
+# Always use downloaded bazel
+check_and_download_bazel arm64
+check_and_download_bazel x86_64
+
+pushd .
 cd bcr
 git fetch --all
 git checkout origin/main
-cd ..
+popd
 
+pushd .
 cd mozc/src/
 git fetch --all
 git checkout origin/fcitx
 git submodule update --init
+popd
 
 _MOZC_BAZEL_CACHE="$BASE/mozc_cache"
 _DOWNLOADER_CACHE="$BASE/downloader_cache"
@@ -44,11 +79,16 @@ PROXY_PID=$!
 popd
 [[ -z $PROXY_PID ]] && exit 1
 
-bazel clean --expunge
 
-BUILD_TARGET="unix/fcitx5:fcitx5-mozc.so server:mozc_server gui/tool:mozc_tool"
-echo bazel build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $BUILD_TARGET
-bazel build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $BUILD_TARGET
+cd mozc/src/
+
+BUILD_TARGET_SERVER="server:mozc_server"
+BUILD_TARGET="unix/fcitx5:fcitx5-mozc.so ${BUILD_TARGET_SERVER} gui/tool:mozc_tool"
+
+run_bazel "$BASE/bazel-x86_64" $BUILD_TARGET
+# Only run aarch64 against server target, as with flatpak we have no external dependencies
+# TODO: apply only tag for deps
+run_bazel "flatpak run --filesystem=home --share=network --command=$BASE/bazel-arm64 org.freedesktop.Sdk/aarch64/23.08" $BUILD_TARGET_SERVER
 
 kill $PROXY_PID
 
