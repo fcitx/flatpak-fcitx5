@@ -14,20 +14,22 @@ check_and_download_bazel() {
     local BAZEL_URL=`yq -r '.sources[].url | select(contains("'$1'"))' "$SCRIPT_DIRECTORY/modules/bazel.yaml"`
     FILENAME="$(basename "$BAZEL_URL")"
     if [ -f "bazel-$1" ]; then
+        chmod +x bazel-$1
         if check_bazel_binary $1 ; then
             return 0
         else
             rm -f "bazel-$1"
         fi
     fi
-    wget -O bazel-$1 ${BAZEL_URL}
+    wget -nv -O bazel-$1 ${BAZEL_URL}
+    chmod +x bazel-$1
     check_bazel_binary $1
     return $?
 }
 
 run_bazel() {
     echo $1 clean --expunge
-    $1 clean --expunge
+    # $1 clean --expunge
     echo $1 build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $2
     $1 build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $2
 }
@@ -88,7 +90,7 @@ BUILD_TARGET="unix/fcitx5:fcitx5-mozc.so ${BUILD_TARGET_SERVER} gui/tool:mozc_to
 run_bazel "$BASE/bazel-x86_64" $BUILD_TARGET
 # Only run aarch64 against server target, as with flatpak we have no external dependencies
 # TODO: apply only tag for deps
-run_bazel "flatpak run --filesystem=home --share=network --command=$BASE/bazel-arm64 org.freedesktop.Sdk/aarch64/23.08" $BUILD_TARGET_SERVER
+run_bazel "flatpak run --filesystem=$PWD --filesystem=home --share=network --command=$BASE/bazel-arm64 org.freedesktop.Sdk/aarch64/23.08" $BUILD_TARGET_SERVER
 
 kill $PROXY_PID
 
