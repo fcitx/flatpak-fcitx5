@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  schedule:
+    - cron: "0 13 * * *"
+
+jobs:
+  update:
+    name: Build and test
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Setup User
+        run: |
+          useradd -m builduser
+      - name: Install dependencies
+        run: |
+          pacman -Syu --noconfirm base-devel clang cmake ninja extra-cmake-modules fmt libuv boost git qt6-base qt6-wayland libxkbcommon qt6-webengine flatpak procps-ng python3 yq wget git qemu-user-static-binfmt
+          /usr/lib/systemd/systemd-binfmt
+          flatpak install -y --system org.freedesktop.Sdk/aarch64/23.08
+      - uses: actions/checkout@v4
+        with:
+          repository: fcitx/fcitx5
+          path: fcitx5
+      - name: Cache fcitx5 data files
+        uses: actions/cache@v4
+        with:
+          path: 'fcitx5/**/*.tar.*'
+          key: ${{ runner.os }}-${{ hashFiles('fcitx5/src/modules/spell/CMakeLists.txt') }}
+      - name: Build and Install fcitx5
+        uses: fcitx/github-actions@cmake
+        with:
+          path: fcitx5
+          cmake-option: >-
+            -DENABLE_KEYBOARD=Off -DENABLE_X11=Off -DENABLE_WAYLAND=Off -DENABLE_ENCHANT=Off
+            -DENABLE_DBUS=Off -DENABLE_SERVER=Off -DENABLE_EMOJI=Off -DUSE_SYSTEMD=Off
+          install-prefix: /usr
+      - uses: actions/checkout@v4
+        with:
+          path: flatpak-fcitx5
+          submodules: true
+      - name: Update
+        run: |
+          cd flatpak-fcitx5
+          chown -R builduser:builduser .
+          sudo -u builduser ./update_mozc_deps
+          git diff
+          chown -R root:root .
