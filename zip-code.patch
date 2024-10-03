@@ -8,8 +8,8 @@ index 2675e04..7336fbe 100644
  # SHA256 values should be specified.
 -SHA256_ZIP_CODE_KEN_ALL = None
 -SHA256_ZIP_CODE_JIGYOSYO = None
-+SHA256_ZIP_CODE_KEN_ALL = "85f13da74bf178ecb18083ec6d31e63bc4395c7817c3bb3587c7e86707609d2a"
-+SHA256_ZIP_CODE_JIGYOSYO = "1ef5d43b5e5bf059117a2570fe95e0a9e3cf8a27f3e3882da283ad18460d2264"
++SHA256_ZIP_CODE_KEN_ALL = "e5a32c0199ebc890ea5c48c06fd817a168b26d68ce1c3a86ba0ae1cdf6c2d1c4"
++SHA256_ZIP_CODE_JIGYOSYO = "5d52511ce6613fcc0c5b24ac59b463e927cff76ac466c2ae07a511a64bb5913f"
 diff --git a/src/MODULE.bazel b/src/MODULE.bazel
 index 577917e..ac6f1c9 100644
 --- a/src/MODULE.bazel
@@ -19,7 +19,7 @@ index 577917e..ac6f1c9 100644
  # SHA256 as of 2024-08-14
  # SHA256_ZIP_CODE_KEN_ALL = "d2d177ef64b9459a618d8aaa96b6c5f081cb3f37f6e9c00ba912001e66b81f3e"
 -SHA256_ZIP_CODE_KEN_ALL = None
-+SHA256_ZIP_CODE_KEN_ALL = "85f13da74bf178ecb18083ec6d31e63bc4395c7817c3bb3587c7e86707609d2a"
++SHA256_ZIP_CODE_KEN_ALL = "e5a32c0199ebc890ea5c48c06fd817a168b26d68ce1c3a86ba0ae1cdf6c2d1c4"
  http_archive(
      name = "zip_code_ken_all",
      build_file_content = "exports_files([\"KEN_ALL.CSV\"])",
@@ -28,7 +28,7 @@ index 577917e..ac6f1c9 100644
  # SHA256 as of 2024-08-14
  # SHA256_ZIP_CODE_JIGYOSYO="ab6fd92df35e63c4566d29f70456da1603d8178ce3fec073f7c27b28d0af2e10"
 -SHA256_ZIP_CODE_JIGYOSYO = None
-+SHA256_ZIP_CODE_JIGYOSYO = "1ef5d43b5e5bf059117a2570fe95e0a9e3cf8a27f3e3882da283ad18460d2264"
++SHA256_ZIP_CODE_JIGYOSYO = "5d52511ce6613fcc0c5b24ac59b463e927cff76ac466c2ae07a511a64bb5913f"
  http_archive(
      name = "zip_code_jigyosyo",
      build_file_content = "exports_files([\"JIGYOSYO.CSV\"])",
