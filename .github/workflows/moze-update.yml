@@ -14,7 +14,9 @@ jobs:
   update:
     name: Build and test
     runs-on: ubuntu-latest
-    container: archlinux:latest
+    container:
+      image: archlinux:latest
+      options: --privileged
     strategy:
       fail-fast: false
     steps:
@@ -23,9 +25,25 @@ jobs:
           useradd -m builduser
       - name: Install dependencies
         run: |
-          pacman -Syu --noconfirm base-devel clang cmake ninja extra-cmake-modules fmt libuv boost git qt6-base qt6-wayland libxkbcommon qt6-webengine flatpak procps-ng python3 yq wget git qemu-user-static-binfmt
-          /usr/lib/systemd/systemd-binfmt
+          pacman -Syu --needed --noconfirm base-devel clang cmake ninja extra-cmake-modules fmt libuv boost git qt6-base qt6-wayland libxkbcommon qt6-webengine flatpak procps-ng python3 yq wget git qemu-user-static-binfmt #aarch64-linux-gnu-glibc
           flatpak install -y --system org.freedesktop.Sdk/aarch64/23.08
+      - name: Qemu and binfmt
+        run: |
+          if [ ! -d /proc/sys/fs/binfmt_misc ]; then
+            if ! /sbin/modprobe binfmt_misc ; then
+              exit 1
+            fi
+          fi
+          if [ ! -f /proc/sys/fs/binfmt_misc/register ]; then
+            if ! mount binfmt_misc -t binfmt_misc /proc/sys/fs/binfmt_misc ; then
+              exit 1
+            fi
+          fi
+          if [ -w "/proc/sys/fs/binfmt_misc/register" ]; then
+            sudo sh -c 'echo -1 > /proc/sys/fs/binfmt_misc/qemu-aarch64' || true
+            cat /usr/lib/binfmt.d/qemu-aarch64-static.conf|sudo tee /proc/sys/fs/binfmt_misc/register || true
+          fi
+
       - uses: actions/checkout@v4
         with:
           repository: fcitx/fcitx5
@@ -51,6 +69,11 @@ jobs:
         run: |
           cd flatpak-fcitx5
           chown -R builduser:builduser .
-          sudo -u builduser ./update_mozc_deps
-          git diff
+          sudo -u builduser \
+            LD_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib64 \
+            QEMU_LD_PREFIX=/usr/aarch64-linux-gnu \
+            TMPDIR=$PWD/tmp \
+            ./update_mozc_deps
+          sudo -u builduser ./update_mozc_zip_code_patch
           chown -R root:root .
+          git diff || true
