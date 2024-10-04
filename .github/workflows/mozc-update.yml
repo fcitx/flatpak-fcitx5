@@ -14,35 +14,52 @@ jobs:
   update:
     name: Build and test
     runs-on: ubuntu-latest
-    container: archlinux:latest
     strategy:
       fail-fast: false
     steps:
-      - name: Setup User
-        run: |
-          useradd -m builduser
       - name: Install dependencies
         run: |
-          pacman -Syu --noconfirm base-devel clang cmake ninja extra-cmake-modules fmt libuv boost git qt6-base qt6-wayland libxkbcommon qt6-webengine flatpak procps-ng python3 yq wget git qemu-user-static-binfmt
-          /usr/lib/systemd/systemd-binfmt
-          flatpak install -y --system org.freedesktop.Sdk/aarch64/23.08
-      - uses: actions/checkout@v4
-        with:
-          repository: fcitx/fcitx5
-          path: fcitx5
-      - name: Cache fcitx5 data files
+          sudo apt-get update
+          sudo apt-get install -y sudo apt-utils wget unzip
+          sudo apt-get install -y git curl unzip jq flatpak pipx
+          pipx install yq
+      - name: Generate flatpak info Hash
+        id: flatpak-hash
+        run: |
+          flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+          packages="org.fcitx.Fcitx5/x86_64/stable org.kde.Sdk/x86_64/6.6 org.freedesktop.Sdk/x86_64/23.08 org.freedesktop.Sdk/aarch64/23.08"
+          HASH_SEEDS=$(for p in $packages; do LC_ALL=C flatpak remote-info --user flathub $p; done)
+
+          HASH=$(echo -e "$HASH_SEEDS" |sha256sum -|cut -f1 -d" ")
+          echo -e "$HASH_SEEDS"
+          echo $HASH
+          echo "FLATPAK_HASH=${HASH}" >> $GITHUB_OUTPUT
+
+      - name: Cache Flatpak
         uses: actions/cache@v4
         with:
-          path: 'fcitx5/**/*.tar.*'
-          key: ${{ runner.os }}-${{ hashFiles('fcitx5/src/modules/spell/CMakeLists.txt') }}
-      - name: Build and Install fcitx5
-        uses: fcitx/github-actions@cmake
-        with:
-          path: fcitx5
-          cmake-option: >-
-            -DENABLE_KEYBOARD=Off -DENABLE_X11=Off -DENABLE_WAYLAND=Off -DENABLE_ENCHANT=Off
-            -DENABLE_DBUS=Off -DENABLE_SERVER=Off -DENABLE_EMOJI=Off -DUSE_SYSTEMD=Off
-          install-prefix: /usr
+          path: /home/runner/.local/share/flatpak/
+          key: ${{ runner.os }}-flatpak-${{ steps.flatpak-hash.outputs.FLATPAK_HASH }}
+          restore-keys: |
+            ${{ runner.os }}-flatpak-${{ steps.flatpak-hash.outputs.FLATPAK_HASH }}
+
+      - name: Install Sdk and Runtime of Flatpak(x86_64)
+        run: |
+          flatpak install --user -y flathub org.fcitx.Fcitx5/x86_64/stable org.kde.Sdk/x86_64/6.6 org.freedesktop.Sdk/x86_64/23.08
+          flatpak update -y
+
+      - name: Install Sdk and Runtime of Flatpak(aarch64)
+        run: |
+          flatpak install --user -y flathub org.freedesktop.Sdk/aarch64/23.08
+          flatpak update -y
+
+      - name: Qemu and binfmt(aarch64 emultation)
+        run: |
+          sudo apt-get install -y qemu-user-static binfmt-support
+          sudo systemctl restart systemd-binfmt.service
+          systemctl status systemd-binfmt.service
+          sudo update-binfmts --enable qemu-aarch64
+
       - uses: actions/checkout@v4
         with:
           path: flatpak-fcitx5
@@ -50,7 +67,8 @@ jobs:
       - name: Update
         run: |
           cd flatpak-fcitx5
-          chown -R builduser:builduser .
-          sudo -u builduser ./update_mozc_deps
+          # unset ANDROID_NDK_HOME
+          env $(printenv | grep '^ANDROID_NDK' | sed 's/=.*//;s/^/-u /') TMPDIR=$PWD/tmp sh -c \
+              './update_mozc_deps'
           git diff
-          chown -R root:root .
+          #sudo chown -R root:root .
