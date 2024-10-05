@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: archlinux:latest
-      options: --privileged
+      options: --init --privileged
     strategy:
       fail-fast: false
     steps:
