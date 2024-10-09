@@ -1,12 +1,4 @@
 - type: file
-  url: https://github.com/bazel-contrib/bazel_features/releases/download/v1.11.0/bazel_features-v1.11.0.tar.gz
-  dest: bazel-deps
-  sha256: 2cd9e57d4c38675d321731d65c15258f3a66438ad531ae09cb8bb14217dc8572
-- type: file
-  url: https://github.com/bazelbuild/apple_support/releases/download/1.16.0/apple_support.1.16.0.tar.gz
-  dest: bazel-deps
-  sha256: c31ce8e531b50ef1338392ee29dd3db3689668701ec3237b9c61e26a1937ab07
-- type: file
   url: https://github.com/bazelbuild/bazel-skylib/releases/download/1.7.1/bazel-skylib-1.7.1.tar.gz
   dest: bazel-deps
   sha256: bc283cdfcd526a52c3201279cda4bc298652efa898b10b4db0837dc51652756f
