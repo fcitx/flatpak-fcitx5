@@ -31,7 +31,7 @@ run_bazel() {
     echo $1 clean --expunge
     $1 clean --expunge
     echo $1 build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $2
-    $1 build --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $2
+    $1 build --noshow_progress --nobuild --experimental_downloader_config="$SCRIPT_DIRECTORY/downloader.cfg" --registry=file://$BASE/bcr --repository_cache="$_MOZC_BAZEL_CACHE" --config oss_linux --config release_build $2
 }
 
 trap cleanup EXIT
@@ -49,8 +49,8 @@ BASE="$TMPDIR/update_mozc"
 mkdir -p "$BASE"
 
 cd "$BASE"
-[[ ! -d mozc ]] && git clone --filter=tree:0 https://github.com/fcitx/mozc/
-[[ ! -d bcr ]] && git clone --filter=tree:0 https://github.com/bazelbuild/bazel-central-registry bcr
+[[ ! -d mozc ]] && git clone --recursive -q --filter=tree:0 https://github.com/fcitx/mozc/
+[[ ! -d bcr ]] && git clone -q --filter=tree:0 https://github.com/bazelbuild/bazel-central-registry bcr
 
 # Always use downloaded bazel
 check_and_download_bazel arm64
