@@ -43,12 +43,15 @@ modules:
         url: https://github.com/bazelbuild/bazel-central-registry
         dest: bcr
         branch: main
-      - type: patch
-        path: zip-code.patch
+      - mozc-deps.yaml
       - type: shell
         commands:
           - sed -e "s|LINUX_MOZC_DOCUMENT_DIR = \(.*\)|LINUX_MOZC_DOCUMENT_DIR = \"${document_dir}\"|"
             -e "s|LINUX_MOZC_SERVER_DIR = \(.*\)|LINUX_MOZC_SERVER_DIR = \"${server_dir}\"|"
             -e "s|LINUX_MOZC_ICONS_DIR = \(.*\)|LINUX_MOZC_ICONS_DIR = \"${icons_dir}\"|"
             -i src/config.bzl
-      - mozc-deps.yaml
+          - SHA256_ZIP_CODE_KEN_ALL=$(sha256sum bazel-deps/ken_all.zip | cut -d' ' -f1);
+            SHA256_ZIP_CODE_JIGYOSYO=$(sha256sum bazel-deps/jigyosyo.zip | cut -d' ' -f1);
+            sed -e "s|SHA256_ZIP_CODE_KEN_ALL = \(.*\)|SHA256_ZIP_CODE_KEN_ALL = \"${SHA256_ZIP_CODE_KEN_ALL}\"|"
+                -e "s|SHA256_ZIP_CODE_JIGYOSYO = \(.*\)|SHA256_ZIP_CODE_JIGYOSYO = \"${SHA256_ZIP_CODE_JIGYOSYO}\"|"
+                -i src/config.bzl src/MODULE.bazel
