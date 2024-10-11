@@ -1,0 +1,21 @@
+modules:
+  - org.fcitx.Fcitx5.Addon.Anthy.yaml
+  - org.fcitx.Fcitx5.Addon.Bamboo.yaml
+  - org.fcitx.Fcitx5.Addon.Chewing.yaml
+  - org.fcitx.Fcitx5.Addon.ChineseAddons.yaml
+  - org.fcitx.Fcitx5.Addon.Cskk.yaml
+  - org.fcitx.Fcitx5.Addon.Hangul.yaml
+  - org.fcitx.Fcitx5.Addon.Jyutping.yaml
+  - org.fcitx.Fcitx5.Addon.Kkc.yaml
+  - org.fcitx.Fcitx5.Addon.LibThai.yaml
+  - org.fcitx.Fcitx5.Addon.Lua.yaml
+  - org.fcitx.Fcitx5.Addon.M17N.yaml
+  - org.fcitx.Fcitx5.Addon.Mozc.yaml
+  - org.fcitx.Fcitx5.Addon.Rime.yaml
+  - org.fcitx.Fcitx5.Addon.Sayura.yaml
+  - org.fcitx.Fcitx5.Addon.Skk.yaml
+  - org.fcitx.Fcitx5.Addon.TableExtra.yaml
+  - org.fcitx.Fcitx5.Addon.TableOther.yaml
+  - org.fcitx.Fcitx5.Addon.Unikey.yaml
+  - org.fcitx.Fcitx5.Addon.Zhuyin.yaml
+  - org.fcitx.Fcitx5.yaml

@@ -26,4 +26,4 @@ jobs:
           GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: --update --never-fork org.fcitx.Fcitx5.Addon.M17N.yaml
+          args: --update --never-fork universal.yaml
