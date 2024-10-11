@@ -99,7 +99,7 @@ else
 fi
 
 if [[ $REPO == "fcitx/mozc" ]]; then
-    cp mozc-deps.yaml zip-code.patch $GIT_REPO/
+    cp mozc-deps.yaml $GIT_REPO/
 fi
 
 update_tag $GIT_REPO/$PACKAGE.yaml
