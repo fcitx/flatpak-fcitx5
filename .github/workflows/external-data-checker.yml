@@ -29,7 +29,7 @@ jobs:
       - name: Update
         run: |
           for f in org.fcitx.Fcitx5*.yaml; do
-            flatpak run org.flathub.flatpak-external-data-checker --update --edit-only $f
+            flatpak run --filesystem=$PWD org.flathub.flatpak-external-data-checker --update --edit-only $f
           done
           git diff || true
 
