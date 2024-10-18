@@ -4,13 +4,13 @@ no-parallel-make: true
 sources:
   - type: git
     url: https://github.com/BYVoid/OpenCC/
-    tag: ver.1.1.7
+    tag: ver.1.1.9
     x-checker-data:
       type: anitya
       project-id: 7230
       stable-only: true
       tag-template: ver.${version}
-    commit: e5d6c5f1b78e28a5797e7ad3ede3513314e544b7
+    commit: 556ed22496d650bd0b13b6c163be9814637970ae
 config-opts:
   - -DCMAKE_BUILD_TYPE=Release
 cleanup:
