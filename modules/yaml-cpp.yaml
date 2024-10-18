@@ -12,4 +12,4 @@ sources:
       type: anitya
       project-id: 5284
       stable-only: true
-      url-template: https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-${version}.tar.gz
+      url-template: https://github.com/jbeder/yaml-cpp/archive/${version}.tar.gz
