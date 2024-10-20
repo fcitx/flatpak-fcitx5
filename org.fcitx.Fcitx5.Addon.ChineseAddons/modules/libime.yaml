@@ -1,0 +1,20 @@
+name: libime
+buildsystem: cmake-ninja
+sources:
+  - type: git
+    url: https://github.com/fcitx/libime
+    tag: 1.1.9
+  - type: file
+    url: https://download.fcitx-im.org/data/lm_sc.arpa-20241001.tar.zst
+    sha256: 54934e73966eb38ea4fe8eae9c61dfe486af37da1cb5316a06b19c7d289e3063
+    dest: data
+  - type: file
+    url: https://download.fcitx-im.org/data/dict-20241001.tar.zst
+    sha256: d3313b88a68620a23bc8d5f9564cf1b678848dc7af541c4f5f02198e5a3686bf
+    dest: data
+  - type: file
+    url: https://download.fcitx-im.org/data/table-20240108.tar.zst
+    sha256: 3e9d87b04a393f131723472c8eaa860dd23c378a3d4f6a9005513b2a95b3614b
+    dest: data
+config-opts:
+  - -DCMAKE_BUILD_TYPE=Release

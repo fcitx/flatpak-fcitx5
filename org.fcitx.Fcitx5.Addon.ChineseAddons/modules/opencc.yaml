@@ -1,0 +1,20 @@
+name: opencc
+buildsystem: cmake-ninja
+no-parallel-make: true
+sources:
+  - type: git
+    url: https://github.com/BYVoid/OpenCC/
+    tag: ver.1.1.9
+    x-checker-data:
+      type: anitya
+      project-id: 7230
+      stable-only: true
+      tag-template: ver.${version}
+    commit: 556ed22496d650bd0b13b6c163be9814637970ae
+config-opts:
+  - -DCMAKE_BUILD_TYPE=Release
+cleanup:
+  - /bin
+  - /include
+  - /lib/cmake
+  - /lib/pkgconfig

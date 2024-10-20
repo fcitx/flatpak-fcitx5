@@ -1,0 +1,12 @@
+name: fcitx5-lua
+buildsystem: cmake-ninja
+sources:
+  - type: git
+    url: https://github.com/fcitx/fcitx5-lua
+    tag: 5.0.13
+modules:
+  - ../shared-modules/lua5.3/lua-5.3.5.json
+config-opts:
+  - -DCMAKE_BUILD_TYPE=Release
+cleanup:
+  - '*'

@@ -75,7 +75,7 @@ fi
 printarr repo_tag
 
 rm -rf $GIT_REPO
-gh repo clone flathub/$GIT_REPO
+gh repo clone --recursive flathub/$GIT_REPO
 
 if [[ "$2" == "new" ]]; then
     pushd .
@@ -83,6 +83,11 @@ if [[ "$2" == "new" ]]; then
     git checkout new-pr
     popd
 fi
+
+pushd .
+cd shared_modules
+SHARED_MODULE_HEAD=`git rev-parse HEAD`
+popd
 
 cp $PACKAGE.yaml $GIT_REPO/$PACKAGE.yaml
 
@@ -114,6 +119,11 @@ if [[ "$2" == "new" ]]; then
 fi
 
 if [[ "$2" != "new" ]] && [[ "$2" != dry ]]; then
+    if [ -d shared_modules ]; then
+        cd shared_modules
+        git checkout $SHARED_MODULE_HEAD
+        cd ..
+    fi
     git checkout -b pr-$LABEL
     git commit -a -m "Update $PACKAGE to $LABEL"
     git push origin --force pr-$LABEL

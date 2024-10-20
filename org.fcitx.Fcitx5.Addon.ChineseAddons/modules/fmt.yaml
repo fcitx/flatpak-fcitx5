@@ -1,0 +1,18 @@
+name: fmt
+buildsystem: cmake-ninja
+config-opts:
+  - -DCMAKE_BUILD_TYPE=Release
+  - -DFMT_TEST=Off
+  - -DBUILD_SHARED_LIBS=On
+sources:
+  - type: git
+    url: https://github.com/fmtlib/fmt
+    tag: 11.0.2
+    x-checker-data:
+      type: anitya
+      project-id: 11526
+      stable-only: true
+      tag-template: ${version}
+    commit: 0c9fce2ffefecfdce794e1859584e25877b7b592
+cleanup:
+  - '*'
