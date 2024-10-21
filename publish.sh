@@ -52,6 +52,10 @@ fi
 
 declare -A repo_tag
 
+cd shared-modules
+SHARED_MODULE_SHA=`git rev-parse HEAD`
+cd ..
+
 REPO=
 while IFS=, read repo package option; do
     if [[ "$option" =~ ^branch: ]]; then
@@ -75,7 +79,7 @@ fi
 printarr repo_tag
 
 rm -rf $GIT_REPO
-gh repo clone flathub/$GIT_REPO
+gh repo clone flathub/$GIT_REPO -- --recursive
 
 if [[ "$2" == "new" ]]; then
     pushd .
@@ -106,6 +110,13 @@ update_tag $GIT_REPO/$PACKAGE.yaml
 update_cherry_pick $GIT_REPO/$PACKAGE.yaml
 
 cd $GIT_REPO
+
+if [ -d shared-modules ]; then
+    cd shared-modules
+    git checkout $SHARED_MODULE_SHA
+    cd ..
+fi
+
 LABEL=${repo_tag[$REPO]/:/-}
 git add .
 if [[ "$2" == "new" ]]; then
