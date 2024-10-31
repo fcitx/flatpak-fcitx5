@@ -65,8 +65,8 @@
 - type: file
   url: https://www.post.japanpost.jp/zipcode/dl/jigyosyo/zip/jigyosyo.zip
   dest: bazel-deps
-  sha256: 5d52511ce6613fcc0c5b24ac59b463e927cff76ac466c2ae07a511a64bb5913f
+  sha256: 7fe78e0392e62dc9b77d8d5fa89786144b2df6bf07cb7b3fef55ab239292842b
 - type: file
   url: https://www.post.japanpost.jp/zipcode/dl/kogaki/zip/ken_all.zip
   dest: bazel-deps
-  sha256: e5a32c0199ebc890ea5c48c06fd817a168b26d68ce1c3a86ba0ae1cdf6c2d1c4
+  sha256: b7a1fb92c5b0e98a8c8ffa3cd732399809fcc80ffef2e19eb2d1faf76fb28777
