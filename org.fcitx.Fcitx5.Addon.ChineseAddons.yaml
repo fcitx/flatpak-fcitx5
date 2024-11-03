@@ -2,7 +2,7 @@ app-id: org.fcitx.Fcitx5.Addon.ChineseAddons
 branch: master
 runtime: org.fcitx.Fcitx5
 runtime-version: master
-sdk: org.kde.Sdk//6.7
+sdk: org.kde.Sdk//6.8
 build-extension: true
 separate-locales: false
 build-options:
