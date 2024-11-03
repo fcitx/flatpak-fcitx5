@@ -51,8 +51,8 @@ modules:
       - type: git
         url: https://github.com/fcitx/fcitx5-zhuyin
       - type: file
-        url: http://download.fcitx-im.org/data/model.text.20161206.tar.gz
-        sha256: 5c7024e5735389c471f54b867eda0d98c5a40a5e5e75333a9febac107508f704
+        url: http://download.fcitx-im.org/data/model.text.20241103.tar.zst
+        sha256: bb4a9789b6e0fde1c6547f659ce591de5e691ee3a8345d3c1c74eaf92b31ea48
         dest: data
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
