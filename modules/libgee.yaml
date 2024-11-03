@@ -1,4 +1,6 @@
 name: libgee
+build-options:
+  cflags: "-Wno-incompatible-pointer-types"
 sources:
   - type: archive
     url: https://download.gnome.org/sources/libgee/0.20/libgee-0.20.6.tar.xz
