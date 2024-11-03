@@ -42,6 +42,7 @@ modules:
           stable-only: true
           url-template: https://github.com/ueno/libskk/archive/${version}.tar.gz
     build-options:
+      cflags: -Wno-int-conversion
       env:
         ACLOCAL_PATH: /app/addons/Skk/share/aclocal
         VALAFLAGS: --vapidir /app/addons/Skk/share/vala/vapi
