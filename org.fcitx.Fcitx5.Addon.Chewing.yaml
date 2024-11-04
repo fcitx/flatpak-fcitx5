@@ -3,6 +3,8 @@ branch: master
 runtime: org.fcitx.Fcitx5
 runtime-version: master
 sdk: org.kde.Sdk//6.8
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
 build-extension: true
 separate-locales: false
 cleanup:
@@ -12,6 +14,7 @@ cleanup:
 build-options:
   prefix: /app/addons/Chewing
   prepend-pkg-config-path: /app/addons/Chewing/lib/pkgconfig
+  append-path: /usr/lib/sdk/rust-stable/bin
 modules:
   - modules/corrosion.yaml
   - name: libchewing
