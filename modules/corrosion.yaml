@@ -15,8 +15,6 @@ sources:
     url: https://github.com/corrosion-rs/corrosion
     tag: v0.5.0
     x-checker-data:
-      type: anitya
-      project-id: 242799
-      stable-only: true
-      tag-template: v${version}
+      type: git
+      tag-pattern: "^v([\\d.]+)$"
 
