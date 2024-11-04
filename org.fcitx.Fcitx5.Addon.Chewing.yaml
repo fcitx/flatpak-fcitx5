@@ -29,8 +29,13 @@ modules:
           stable-only: true
           tag-template: v${version}
         commit: bab025039a24d610d5c327d6894356a3d645e441
+      - chewing-cargo-sources.json
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
+      - -DBUILD_TESTING=Off
+    build-options:
+      env:
+        CARGO_HOME: /run/build/libchewing/cargo
   - name: fcitx5-chewing
     buildsystem: cmake-ninja
     sources:
