@@ -35,8 +35,7 @@ modules:
         CARGO_HOME: /run/build/cskk/cargo
     buildsystem: simple
     build-commands:
-      - cargo --offline install cargo-c
-      - cargo cinstall --release --prefix=/app/addons/Cskk
+      - cargo cinstall --release --prefix=/app/addons/Cskk --libdir=lib
   - name: skk-jisyo
     buildsystem: simple
     build-commands:
