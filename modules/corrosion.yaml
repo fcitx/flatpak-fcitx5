@@ -6,14 +6,14 @@ build-options:
 cleanup:
   - /app
 config-opts:
-  - "-DCORROSION_INSTALL_EXECUTABLE=OFF"
-  - "-DCORROSION_BUILD_TESTS=OFF"
-  - "-DCORROSION_DEV_MODE=OFF"
+  - -DCORROSION_INSTALL_EXECUTABLE=OFF
+  - -DCORROSION_BUILD_TESTS=OFF
+  - -DCORROSION_DEV_MODE=OFF
 sources:
   - type: git
-    commit: 64289b1d79d6d19cd2e241db515381a086bb8407
+    commit: 9943de73df25ddb06bf6105baeca002ae54e45f3
     url: https://github.com/corrosion-rs/corrosion
-    tag: v0.5.0
+    tag: v0.4.10
     x-checker-data:
       type: anitya
       project-id: 242799
