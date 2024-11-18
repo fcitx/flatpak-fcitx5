@@ -41,6 +41,9 @@ modules:
           project-id: 228903
           stable-only: true
           url-template: https://github.com/ueno/libskk/archive/${version}.tar.gz
+      - type: patch
+        path: 0001-Fix-invalid-escape-on-json-file.patch
+        use-git: true
     build-options:
       cflags: -Wno-int-conversion
       env:
