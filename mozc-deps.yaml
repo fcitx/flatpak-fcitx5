@@ -43,9 +43,9 @@
   dest: bazel-deps
   sha256: d20c951960ed77cb7b341c2a59488534e494d5ad1d30c4818c736d57772a9fef
 - type: file
-  url: https://github.com/bazelbuild/rules_python/releases/download/0.40.0/rules_python-0.40.0.tar.gz
+  url: https://github.com/bazelbuild/rules_python/releases/download/1.0.0/rules_python-1.0.0.tar.gz
   dest: bazel-deps
-  sha256: 690e0141724abb568267e003c7b6d9a54925df40c275a870a4d934161dc9dd53
+  sha256: 4f7e2aa1eb9aa722d96498f5ef514f426c1f55161c3c9ae628c857a7128ceb07
 - type: file
   url: https://github.com/bazelbuild/rules_shell/releases/download/v0.2.0/rules_shell-v0.2.0.tar.gz
   dest: bazel-deps
