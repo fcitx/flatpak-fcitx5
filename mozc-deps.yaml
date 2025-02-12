@@ -79,6 +79,6 @@
   dest: bazel-deps
   sha256: 9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23
 - type: file
-  url: https://github.com/protocolbuffers/protobuf/releases/download/v29.3/protobuf-29.3.zip
+  url: https://github.com/protocolbuffers/protobuf/releases/download/v29.1/protobuf-29.1.zip
   dest: bazel-deps
-  sha256: e9b9ac1910b1041065839850603caf36e29d3d3d230ddf52bd13778dd31b9046
+  sha256: 5ad0b8b1bfe72545ef0e5984e7a860c46b82c2be4032d47c53e0f02aea0a7a64
