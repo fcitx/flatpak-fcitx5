@@ -20,8 +20,8 @@ modules:
     no-parallel-make: true
     sources:
       - type: archive
-        url: https://download.savannah.gnu.org/releases/m17n/m17n-lib-1.8.4.tar.gz
-        sha256: c6a2582c6e4f2a8c2e7a2844fa5c7eb363aad2538b052f203c710649dd421cc8
+        url: https://download.savannah.gnu.org/releases/m17n/m17n-lib-1.8.5.tar.gz
+        sha256: 7b6c425f792d06d14e4f5b17204d3627e2c8ebb423ebdae92c0c646710d3d6c7
         x-checker-data:
           type: anitya
           project-id: 1870
