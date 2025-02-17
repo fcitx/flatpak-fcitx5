@@ -31,13 +31,13 @@ modules:
   - modules/xcb-imdkit.yaml
   - modules/libuv.yaml
   - modules/json-c.yaml
+  - modules/enchant.yaml
 
   - name: fcitx5
     buildsystem: cmake-ninja
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
       - -DUSE_SYSTEMD=Off
-      - -DENABLE_ENCHANT=Off
       - -DUSE_FLATPAK_ICON=On
       - -DENABLE_TEST=Off
     sources:
