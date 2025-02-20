@@ -8,13 +8,13 @@ config-opts:
 sources:
   - type: git
     url: https://github.com/facebook/zstd.git
-    tag: v1.5.6
+    tag: v1.5.7
     x-checker-data:
       type: anitya
       project-id: 12083
       stable-only: true
       tag-template: v${version}
-    commit: 794ea1b0afca0f020f4e57b6732332231fb23c70
+    commit: f8745da6ff1ad1e7bab384bd1f9d742439278e99
 cleanup:
   - /include
   - /lib/cmake
