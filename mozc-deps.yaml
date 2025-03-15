@@ -59,6 +59,10 @@
   dest: bazel-deps
   sha256: 9919ed1d8dae509645bfd380537ae6501528d8de971caebed6d5185b9970dc4d
 - type: file
+  url: https://github.com/hiroyuki-komatsu/japanese-usage-dictionary/archive/refs/tags/2025-01-25.zip
+  dest: bazel-deps
+  sha256: 140f24f71f7d78d5eb5b93a9c079f44f23728dca5ab16bf857fe8a3fa1bf20ed
+- type: file
   url: https://github.com/hiroyuki-komatsu/japanpost_zipcode/raw/6ece210081fb73d0ea4a5ea8e13ac9584d03fd76/jigyosyo.zip
   dest: bazel-deps
   sha256: 1c56e79ff4c7f709778e0bf4dfbffdf939efd170845feccae986d22cf4373988
