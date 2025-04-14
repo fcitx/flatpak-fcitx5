@@ -31,9 +31,9 @@
   dest: bazel-deps
   sha256: abc605dd850f813bb37004b77db20106a19311a96b2da1c92b789da529d28fe1
 - type: file
-  url: https://github.com/bazelbuild/rules_java/releases/download/8.6.1/rules_java-8.6.1.tar.gz
+  url: https://github.com/bazelbuild/rules_java/releases/download/8.11.0/rules_java-8.11.0.tar.gz
   dest: bazel-deps
-  sha256: c5bc17e17bb62290b1fd8fdd847a2396d3459f337a7e07da7769b869b488ec26
+  sha256: d31b6c69e479ffa45460b64dc9c7792a431cac721ef8d5219fc9f603fa2ff877
 - type: file
   url: https://github.com/bazelbuild/rules_kotlin/releases/download/v1.9.6/rules_kotlin-v1.9.6.tar.gz
   dest: bazel-deps
