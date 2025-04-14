@@ -8,8 +8,8 @@ sources:
   - type: file
     only-arches:
       - x86_64
-    url: https://github.com/bazelbuild/bazel/releases/download/8.1.1/bazel-8.1.1-linux-x86_64
-    sha256: a2a095d7006ea70bdfdbe90a71f99f957fee1212d4614cfcfdbe3aadae681def
+    url: https://github.com/bazelbuild/bazel/releases/download/8.2.0/bazel-8.2.0-linux-x86_64
+    sha256: 78d1a7e411ae52b1049f78fd8bc1f502abc98feb612fa16719eb2143752db68e
     dest-filename: bazel
     x-checker-data:
       type: anitya
@@ -19,8 +19,8 @@ sources:
   - type: file
     only-arches:
       - aarch64
-    url: https://github.com/bazelbuild/bazel/releases/download/8.1.1/bazel-8.1.1-linux-arm64
-    sha256: 359be37055104d84a4a5fa5b570b5bde402a87c2d2b9fc736954bc11366b321e
+    url: https://github.com/bazelbuild/bazel/releases/download/8.2.0/bazel-8.2.0-linux-arm64
+    sha256: 57e2f6406a643168833ff028d3d2d399aaa1d8822887dbc9b2ff0044e61abdaf
     dest-filename: bazel
     x-checker-data:
       type: anitya
