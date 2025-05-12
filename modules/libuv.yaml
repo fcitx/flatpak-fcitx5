@@ -5,13 +5,13 @@ config-opts:
 sources:
   - type: git
     url: https://github.com/libuv/libuv/
-    tag: v1.50.0
+    tag: v1.51.0
     x-checker-data:
       type: anitya
       project-id: 10784
       stable-only: true
       tag-template: v${version}
-    commit: 8fb9cb919489a48880680a56efecff6a7dfb4504
+    commit: 5152db2cbfeb5582e9c27c5ea1dba2cd9e10759b
 cleanup:
   - /bin
   - /include

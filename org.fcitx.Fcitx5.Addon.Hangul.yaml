@@ -20,13 +20,13 @@ modules:
     sources:
       - type: git
         url: https://github.com/libhangul/libhangul
-        tag: libhangul-0.1.0
+        tag: libhangul-0.2.0
         x-checker-data:
           type: anitya
           project-id: 1630
           stable-only: true
           tag-template: libhangul-${version}
-        commit: 9fe2d4e8c225b1797d2c5bb78ccfdc703af7b886
+        commit: 41c702f5d3581325b646ef6249f1f641b0427ae0
     buildsystem: simple
     build-commands:
       - ./autogen.sh
