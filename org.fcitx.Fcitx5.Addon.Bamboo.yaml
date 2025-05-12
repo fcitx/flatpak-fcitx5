@@ -2,7 +2,7 @@ app-id: org.fcitx.Fcitx5.Addon.Bamboo
 branch: master
 runtime: org.fcitx.Fcitx5
 runtime-version: master
-sdk: org.kde.Sdk//6.8
+sdk: org.kde.Sdk//6.9
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.golang
 build-extension: true
