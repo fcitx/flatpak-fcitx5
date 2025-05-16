@@ -27,6 +27,8 @@ modules:
           stable-only: true
           tag-template: libhangul-${version}
         commit: 41c702f5d3581325b646ef6249f1f641b0427ae0
+      - type: patch
+        path: libhangul-gettext.patch
     buildsystem: simple
     build-commands:
       - ./autogen.sh
