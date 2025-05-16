@@ -28,8 +28,6 @@ modules:
           tag-template: libhangul-${version}
         commit: 41c702f5d3581325b646ef6249f1f641b0427ae0
     buildsystem: cmake-ninja
-    config-opts:
-      - -DENABLE_UNIT_TEST=Off
   - name: fcitx5-hangul
     buildsystem: cmake-ninja
     sources:
