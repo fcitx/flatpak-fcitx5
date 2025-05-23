@@ -1,0 +1,13 @@
+diff --git a/configure.ac b/configure.ac
+index e5c6e8a..e098c56 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -27,7 +27,7 @@ AC_SUBST(LIBHANGUL_AGE)
+ 
+ AM_MAINTAINER_MODE
+ 
+-AM_GNU_GETTEXT_VERSION([0.23.1])
++AM_GNU_GETTEXT_VERSION([0.22.5])
+ AM_GNU_GETTEXT([external])
+ 
+ # Checks for programs.
