@@ -1,8 +1,8 @@
 name: marisa
 sources:
   - type: archive
-    url: https://github.com/s-yata/marisa-trie/archive/v0.2.7.tar.gz
-    sha256: d4e0097d3a78e2799dfc55c73420d1a43797a2986a4105facfe9a33f4b0ba3c2
+    url: https://github.com/s-yata/marisa-trie/archive/v0.3.0.tar.gz
+    sha256: a3057d0c2da0a9a57f43eb8e07b73715bc5ff053467ee8349844d01da91b5efb
     x-checker-data:
       type: anitya
       project-id: 242978
