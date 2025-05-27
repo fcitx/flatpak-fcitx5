@@ -1,4 +1,5 @@
 name: marisa
+buildsystem: cmake-ninja
 sources:
   - type: archive
     url: https://github.com/s-yata/marisa-trie/archive/v0.3.0.tar.gz
@@ -8,16 +9,17 @@ sources:
       project-id: 242978
       stable-only: true
       url-template: https://github.com/s-yata/marisa-trie/archive/v${version}.tar.gz
-  - type: shell
-    commands:
-      - autoreconf -i
+config-opts:
+  - -DCMAKE_BUILD_TYPE=Release
+  - -DBUILD_SHARED_LIBS=On
 build-commands:
-  - make -C bindings swig-python
-  - cd bindings/python && python3 setup.py build_ext --include-dirs=../../include
-    --library-dirs=../../lib/marisa/.libs
-  - cd bindings/python && python3 setup.py build
+  - make -C bindings swig-python3
+  - find ../..
+  - cd bindings/python3 && python3 setup.py build_ext --include-dirs=../../include
+    --library-dirs=../../
+  - cd bindings/python3 && python3 setup.py build
 post-install:
-  - cd bindings/python && python3 setup.py install --skip-build --prefix=${FLATPAK_DEST}
+  - cd bindings/python3 && python3 setup.py install --skip-build --prefix=${FLATPAK_DEST}
     --root=/ --optimize=1
 modules:
   - swig.yaml
