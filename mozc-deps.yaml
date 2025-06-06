@@ -3,10 +3,6 @@
   dest: bazel-deps
   sha256: 7262daa7c1711406248c10f41026d685e88223bc92817d16fb93c19adb57f669
 - type: file
-  url: https://github.com/aspect-build/bazel-lib/releases/download/v1.40.3/bazel-lib-v1.40.3.tar.gz
-  dest: bazel-deps
-  sha256: f2c1f91cc0a55f7a44c94b8a79974f21349b844075740c01045acaa49e731307
-- type: file
   url: https://github.com/astral-sh/python-build-standalone/releases/download/20250317/cpython-3.11.11+20250317-aarch64-unknown-linux-gnu-install_only.tar.gz
   dest: bazel-deps
   sha256: 7d52b5206afe617de2899af477f5a1d275ecbce80fb8300301b254ebf1da5a90
@@ -47,10 +43,6 @@
   dest: bazel-deps
   sha256: 712d77868b3152dd618c4d64faaddefcc5965f90f5de6e6dd1d5ddcd0be82d42
 - type: file
-  url: https://github.com/bazelbuild/rules_go/releases/download/v0.39.1/rules_go-v0.39.1.zip
-  dest: bazel-deps
-  sha256: 6dc2da7ab4cf5d7bfc7c949776b1b7c733f05e56edc4bcd9022bb249d2e2a996
-- type: file
   url: https://github.com/bazelbuild/rules_java/releases/download/8.11.0/rules_java-8.11.0.tar.gz
   dest: bazel-deps
   sha256: d31b6c69e479ffa45460b64dc9c7792a431cac721ef8d5219fc9f603fa2ff877
@@ -63,61 +55,17 @@
   dest: bazel-deps
   sha256: 26d4021f6898e23b82ef953078389dd49ac2b5618ac564ade4ef87cced147b38
 - type: file
-  url: https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.2/rules_nodejs-core-5.8.2.tar.gz
-  dest: bazel-deps
-  sha256: 764a3b3757bb8c3c6a02ba3344731a3d71e558220adcb0cf7e43c9bba2c37ba8
-- type: file
   url: https://github.com/bazelbuild/rules_pkg/releases/download/1.0.1/rules_pkg-1.0.1.tar.gz
   dest: bazel-deps
   sha256: d20c951960ed77cb7b341c2a59488534e494d5ad1d30c4818c736d57772a9fef
-- type: file
-  url: https://github.com/bazelbuild/rules_proto/releases/download/7.0.2/rules_proto-7.0.2.tar.gz
-  dest: bazel-deps
-  sha256: 0e5c64a2599a6e26c6a03d6162242d231ecc0de219534c38cb4402171def21e8
-- type: file
-  url: https://github.com/bazelbuild/rules_rust/releases/download/0.51.0/rules_rust-v0.51.0.tar.gz
-  dest: bazel-deps
-  sha256: 042acfb73469b2d1848fe148d81c3422c61ea47a9e1900f1c9ec36f51e8e7193
 - type: file
   url: https://github.com/bazelbuild/rules_shell/releases/download/v0.3.0/rules_shell-v0.3.0.tar.gz
   dest: bazel-deps
   sha256: d8cd4a3a91fc1dc68d4c7d6b655f09def109f7186437e3f50a9b60ab436a0c53
 - type: file
-  url: https://github.com/bazelbuild/rules_swift/releases/download/2.4.0/rules_swift.2.4.0.tar.gz
+  url: https://github.com/bazelbuild/rules_swift/releases/download/2.8.2/rules_swift.2.8.2.tar.gz
   dest: bazel-deps
-  sha256: 28db894977ac51c8f3ab7c6dc9d655a85510366734e900b3c5302ce1ed91256c
-- type: file
-  url: https://github.com/bufbuild/buf/releases/download/v1.27.0/buf-Linux-aarch64
-  dest: bazel-deps
-  sha256: d32a835f7b09845aa6357bd679a1778025e5200067cb96596f3eb0379852fb1c
-- type: file
-  url: https://github.com/bufbuild/buf/releases/download/v1.27.0/buf-Linux-x86_64
-  dest: bazel-deps
-  sha256: 9464d12f427f4e88d3671678547d2e5942362a755c896dbce66d75e296f92f78
-- type: file
-  url: https://github.com/bufbuild/buf/releases/download/v1.27.0/protoc-gen-buf-breaking-Linux-aarch64
-  dest: bazel-deps
-  sha256: 85c8b37f51a47efa07838d7c74a0c1d82245a2243a5dc8fbb635cc73c3434a10
-- type: file
-  url: https://github.com/bufbuild/buf/releases/download/v1.27.0/protoc-gen-buf-breaking-Linux-x86_64
-  dest: bazel-deps
-  sha256: 8bd139f87a8da0049b6a60908adf7a5895097038c2d2346aa8444dda353a9dc8
-- type: file
-  url: https://github.com/bufbuild/buf/releases/download/v1.27.0/protoc-gen-buf-lint-Linux-aarch64
-  dest: bazel-deps
-  sha256: 286a51adbe29f33edf48bc8be941182ddb6ca535c45b0243d2043e79f5e04821
-- type: file
-  url: https://github.com/bufbuild/buf/releases/download/v1.27.0/protoc-gen-buf-lint-Linux-x86_64
-  dest: bazel-deps
-  sha256: 560f607b55e55f51549428028b88daaa36cda11cd85427837e657d3e7ade1e28
-- type: file
-  url: https://github.com/bufbuild/buf/releases/download/v1.27.0/sha256.txt
-  dest: bazel-deps
-  sha256: c69540da0321dd5b07d759f4d41557f15761ee0ad8ba7626577423206b250401
-- type: file
-  url: https://github.com/bufbuild/rules_buf/archive/abbbfce7c3fccf1d4b87afa28140d9ce53f80057.zip
-  dest: bazel-deps
-  sha256: fdcbe47efb68af5c24dfe752749ab0b2a0c1ac0215e3d28cf6e9ee28e0c2aefb
+  sha256: a632eaf9d0d7564ae7dbd12f94fc2047cc00706a7f037a4af1fc10e20b7875a4
 - type: file
   url: https://github.com/hiroyuki-komatsu/japanese-usage-dictionary/archive/refs/tags/2025-01-25.zip
   dest: bazel-deps
@@ -135,6 +83,6 @@
   dest: bazel-deps
   sha256: 9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23
 - type: file
-  url: https://github.com/protocolbuffers/protobuf/releases/download/v30.2/protobuf-30.2.zip
+  url: https://github.com/protocolbuffers/protobuf/releases/download/v31.1/protobuf-31.1.zip
   dest: bazel-deps
-  sha256: 6544e5ceec7f29d00397193360435ca8b3c4e843de3cf5698a99d36b72d65342
+  sha256: 554e847e46c705bfc44fb2d0ae5bf78f34395fcbfd86ba747338b570eef26771
