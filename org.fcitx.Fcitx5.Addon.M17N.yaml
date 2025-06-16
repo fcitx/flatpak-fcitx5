@@ -15,7 +15,6 @@ cleanup:
   - /share/pkgconfig
   - '*.la'
 modules:
-  - modules/fmt.yaml
   - name: m17n-lib
     no-parallel-make: true
     sources:

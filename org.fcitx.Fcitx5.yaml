@@ -27,7 +27,6 @@ finish-args:
   - --filesystem=xdg-cache/ibus:create
   - --device=dri
 modules:
-  - modules/fmt.yaml
   - modules/xcb-imdkit.yaml
   - modules/libuv.yaml
   - modules/json-c.yaml

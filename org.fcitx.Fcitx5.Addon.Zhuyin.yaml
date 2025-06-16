@@ -44,7 +44,6 @@ modules:
           - sed -i "/wget.*/d" data/Makefile.am
     make-args:
       - V=1
-  - modules/fmt.yaml
   - name: fcitx5-zhuyin
     buildsystem: cmake-ninja
     sources:

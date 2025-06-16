@@ -22,7 +22,6 @@ cleanup:
 modules:
   - modules/boost.yaml
   - modules/libime.yaml
-  - modules/fmt.yaml
   - modules/fcitx5-chinese-addons.yaml
   - name: libime-jyutping
     buildsystem: cmake-ninja
