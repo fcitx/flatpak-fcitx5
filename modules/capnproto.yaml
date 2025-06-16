@@ -6,10 +6,10 @@ config-opts:
 sources:
   - type: git
     url: https://github.com/capnproto/capnproto
-    tag: v1.1.0
+    tag: v1.2.0
     x-checker-data:
       type: anitya
       project-id: 11515
       stable-only: true
       tag-template: v${version}
-    commit: b34ec28cceaf15b1082b74b50f03f770873c3636
+    commit: d135c9ca5e15219eaf131dfce1a41afdbaea9aab
