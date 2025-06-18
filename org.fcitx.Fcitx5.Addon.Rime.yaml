@@ -46,7 +46,7 @@ modules:
           tag-template: ${version}
       - type: git
         url: https://github.com/lotem/librime-octagram.git
-        commit: a6ced5a1d623afed17284fbaa395dd3a8b019a14
+        commit: dfcc15115788c828d9dd7b4bff68067d3ce2ffb8
         dest: plugins/librime-octagram
       - type: git
         url: https://github.com/hchunhui/librime-lua
