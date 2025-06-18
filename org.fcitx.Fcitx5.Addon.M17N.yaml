@@ -20,7 +20,7 @@ modules:
     sources:
       - type: archive
         url: https://download.savannah.gnu.org/releases/m17n/m17n-lib-1.8.6.tar.gz
-        sha256: e2205fd49bf3763ed5a1025c603e1c0413ff5f4712a822ab52ee1e73f7828fcd
+        sha256: 7129fe3b7ad500f88b8af8605ef07b96c87a75ec986a695fffc0a409f44a7c86
         x-checker-data:
           type: anitya
           project-id: 1870
