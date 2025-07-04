@@ -11,9 +11,9 @@
   dest: bazel-deps
   sha256: 51e47bc0d1b9f4bf68dd395f7a39f60c58a87cde854cab47264a859eb666bb69
 - type: file
-  url: https://github.com/bazel-contrib/bazel_features/releases/download/v1.27.0/bazel_features-v1.27.0.tar.gz
+  url: https://github.com/bazel-contrib/bazel_features/releases/download/v1.30.0/bazel_features-v1.30.0.tar.gz
   dest: bazel-deps
-  sha256: 2da0aaccbd725ad61f4e35d6d75ed421bf73ec1de167458b00ffecef3cd78f6d
+  sha256: a660027f5a87f13224ab54b8dc6e191693c554f2692fcca46e8e29ee7dabc43b
 - type: file
   url: https://github.com/bazel-contrib/rules_python/releases/download/1.4.1/rules_python-1.4.1.tar.gz
   dest: bazel-deps
@@ -43,9 +43,9 @@
   dest: bazel-deps
   sha256: 712d77868b3152dd618c4d64faaddefcc5965f90f5de6e6dd1d5ddcd0be82d42
 - type: file
-  url: https://github.com/bazelbuild/rules_java/releases/download/8.11.0/rules_java-8.11.0.tar.gz
+  url: https://github.com/bazelbuild/rules_java/releases/download/8.12.0/rules_java-8.12.0.tar.gz
   dest: bazel-deps
-  sha256: d31b6c69e479ffa45460b64dc9c7792a431cac721ef8d5219fc9f603fa2ff877
+  sha256: 1558508fc6c348d7f99477bd21681e5746936f15f0436b5f4233e30832a590f9
 - type: file
   url: https://github.com/bazelbuild/rules_kotlin/releases/download/v1.9.6/rules_kotlin-v1.9.6.tar.gz
   dest: bazel-deps
