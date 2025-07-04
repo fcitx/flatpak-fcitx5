@@ -8,8 +8,8 @@ sources:
     sha256: 42146ac97de6c13d55f9e99ed873915f4c66739e9c11532a34556badf9792c04
     dest: modules/pinyinhelper
   - type: file
-    url: https://download.fcitx-im.org/data/py_stroke-20121124.tar.gz
-    sha256: 8eb128a9bfa43952e67cf2fcee1fd134c6f4cfd317bc2f6c38a615f5eb64e248
+    url: https://download.fcitx-im.org/data/py_stroke-20250329.tar.gz
+    sha256: c1a7ca7225d3614ab83353fc827503006a980447762018f53760425d7b5303a6
     dest: modules/pinyinhelper
 config-opts:
   - -DCMAKE_BUILD_TYPE=Release
