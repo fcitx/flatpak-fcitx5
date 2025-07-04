@@ -16,9 +16,9 @@ cleanup:
   - /include
   - /lib/pkgconfig
   - /lib/cmake
-  - "/lib/python*"
+  - /lib/python*
   - /share/cmake
-  - "*.la"
+  - '*.la'
 
 modules:
   - modules/boost.yaml
@@ -38,12 +38,13 @@ modules:
     sources:
       - type: git
         url: https://github.com/rime/librime
-        tag: 1.12.0
+        tag: 1.13.1
         x-checker-data:
           type: anitya
           project-id: 228902
           stable-only: true
           tag-template: ${version}
+        commit: 1c23358157934bd6e6d6981f0c0164f05393b497
       - type: git
         url: https://github.com/lotem/librime-octagram.git
         commit: dfcc15115788c828d9dd7b4bff68067d3ce2ffb8
@@ -73,20 +74,20 @@ modules:
       - install -Dm644 rime-prelude/*.yaml -t rime-data/
         # copy all other rime schemas
       - |
-          for _ime in rime-*; do
-            [ "$_ime" != "rime-data" ] &&
-              [ "$_ime" != "rime-essay" ] &&
-              [ "$_ime" != "rime-prelude" ] &&
-              install -Dm644 ${_ime}/*.yaml -t rime-data/
-          done
-          cd rime-data/
-          for _ime_schema in $(ls *.schema.yaml); do
-            rime_deployer --compile $_ime_schema
-          done
+        for _ime in rime-*; do
+          [ "$_ime" != "rime-data" ] &&
+            [ "$_ime" != "rime-essay" ] &&
+            [ "$_ime" != "rime-prelude" ] &&
+            install -Dm644 ${_ime}/*.yaml -t rime-data/
+        done
+        cd rime-data/
+        for _ime_schema in $(ls *.schema.yaml); do
+          rime_deployer --compile $_ime_schema
+        done
       - |
-          install -Dm644 rime-data/*.{txt,yaml} -t ${FLATPAK_DEST}/share/rime-data/
-          rm rime-data/build/*.txt
-          install -Dm644 rime-data/build/* -t ${FLATPAK_DEST}/share/rime-data/build/
+        install -Dm644 rime-data/*.{txt,yaml} -t ${FLATPAK_DEST}/share/rime-data/
+        rm rime-data/build/*.txt
+        install -Dm644 rime-data/build/* -t ${FLATPAK_DEST}/share/rime-data/build/
     sources:
       - type: archive
         url: https://github.com/rime/rime-essay/archive/917e5691d090f75c40f0bc72476c2f483bae0c21/rime-essay-917e5691d090f75c40f0bc72476c2f483bae0c21.tar.gz
