@@ -39,9 +39,9 @@
   dest: bazel-deps
   sha256: a78f26c22ac8d6e3f3fcaad50eace4d9c767688bd7254b75bdf4a6735b299f6a
 - type: file
-  url: https://github.com/bazelbuild/rules_cc/releases/download/0.1.1/rules_cc-0.1.1.tar.gz
+  url: https://github.com/bazelbuild/rules_cc/releases/download/0.1.4/rules_cc-0.1.4.tar.gz
   dest: bazel-deps
-  sha256: 712d77868b3152dd618c4d64faaddefcc5965f90f5de6e6dd1d5ddcd0be82d42
+  sha256: 0d3b4f984c4c2e1acfd1378e0148d35caf2ef1d9eb95b688f8e19ce0c41bdf5b
 - type: file
   url: https://github.com/bazelbuild/rules_java/releases/download/8.12.0/rules_java-8.12.0.tar.gz
   dest: bazel-deps
