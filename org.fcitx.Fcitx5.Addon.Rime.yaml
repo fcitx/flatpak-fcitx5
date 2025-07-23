@@ -38,13 +38,13 @@ modules:
     sources:
       - type: git
         url: https://github.com/rime/librime
-        tag: 1.13.1
+        tag: 1.14.0
         x-checker-data:
           type: anitya
           project-id: 228902
           stable-only: true
           tag-template: ${version}
-        commit: 1c23358157934bd6e6d6981f0c0164f05393b497
+        commit: e053fb29e4a7c584d93c81e2e314bc1c9efca0a6
       - type: git
         url: https://github.com/lotem/librime-octagram.git
         commit: dfcc15115788c828d9dd7b4bff68067d3ce2ffb8
