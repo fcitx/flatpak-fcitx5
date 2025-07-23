@@ -55,9 +55,9 @@
   dest: bazel-deps
   sha256: 26d4021f6898e23b82ef953078389dd49ac2b5618ac564ade4ef87cced147b38
 - type: file
-  url: https://github.com/bazelbuild/rules_pkg/releases/download/1.0.1/rules_pkg-1.0.1.tar.gz
+  url: https://github.com/bazelbuild/rules_pkg/releases/download/1.1.0/rules_pkg-1.1.0.tar.gz
   dest: bazel-deps
-  sha256: d20c951960ed77cb7b341c2a59488534e494d5ad1d30c4818c736d57772a9fef
+  sha256: b7215c636f22c1849f1c3142c72f4b954bb12bb8dcf3cbe229ae6e69cc6479db
 - type: file
   url: https://github.com/bazelbuild/rules_shell/releases/download/v0.3.0/rules_shell-v0.3.0.tar.gz
   dest: bazel-deps
@@ -71,13 +71,13 @@
   dest: bazel-deps
   sha256: 140f24f71f7d78d5eb5b93a9c079f44f23728dca5ab16bf857fe8a3fa1bf20ed
 - type: file
-  url: https://github.com/hiroyuki-komatsu/japanpost_zipcode/raw/6ece210081fb73d0ea4a5ea8e13ac9584d03fd76/jigyosyo.zip
+  url: https://github.com/hiroyuki-komatsu/japanpost_zipcode/raw/21c6fb3cbc125e4408a8c2715beb1fbfcf03a442/jigyosyo.zip
   dest: bazel-deps
-  sha256: 1c56e79ff4c7f709778e0bf4dfbffdf939efd170845feccae986d22cf4373988
+  sha256: f390501cbfe143921a939884178e5b33ca246181803d814e5f58676c19e91a6c
 - type: file
-  url: https://github.com/hiroyuki-komatsu/japanpost_zipcode/raw/6ece210081fb73d0ea4a5ea8e13ac9584d03fd76/ken_all.zip
+  url: https://github.com/hiroyuki-komatsu/japanpost_zipcode/raw/21c6fb3cbc125e4408a8c2715beb1fbfcf03a442/ken_all.zip
   dest: bazel-deps
-  sha256: 296cfa57f2012c0226afbc64e9e8575fc36285d2fa31d725a176548cd173b3df
+  sha256: 9cd7a9235d1869a94f4019a201d61172a0fc633f1957922c3ec23ac7bf75becf
 - type: file
   url: https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz
   dest: bazel-deps
