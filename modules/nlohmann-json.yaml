@@ -1,0 +1,18 @@
+name: nlohmann-json
+buildsystem: cmake-ninja
+config-opts:
+  - -DCMAKE_BUILD_TYPE=Release
+  - -DJSON_BuildTests=OFF
+  - -DJSON_MultipleHeaders=ON
+  - -DJSON_SystemInclude=ON
+sources:
+  - type: archive
+    url: https://github.com/nlohmann/json/archive/v3.12.0.tar.gz
+    tag: v3.12.0
+    sha256: 4b92eb0c06d10683f7447ce9406cb97cd4b453be18d7279320f7b2f025c10187
+    x-checker-data:
+      type: anitya
+      project-id: 11152
+      stable-only: true
+      url-template: https://github.com/nlohmann/json/archive/v{version}.tar.gz
+

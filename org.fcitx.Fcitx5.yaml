@@ -29,7 +29,7 @@ finish-args:
 modules:
   - modules/xcb-imdkit.yaml
   - modules/libuv.yaml
-  - modules/json-c.yaml
+  - modules/nlohmann-json.yaml
   - modules/enchant.yaml
 
   - name: fcitx5
