@@ -2,7 +2,7 @@ app-id: org.fcitx.Fcitx5.Addon.Cskk
 branch: master
 runtime: org.fcitx.Fcitx5
 runtime-version: master
-sdk: org.kde.Sdk//6.9
+sdk: org.kde.Sdk//6.10
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
 build-extension: true
