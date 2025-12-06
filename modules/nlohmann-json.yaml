@@ -13,5 +13,5 @@ sources:
       type: anitya
       project-id: 11152
       stable-only: true
-      url-template: https://github.com/nlohmann/json/archive/v{version}.tar.gz
+      url-template: https://github.com/nlohmann/json/archive/v${version}.tar.gz
 
