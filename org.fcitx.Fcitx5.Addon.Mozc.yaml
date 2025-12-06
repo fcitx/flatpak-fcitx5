@@ -4,14 +4,14 @@ runtime: org.fcitx.Fcitx5
 runtime-version: master
 sdk: org.kde.Sdk//6.10
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.llvm18
+  - org.freedesktop.Sdk.Extension.llvm21
 build-extension: true
 separate-locales: false
 build-options:
   prefix: /app/addons/Mozc
-  prepend-path: /usr/lib/sdk/llvm18/bin:/app/addons/Mozc/bin
+  prepend-path: /usr/lib/sdk/llvm21/bin:/app/addons/Mozc/bin
   prepend-pkg-config-path: /app/addons/Mozc/lib/pkgconfig
-  prepend-ld-library-path: /usr/lib/sdk/llvm18/lib
+  prepend-ld-library-path: /usr/lib/sdk/llvm21/lib
   env:
     - server_dir=/app/addons/Mozc/lib/mozc
     - document_dir=/app/ime/mozc/licenses/mozc
