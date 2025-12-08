@@ -1,0 +1,12 @@
+name: patchelf
+sources:
+  - type: archive
+    url: https://github.com/NixOS/patchelf/releases/download/0.18.0/patchelf-0.18.0.tar.gz
+    sha256: 64de10e4c6b8b8379db7e87f58030f336ea747c0515f381132e810dbf84a86e7
+    x-checker-data:
+      type: anitya
+      project-id: 2598
+      stable-only: true
+      url-template: https://github.com/NixOS/patchelf/releases/download/$version/patchelf-$version.tar.gz
+cleanup:
+  - '*'

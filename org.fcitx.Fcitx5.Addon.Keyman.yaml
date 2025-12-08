@@ -1,0 +1,65 @@
+app-id: org.fcitx.Fcitx5.Addon.Keyman
+branch: master
+runtime: org.fcitx.Fcitx5
+runtime-version: master
+sdk: org.kde.Sdk//6.10
+build-extension: true
+separate-locales: false
+build-options:
+  prefix: /app/addons/Keyman
+  prepend-pkg-config-path: /app/addons/Keyman/lib/pkgconfig
+  prepend-path: /app/addons/Keyman/bin
+  env:
+    PYTHONPATH: /usr/lib/python3.13/site-packages:/app/addons/Keyman/lib/python3.13/site-packages
+
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - '*.la'
+
+modules:
+  - modules/webkit2gtk.yaml
+  - modules/patchelf.yaml
+  - python3-modules.json
+  - name: keyman
+    buildsystem: simple
+    build-commands:
+      - core/build.sh --no-tests configure:arch build:arch -- --wrap-mode=nodownload
+          --prefix="${FLATPAK_DEST}"
+          --sysconfdir=/etc
+          --localstatedir=/var
+          --libdir=lib
+          --libexecdir=lib
+      - sed -i 's|build_man_and_help_pages$||g' linux/keyman-config/build.sh
+      - sed -i 's/if dpkg --compare-versions .*; then/if false; then/' linux/keyman-config/build.sh
+      - linux/keyman-config/build.sh configure build
+      - cd linux/keyman-config && sed -i -e "s/^__pkgversion__ = \"[^\"]*\"/__pkgversion__ = \"18.0.236\"/g" keyman_config/version.py
+      - make -C linux/keyman-config compile-po
+      - core/build.sh --no-tests install:arch
+      - cd linux/keyman-config && pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}/build" --prefix=${FLATPAK_DEST} "keyman_config" --no-build-isolation
+      - install -d "${FLATPAK_DEST}/share"
+      - echo "${FLATPAK_DEST}"
+      - cp -r linux/keyman-config/locale/ "${FLATPAK_DEST}/share"
+      - rm "${FLATPAK_DEST}/share/locale/"*.po*
+      - install -Dm644 --target-directory="${FLATPAK_DEST}/share/glib-2.0/schemas" linux/keyman-config/resources/com.keyman.gschema.xml
+      - glib-compile-schemas "${FLATPAK_DEST}/share/glib-2.0/schemas"
+      - mv "${FLATPAK_DEST}/bin/km-config"{,.real}
+    sources:
+      - type: archive
+        url: https://downloads.keyman.com/linux/stable/18.0.236/keyman-18.0.236.tar.gz
+        sha256: b3ce70a5a59602674812e1a06dc6701bbb08d9115f7cedeb70b0bd6ff8d71355
+  - name: km-config-script
+    buildsystem: simple
+    build-commands:
+      - install -m755 km-config.sh "${FLATPAK_DEST}/bin/km-config"
+    sources:
+      - type: file
+        path: km-config.sh
+  - modules/nlohmann-json.yaml
+  - name: fcitx5-keyman
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/fcitx/fcitx5-keyman
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release

@@ -1,0 +1,52 @@
+name: webkit2gtk
+sources:
+  - type: archive
+    url: https://webkitgtk.org/releases/webkitgtk-2.48.6.tar.xz
+    sha256: d9ac3034b7a39c2aaa567e6112b3124b158e591a74439e46974a031dd0e44e24
+    x-checker-data:
+      type: html
+      url: https://webkitgtk.org/releases/
+      version-pattern: LATEST-STABLE-(\d[\.\d]+\d)
+      url-template: https://webkitgtk.org/releases/webkitgtk-$version.tar.xz
+buildsystem: cmake-ninja
+config-opts:
+  - -DCMAKE_BUILD_TYPE=Release
+  - -DENABLE_BUBBLEWRAP_SANDBOX=OFF
+  - -DENABLE_DOCUMENTATION=OFF
+  - -DENABLE_GAMEPAD=OFF
+  - -DENABLE_MINIBROWSER=OFF
+  - -DENABLE_SPEECH_SYNTHESIS=OFF
+  - -DENABLE_WEBDRIVER=OFF
+  - -DPORT=GTK
+  - -DUSE_GTK4=OFF
+  - -DUSE_LIBBACKTRACE=OFF
+  - -DENABLE_SPELLCHECK=OFF
+  - -DUSE_WOFF2=OFF
+  - -DUSE_SYSTEM_SYSPROF_CAPTURE=OFF
+modules:
+
+  - name: unifdef
+    no-autogen: true
+    make-install-args:
+      - prefix=${FLATPAK_DEST}
+    sources:
+      - type: archive
+        url: https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz
+        sha256: 43ce0f02ecdcdc723b2475575563ddb192e988c886d368260bc0a63aee3ac400
+        x-checker-data:
+          type: anitya
+          project-id: 5046
+          url-template: https://dotat.at/prog/unifdef/unifdef-$version.tar.xz
+      - type: patch
+        path: unidef-gcc15.patch
+    cleanup:
+      - '*'
+
+  - name: ruby
+    no-autogen: true
+    cleanup:
+      - '*'
+    sources:
+      - type: archive
+        url: https://cache.ruby-lang.org/pub/ruby/3.4/ruby-3.4.7.tar.gz
+        sha256: 23815a6d095696f7919090fdc3e2f9459b2c83d57224b2e446ce1f5f7333ef36
