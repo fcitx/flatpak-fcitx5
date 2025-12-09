@@ -10,6 +10,8 @@ build-options:
   prepend-path: /app/addons/Rime/bin
   prepend-pkg-config-path: /app/addons/Rime/lib/pkgconfig
   prepend-ld-library-path: /app/addons/Rime/lib
+  no-debuginfo: false
+  strip: true
 
 cleanup:
   - /bin

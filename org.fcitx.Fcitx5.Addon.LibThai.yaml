@@ -8,6 +8,8 @@ separate-locales: false
 build-options:
   prefix: /app/addons/LibThai
   prepend-pkg-config-path: /app/addons/LibThai/lib/pkgconfig
+  no-debuginfo: false
+  strip: true
 cleanup:
   - /bin
   - /include

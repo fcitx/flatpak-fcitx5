@@ -11,6 +11,8 @@ build-options:
   prepend-path: /app/addons/Keyman/bin
   env:
     PYTHONPATH: /usr/lib/python3.13/site-packages:/app/addons/Keyman/lib/python3.13/site-packages
+  no-debuginfo: false
+  strip: true
 
 cleanup:
   - /include

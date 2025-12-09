@@ -19,6 +19,8 @@ build-options:
     - LOCALE=C.UTF-8
     - CC=clang
     - CXX=clang++
+  no-debuginfo: false
+  strip: true
 cleanup:
   - /bin
   - /include

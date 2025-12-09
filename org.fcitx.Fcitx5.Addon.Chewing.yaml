@@ -15,6 +15,8 @@ build-options:
   prefix: /app/addons/Chewing
   prepend-pkg-config-path: /app/addons/Chewing/lib/pkgconfig
   append-path: /usr/lib/sdk/rust-stable/bin
+  no-debuginfo: false
+  strip: true
 modules:
   - modules/corrosion.yaml
   - name: libchewing

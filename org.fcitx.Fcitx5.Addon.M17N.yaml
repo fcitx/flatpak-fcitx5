@@ -8,6 +8,8 @@ separate-locales: false
 build-options:
   prefix: /app/addons/M17N
   prepend-pkg-config-path: /app/addons/M17N/lib/pkgconfig:/app/addons/M17N/share/pkgconfig
+  no-debuginfo: false
+  strip: true
 cleanup:
   - /bin
   - /include

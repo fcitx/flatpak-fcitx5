@@ -8,6 +8,8 @@ separate-locales: false
 build-options:
   prefix: /app/addons/TableExtra
   prepend-pkg-config-path: /app/addons/TableExtra/lib/pkgconfig
+  no-debuginfo: false
+  strip: true
 
 cleanup:
   - /bin

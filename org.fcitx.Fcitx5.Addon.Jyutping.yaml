@@ -8,6 +8,8 @@ separate-locales: false
 build-options:
   prefix: /app/addons/Jyutping
   prepend-pkg-config-path: /app/addons/Jyutping/lib/pkgconfig
+  no-debuginfo: false
+  strip: true
 cleanup:
   - /include
   - "*.la"

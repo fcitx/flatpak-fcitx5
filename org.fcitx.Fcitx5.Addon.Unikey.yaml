@@ -8,6 +8,8 @@ separate-locales: false
 build-options:
   prefix: /app/addons/Unikey
   prepend-pkg-config-path: /app/addons/Unikey/lib/pkgconfig
+  no-debuginfo: false
+  strip: true
 
 cleanup:
   - /bin

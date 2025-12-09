@@ -8,6 +8,8 @@ separate-locales: false
 build-options:
   prefix: /app/addons/ChineseAddons
   prepend-pkg-config-path: /app/addons/ChineseAddons/lib/pkgconfig
+  no-debuginfo: false
+  strip: true
 cleanup:
   - /include
   - "*.la"

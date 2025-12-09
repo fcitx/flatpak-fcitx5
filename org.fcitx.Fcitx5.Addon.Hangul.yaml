@@ -8,6 +8,8 @@ separate-locales: false
 build-options:
   prefix: /app/addons/Hangul
   prepend-pkg-config-path: /app/addons/Hangul/lib/pkgconfig
+  no-debuginfo: false
+  strip: true
 
 cleanup:
   - /bin

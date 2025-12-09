@@ -8,6 +8,8 @@ separate-locales: false
 build-options:
   prefix: /app/addons/Sayura
   prepend-pkg-config-path: /app/addons/Sayura/lib/pkgconfig
+  no-debuginfo: false
+  strip: true
 
 cleanup:
   - /bin
