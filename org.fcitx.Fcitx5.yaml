@@ -14,6 +14,9 @@ add-extensions:
     add-ld-path: lib
     autodelete: true
 separate-locales: false
+build-options:
+  no-debuginfo: true
+  strip: true
 command: fcitx5
 finish-args:
   # Manually set sockets metadata, so we can bypass the validity check of --socket
