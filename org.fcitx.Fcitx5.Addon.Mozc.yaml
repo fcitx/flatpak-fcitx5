@@ -19,8 +19,6 @@ build-options:
     - LOCALE=C.UTF-8
     - CC=clang
     - CXX=clang++
-  no-debuginfo: false
-  strip: true
 cleanup:
   - /bin
   - /include
@@ -31,6 +29,9 @@ modules:
   - name: mozc
     buildsystem: simple
     subdir: src
+    build-options:
+      no-debuginfo: false
+      strip: true
     build-commands:
       - ../scripts/build_fcitx5_bazel --config release_build --distdir=$PWD/../bazel-deps
         --registry=file:///$PWD/../bcr $(echo "${LDFLAGS}"|xargs -n1 echo "--linkopt")
