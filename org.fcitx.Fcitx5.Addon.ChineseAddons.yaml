@@ -19,7 +19,6 @@ cleanup:
   - /man
 modules:
   - modules/boost.yaml
-  - modules/zstd.yaml
   - modules/libime.yaml
   - modules/fcitx5-lua.yaml
   - modules/opencc.yaml
