@@ -43,6 +43,10 @@ populate_modules() {
         update_tag $GIT_REPO/$basedir/$module
         populate_modules $basedir/$module
     done
+    for patch in $(yq -r '.. | select(.sources?) | .sources[]? | select(.type? == "patch") | .path' $1); do
+        echo cp $basedir/$patch $GIT_REPO/$basedir
+        cp $basedir/$patch $GIT_REPO/$basedir
+    done
 }
 
 if [[ "$1" == "" ]]; then
