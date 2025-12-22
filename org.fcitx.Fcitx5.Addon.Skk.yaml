@@ -68,7 +68,7 @@ modules:
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
       - -DUSE_QT6=On
-      - -DSKK_DEFAULT_PATH=/app/addons/Skk/share/skk/SKK-JISYO.L
+      - -DSKK_PATH=/app/addons/Skk/share/skk
     sources:
       - type: git
         url: https://github.com/fcitx/fcitx5-skk
