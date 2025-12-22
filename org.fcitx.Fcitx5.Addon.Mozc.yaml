@@ -30,7 +30,7 @@ modules:
     buildsystem: simple
     subdir: src
     build-options:
-      no-debuginfo: false
+      no-debuginfo: true
       strip: true
     build-commands:
       - ../scripts/build_fcitx5_bazel --config release_build --distdir=$PWD/../bazel-deps

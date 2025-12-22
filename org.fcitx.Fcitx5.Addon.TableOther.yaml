@@ -8,7 +8,7 @@ separate-locales: false
 build-options:
   prefix: /app/addons/TableOther
   prepend-pkg-config-path: /app/addons/TableOther/lib/pkgconfig
-  no-debuginfo: false
+  no-debuginfo: true
   strip: true
 
 cleanup:

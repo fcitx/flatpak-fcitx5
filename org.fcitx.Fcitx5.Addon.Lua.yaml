@@ -8,7 +8,7 @@ separate-locales: false
 build-options:
   prefix: /app/addons/Lua
   prepend-pkg-config-path: /app/addons/Lua/lib/pkgconfig
-  no-debuginfo: false
+  no-debuginfo: true
   strip: true
 
 cleanup:

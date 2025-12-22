@@ -13,7 +13,7 @@ build-options:
   prepend-pkg-config-path: /app/addons/Cskk/lib/pkgconfig
   cflags: -I/app/addons/Cskk/include
   append-path: /usr/lib/sdk/rust-stable/bin
-  no-debuginfo: false
+  no-debuginfo: true
   strip: true
 
 cleanup:

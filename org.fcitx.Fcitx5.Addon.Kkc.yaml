@@ -14,7 +14,7 @@ build-options:
   cflags: -I/app/addons/Kkc/include
   append-path: /usr/lib/sdk/vala/bin
   prepend-ld-library-path: /usr/lib/sdk/vala/lib
-  no-debuginfo: false
+  no-debuginfo: true
   strip: true
 
 cleanup:

@@ -12,7 +12,7 @@ build-options:
   ldflags: -L/app/addons/Zhuyin/lib
   cflags: -I/app/addons/Zhuyin/include
   cxxflags: -I/app/addons/Zhuyin/include
-  no-debuginfo: false
+  no-debuginfo: true
   strip: true
 
 cleanup:

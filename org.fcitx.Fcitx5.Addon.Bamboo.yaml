@@ -11,7 +11,7 @@ build-options:
   prefix: /app/addons/Bamboo
   prepend-pkg-config-path: /app/addons/Unikey/lib/pkgconfig
   append-path: /usr/lib/sdk/golang/bin
-  no-debuginfo: false
+  no-debuginfo: true
   strip: true
 
 cleanup:
