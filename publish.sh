@@ -94,7 +94,7 @@ rm -rf $GIT_REPO/modules
 
 populate_modules $PACKAGE.yaml
 
-yq -y -i '.branch = "stable"' $GIT_REPO/$PACKAGE.yaml
+yq -y -i 'del(.branch)' $GIT_REPO/$PACKAGE.yaml
 if [[ "$PACKAGE" =~ .*Addon.* ]]; then
     cp flathub.json $GIT_REPO/
     yq -y -i '."runtime-version" = "stable"' $GIT_REPO/$PACKAGE.yaml
