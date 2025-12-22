@@ -7,7 +7,7 @@ sources:
     tag: ver.1.1.9
     x-checker-data:
       type: anitya
-      project-id: 7230
+      project-id: 2542
       stable-only: true
       tag-template: ver.${version}
     commit: 556ed22496d650bd0b13b6c163be9814637970ae
