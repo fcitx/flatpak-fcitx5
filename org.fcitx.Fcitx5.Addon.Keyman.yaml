@@ -9,8 +9,8 @@ build-extension: true
 separate-locales: false
 build-options:
   prefix: /app/addons/Keyman
+  prepend-path: /usr/lib/sdk/llvm21/bin:/app/addons/Keyman/bin
   prepend-pkg-config-path: /app/addons/Keyman/lib/pkgconfig
-  prepend-path: /app/addons/Keyman/bin
   prepend-ld-library-path: /usr/lib/sdk/llvm21/lib
   env:
     PYTHONPATH: /usr/lib/python3.13/site-packages:/app/addons/Keyman/lib/python3.13/site-packages
