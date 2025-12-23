@@ -43,7 +43,7 @@ populate_modules() {
         update_tag $GIT_REPO/$basedir/$module
         populate_modules $basedir/$module
     done
-    for module in $(yq -r '.modules[]? | select(type == "string" and endswith(".json"))' $1); do
+    for module in $(yq -r '.. | select(.sources?) | .sources[]? | select(type == "string" and endswith("-sources.json"))' $1); do
         local moduledir=$(dirname $module)
         mkdir -p $GIT_REPO/$basedir/$moduledir
         cp $basedir/$module $GIT_REPO/$basedir/$module
