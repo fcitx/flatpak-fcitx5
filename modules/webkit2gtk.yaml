@@ -9,6 +9,11 @@ sources:
       version-pattern: LATEST-STABLE-(\d[\.\d]+\d)
       url-template: https://webkitgtk.org/releases/webkitgtk-$version.tar.xz
 buildsystem: cmake-ninja
+build-options:
+  env:
+    CC: clang
+    CXX: clang++
+
 config-opts:
   - -DCMAKE_BUILD_TYPE=Release
   - -DENABLE_BUBBLEWRAP_SANDBOX=OFF

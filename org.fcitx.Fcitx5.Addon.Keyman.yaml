@@ -14,8 +14,6 @@ build-options:
   prepend-ld-library-path: /usr/lib/sdk/llvm21/lib
   env:
     PYTHONPATH: /usr/lib/python3.13/site-packages:/app/addons/Keyman/lib/python3.13/site-packages
-    CC: clang
-    CXX: clang++
   no-debuginfo: true
   strip: true
 
