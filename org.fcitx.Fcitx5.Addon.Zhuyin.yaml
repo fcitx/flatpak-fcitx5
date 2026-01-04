@@ -30,13 +30,13 @@ modules:
     sources:
       - type: git
         url: https://github.com/libpinyin/libpinyin
-        tag: 2.10.3
+        tag: 2.11.91
         x-checker-data:
           type: anitya
           project-id: 1353
           stable-only: true
           tag-template: ${version}
-        commit: 954ecc3522686fb30a78d12080da1145df3f24da
+        commit: 0c5e80e1200f84fab185d1c5bde458b770a0636c
       - type: file
         url: https://downloads.sourceforge.net/libpinyin/model20.text.tar.gz
         sha256: 59c68e89d43ff85f5a309489499cbcde282d2b04bd91888734884b7defcb1155
