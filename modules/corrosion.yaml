@@ -11,9 +11,9 @@ config-opts:
   - -DCORROSION_DEV_MODE=OFF
 sources:
   - type: git
-    commit: 5239c1b64742bb03e13f10822ca8ef5e52f75f71
+    commit: 1499b14e4906a2890f5cee1547c8848db261753d
     url: https://github.com/corrosion-rs/corrosion
-    tag: v0.6.0
+    tag: v0.6.1
     x-checker-data:
       type: git
       tag-pattern: ^v([\d.]+)$
