@@ -21,13 +21,13 @@ cleanup:
   - /bin
   - /include
   - /lib/pkgconfig
-  - "/lib/python*"
-  - "/lib/vala*"
-  - "/lib/gir*"
-  - "/share/vala*"
-  - "/share/gir*"
+  - /lib/python*
+  - /lib/vala*
+  - /lib/gir*
+  - /share/vala*
+  - /share/gir*
   - /share/intltool
-  - "*.la"
+  - '*.la'
 
 modules:
   - modules/gnome-common.yaml
@@ -36,8 +36,8 @@ modules:
   - name: libskk
     sources:
       - type: archive
-        url: https://github.com/ueno/libskk/archive/1.0.5.tar.gz
-        sha512: 50b07b244e1fbec13764ca00b90ede2584c53dd5c16783c9bb9114f69f43dbebd352653f335f1c3584b8c42ef4184e891e0ca7427c38afc99131196721e1c1c1
+        url: https://github.com/ueno/libskk/archive/1.1.0.tar.gz
+        sha512: 8fda1f453682fdceb8041c852d034fb03665af20005c474fb93f4c69432175d8b52a847a7bbba0e73c62bf3317d5887902bc7532b00ba528ea26ed47ec882d8c
         x-checker-data:
           type: anitya
           project-id: 228903
