@@ -21,6 +21,7 @@ modules:
   - modules/corrosion.yaml
   - name: libchewing
     buildsystem: cmake-ninja
+    builddir: true
     sources:
       - type: git
         url: https://github.com/chewing/libchewing
