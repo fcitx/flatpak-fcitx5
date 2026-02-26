@@ -11,8 +11,6 @@ sources:
       stable-only: true
       tag-template: ver.${version}
     commit: 907bfcbbd3aae86ff04bc8eaca67c8af03108ddf
-  - type: patch
-    path: 3d3adca2dbee0da7d33eb3c3563299fcbd2255e3.patch
 config-opts:
   - -DCMAKE_BUILD_TYPE=Release
 cleanup:
