@@ -16,6 +16,8 @@ sources:
       project-id: 15227
       stable-only: true
       url-template: https://github.com/bazelbuild/bazel/releases/download/${version}/bazel-${version}-linux-x86_64
+      versions:
+        <: 9.0.0
   - type: file
     only-arches:
       - aarch64
@@ -27,6 +29,8 @@ sources:
       project-id: 15227
       stable-only: true
       url-template: https://github.com/bazelbuild/bazel/releases/download/${version}/bazel-${version}-linux-arm64
+      versions:
+        <: 9.0.0
 build-commands:
   - install -D -m755 bazel ${FLATPAK_DEST}/bin/bazel
 cleanup:
