@@ -36,8 +36,8 @@ modules:
   - name: libskk
     sources:
       - type: archive
-        url: https://github.com/ueno/libskk/archive/1.1.0.tar.gz
-        sha512: 8fda1f453682fdceb8041c852d034fb03665af20005c474fb93f4c69432175d8b52a847a7bbba0e73c62bf3317d5887902bc7532b00ba528ea26ed47ec882d8c
+        url: https://github.com/ueno/libskk/archive/1.1.1.tar.gz
+        sha512: b724e8ba7c4e554848627af932a292ad3fe065a206c7c2529e0c50e2fd8252ec8ec01fe751105d8846dee882d5a7c613be5b16744e05da132684c00b4ad566ca
         x-checker-data:
           type: anitya
           project-id: 228903
