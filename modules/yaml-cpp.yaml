@@ -14,5 +14,3 @@ sources:
       project-id: 5284
       stable-only: true
       url-template: https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-${version}.tar.gz
-  - type: patch
-    path: 7b469b4220f96fb3d036cf68cd7bd30bd39e61d2.patch
