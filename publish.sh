@@ -11,7 +11,9 @@ update_tag() {
     for k in "${!repo_tag[@]}"; do
         local repo_info="${repo_tag[$k]}"
         if [[ "$repo_info" =~ ^tag: ]]; then
+            local tag_commit="${repo_tag_commit[$k]}"
             yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/'$k'")) .tag = "'${repo_info/tag:/}'"' $1
+            yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/'$k'")) .commit = "'${tag_commit}'"' $1
             yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/'$k'")) |= del(.branch)' $1
         elif [[ "$repo_info" =~ ^commit: ]]; then
             yq -y -i '(.. |select(.sources?) | .sources[]? | select(.type? == "git" and .url? == "https://github.com/'$k'")) .commit = "'${repo_info/commit:/}'"' $1
@@ -61,6 +63,7 @@ if [[ "$1" == "" ]]; then
 fi
 
 declare -A repo_tag
+declare -A repo_tag_commit
 
 cd shared-modules
 SHARED_MODULE_SHA=`git rev-parse HEAD`
@@ -71,7 +74,9 @@ while IFS=, read repo package option; do
     if [[ "$option" =~ ^branch: ]]; then
         repo_tag[$repo]=commit:$(get_commit $repo ${option/branch:/})
     else
-        repo_tag[$repo]=tag:$(get_tag $repo)
+        tag_name=$(get_tag $repo)
+        repo_tag[$repo]=tag:$tag_name
+        repo_tag_commit[$repo]=$(get_tag_commit $repo $tag_name)
     fi
 
     if [[ "$package" == "$1" ]]; then

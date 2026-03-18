@@ -130,7 +130,13 @@ modules:
         disable-submodules: true
       - type: git
         url: https://github.com/openvanilla/fcitx5-mcbopomofo
-        tag: 2.9.5
+        tag: 3.0
+        commit: 07dd922ddab159dd4c1865dee73f009aa3c8fdc1
+        x-checker-data:
+            type: anitya
+            project-id: 243006
+            stable-only: true
+            tag-template: ${version}
         dest: fcitx5-mcbopomofo
       - type: file
         path: install_icons

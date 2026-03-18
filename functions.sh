@@ -8,3 +8,6 @@ get_commit() {
     gh api repos/$1/commits/$2 --jq .sha
 }
 
+get_tag_commit() {
+    gh api repos/$1/git/ref/tags/$2 --jq '.object.sha'
+}
