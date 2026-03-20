@@ -22,3 +22,4 @@ fcitx/fcitx5-bamboo,org.fcitx.Fcitx5.Addon.Bamboo
 fcitx/fcitx5-qt,,
 fcitx/fcitx5-configtool,,
 bazelbuild/bazel-central-registry,,branch:main
+skk-dev/dict,,branch:master

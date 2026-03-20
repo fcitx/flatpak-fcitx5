@@ -31,7 +31,7 @@ cleanup:
 
 modules:
   - modules/gnome-common.yaml
-  - modules/intltool.yaml
+  - shared-modules/intltool/intltool-0.51.json
   - modules/libgee.yaml
   - name: libskk
     sources:
