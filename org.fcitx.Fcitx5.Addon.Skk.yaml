@@ -58,7 +58,7 @@ modules:
       - install -Dm644 SKK-JISYO.* -t ${FLATPAK_DEST}/share/skk/
     sources:
       - type: git
-        url: https://github.com/skk-dev/dict.git
+        url: https://github.com/skk-dev/dict
         branch: master
   - name: fcitx5-skk
     buildsystem: cmake-ninja
