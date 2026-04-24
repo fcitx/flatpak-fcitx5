@@ -10,6 +10,6 @@ sources:
       stable-only: true
       url-template: https://archives.boost.io/release/$version/source/boost_${major}_${minor}_${patch}.tar.bz2
 build-commands:
-  - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=iostreams,regex,filesystem,system,locale
+  - ./bootstrap.sh --prefix=${FLATPAK_DEST} --with-libraries=iostreams,regex,filesystem,locale
   - ./b2 headers
   - ./b2 -j$FLATPAK_BUILDER_N_JOBS install variant=release cxxstd=17 --layout=system
