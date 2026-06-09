@@ -113,4 +113,4 @@
 - type: file
   url: https://go.dev/dl/?mode=json&include=all
   dest: bazel-deps
-  sha256: 1d02b5557bdb7955572e07edc11694cb31856e64aef3d8a57f2a51c1d7c57988
+  sha256: e391ba2a2e9e012b337f2adcdc68cd64dc0b3247fd703b9607d5341c4392ce84
