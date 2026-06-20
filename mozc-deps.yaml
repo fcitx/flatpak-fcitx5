@@ -23,9 +23,9 @@
   dest: bazel-deps
   sha256: 6fd3b1e1a38ca744f9664be4627ced80895c7d2ee353891c172f1ab61309c933
 - type: file
-  url: https://github.com/bazel-contrib/bazel_features/releases/download/v1.36.0/bazel_features-v1.36.0.tar.gz
+  url: https://github.com/bazel-contrib/bazel_features/releases/download/v1.42.1/bazel_features-v1.42.1.tar.gz
   dest: bazel-deps
-  sha256: 9390b391a68d3b24aef7966bce8556d28003fe3f022a5008efc7807e8acaaf1a
+  sha256: 8189bac9a6bf9cc155a854c4cbebfebf58b9ca7a2d0a67645f7d0c1f83c523ac
 - type: file
   url: https://github.com/bazel-contrib/rules_go/releases/download/v0.60.0/rules_go-v0.60.0.zip
   dest: bazel-deps
@@ -110,3 +110,15 @@
   url: https://github.com/protocolbuffers/protobuf/releases/download/v34.1/protobuf-34.1.bazel.tar.gz
   dest: bazel-deps
   sha256: 9f0933ad12abb0a8957b3b64aefc34774ccbe57f77f890c66cb4067519bb83c1
+- type: file
+  url: https://github.com/protocolbuffers/protobuf/releases/download/v34.1/protoc-34.1-linux-aarch_64.zip
+  dest: bazel-deps
+  sha256: 31c5e9e3c7bf013cf41fb97765ee255c140024a6b175b6cc9b64beddd7c23ba7
+- type: file
+  url: https://github.com/protocolbuffers/protobuf/releases/download/v34.1/protoc-34.1-linux-x86_64.zip
+  dest: bazel-deps
+  sha256: af27ea66cd26938fe48587804ca7d4817457a08350021a1c6e23a27ccc8c6904
+- type: file
+  url: https://go.dev/dl/?mode=json&include=all
+  dest: bazel-deps
+  sha256: cc708f98600a326e81fd5aaa0673fb019bf603d16c51648a00341b95a8374d05
