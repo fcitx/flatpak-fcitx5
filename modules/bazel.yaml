@@ -8,8 +8,8 @@ sources:
   - type: file
     only-arches:
       - x86_64
-    url: https://github.com/bazelbuild/bazel/releases/download/8.7.0/bazel-8.7.0-linux-x86_64
-    sha256: d7606e679b78067c811096fb3d6cf135225b528835ca396e3a4dddf957859544
+    url: https://github.com/bazelbuild/bazel/releases/download/9.0.2/bazel-9.0.2-linux-x86_64
+    sha256: 422e7a1690b76d7e615c29091d3aca28d0bd3a93fe3c93cbefb8f72d774926d5
     dest-filename: bazel
     x-checker-data:
       type: anitya
@@ -17,12 +17,12 @@ sources:
       stable-only: true
       url-template: https://github.com/bazelbuild/bazel/releases/download/${version}/bazel-${version}-linux-x86_64
       versions:
-        "<=": 9.0.2
+        <=: 9.0.2
   - type: file
     only-arches:
       - aarch64
-    url: https://github.com/bazelbuild/bazel/releases/download/8.7.0/bazel-8.7.0-linux-arm64
-    sha256: bfe9558bd8a2ecfe4841ec46c0dbccb4b469fe22d81f2f859de0de222b3e7ce3
+    url: https://github.com/bazelbuild/bazel/releases/download/9.0.2/bazel-9.0.2-linux-arm64
+    sha256: e9fc2c7b0027619058acae81c063e5ced683cb0f1598e9373b4f752820c03adb
     dest-filename: bazel
     x-checker-data:
       type: anitya
@@ -30,7 +30,7 @@ sources:
       stable-only: true
       url-template: https://github.com/bazelbuild/bazel/releases/download/${version}/bazel-${version}-linux-arm64
       versions:
-        "<=": 9.0.2
+        <=: 9.0.2
 build-commands:
   - install -D -m755 bazel ${FLATPAK_DEST}/bin/bazel
 cleanup:
