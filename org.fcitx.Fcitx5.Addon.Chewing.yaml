@@ -25,13 +25,13 @@ modules:
     sources:
       - type: git
         url: https://codeberg.org/chewing/libchewing.git
-        tag: v0.12.0
+        tag: v0.13.1
         x-checker-data:
           type: anitya
           project-id: 1577
           stable-only: true
           tag-template: v${version}
-        commit: 05ae6bcb9309c466a1b32d69c146bc583be04747
+        commit: f071d2e95c531cc39bb4325cd5a5d0e1d51daef8
       - chewing-cargo-sources.json
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
