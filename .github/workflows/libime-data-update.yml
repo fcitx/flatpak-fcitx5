@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  schedule:
+    - cron: "0 13 * * *"
+
+jobs:
+  update:
+    name: Update libime data dependency
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    container:
+      image: archlinux:latest
+      options: --init --privileged
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Install dependencies
+        run: |
+          pacman -Syu --needed --noconfirm base-devel cmake
+      - name: Update
+        run: |
+          ./update_libime_data
+      - name: Create Pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          path: flatpak-fcitx5
+          add-paths: |
+            modules/libime.yaml
+          commit-message: |
+            Update libime data
+            - Updated ${{ github.event.repository.updated_at}}
+          branch: mozc-deps
+          delete-branch: true
+          title: 'Update libime data'
+          body: |
+            - Updated ${{ github.event.repository.updated_at}}
+

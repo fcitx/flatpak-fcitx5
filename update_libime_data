@@ -1,0 +1,33 @@
+#!/bin/bash
+
+cleanup() {
+    pkill -P $$ || true
+}
+
+trap cleanup EXIT
+
+SCRIPT_PATH="$(realpath "${BASH_SOURCE[-1]}")"
+SCRIPT_DIRECTORY="$(dirname "$SCRIPT_PATH")"
+
+set -e
+
+# TMPDIR
+[[ -z $TMPDIR ]] && TMPDIR=$PWD/tmp
+BASE="$TMPDIR/update_libime"
+
+mkdir -p "$BASE"
+
+cd "$BASE"
+[[ ! -d libime ]] && git clone --recursive -q --filter=tree:0 https://github.com/fcitx/libime/
+
+cd libime
+
+cmake -DINPUT_FILE=data/CMakeLists.txt -P "$SCRIPT_DIRECTORY/print_urls.cmake" 2> "$BASE/urls.txt"
+
+yq -Y -i 'del(.sources[] | select(.type == "file"))' "$SCRIPT_DIRECTORY/modules/libime.yaml"
+
+while read -r url sha256; do
+    yq -Y -i '.sources += [{"type": "file", "url": "'"$url"'", "sha256": "'"$sha256"'", "dest": "data"}]' "$SCRIPT_DIRECTORY/modules/libime.yaml"
+done < "$BASE/urls.txt"
+
+rm -rf "$BASE"
