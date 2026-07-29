@@ -26,9 +26,15 @@ jobs:
       - name: Install dependencies
         run: |
           pacman -Syu --needed --noconfirm base-devel cmake
+      - uses: actions/checkout@v4
+        with:
+          path: flatpak-fcitx5
+          submodules: true
       - name: Update
         run: |
+          cd flatpak-fcitx5
           ./update_libime_data
+          git diff || true
       - name: Create Pull request
         uses: peter-evans/create-pull-request@v7
         with:
