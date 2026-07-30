@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          pacman -Syu --needed --noconfirm base-devel cmake
+          pacman -Syu --needed --noconfirm base-devel cmake git
       - uses: actions/checkout@v4
         with:
           path: flatpak-fcitx5
