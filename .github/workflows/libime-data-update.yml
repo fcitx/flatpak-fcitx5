@@ -44,7 +44,7 @@ jobs:
           commit-message: |
             Update libime data
             - Updated ${{ github.event.repository.updated_at}}
-          branch: mozc-deps
+          branch: libime-deps
           delete-branch: true
           title: 'Update libime data'
           body: |
