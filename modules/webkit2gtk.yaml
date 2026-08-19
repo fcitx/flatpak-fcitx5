@@ -1,8 +1,8 @@
 name: webkit2gtk
 sources:
   - type: archive
-    url: https://webkitgtk.org/releases/webkitgtk-2.52.5.tar.xz
-    sha256: 8a531a9abd2215936e8a8a914c077b586c0228b31d652f205286a8ec90f3364b
+    url: https://webkitgtk.org/releases/webkitgtk-2.52.6.tar.xz
+    sha256: 179a2ea3f8f6edd4be7f31fdc55afc57bd0729f1fba648c61d4181539ac116fc
     x-checker-data:
       type: html
       url: https://webkitgtk.org/releases/
