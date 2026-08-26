@@ -3,6 +3,10 @@
   dest: bazel-deps
   sha256: 4314e2a7cbac89cac25a2f2322870f343d81579756ceff7f431803c2c9090195
 - type: file
+  url: https://github.com/abseil/abseil-py/archive/refs/tags/v2.1.0.tar.gz
+  dest: bazel-deps
+  sha256: 8a3d0830e4eb4f66c4fa907c06edf6ce1c719ced811a12e26d9d3162f8471758
+- type: file
   url: https://github.com/astral-sh/python-build-standalone/releases/download/20251031/cpython-3.11.14+20251031-aarch64-unknown-linux-gnu-install_only.tar.gz
   dest: bazel-deps
   sha256: 510edb027527413c4249256194cb8ad2590b52dd93f7123b4cb341aff5d05894
