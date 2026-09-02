@@ -129,8 +129,8 @@ modules:
         disable-submodules: true
       - type: git
         url: https://github.com/openvanilla/fcitx5-mcbopomofo
-        tag: '3.1'
-        commit: 28a8c93944c0dcfb7855b423ccc94854673fd1df
+        tag: 3.1.1
+        commit: a84bdd5c741e1696b270159ebda675946dc73d49
         x-checker-data:
           type: anitya
           project-id: 243006
