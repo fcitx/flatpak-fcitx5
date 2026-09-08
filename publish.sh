@@ -37,24 +37,68 @@ update_cherry_pick() {
 }
 
 populate_modules() {
-    local basedir=$(dirname $1)
-    for module in $(yq -r '.modules[]? | select(type == "string" and endswith(".yaml"))' $1); do
-        local moduledir=$(dirname $module)
-        mkdir -p $GIT_REPO/$basedir/$moduledir
-        cp $basedir/$module $GIT_REPO/$basedir/$module
-        update_tag $GIT_REPO/$basedir/$module
-        populate_modules $basedir/$module
-    done
-    for module in $(yq -r '.. | select(.sources?) | .sources[]? | select(type == "string" and endswith("-sources.json"))' $1); do
-        local moduledir=$(dirname $module)
-        mkdir -p $GIT_REPO/$basedir/$moduledir
-        cp $basedir/$module $GIT_REPO/$basedir/$module
-    done
+    local source_file="$1"
+    local target_file="$2"
+    local source_dir
+    source_dir=$(dirname "$source_file")
+    local target_dir
+    target_dir=$(dirname "$target_file")
+    local module
+    local patch
 
-    for patch in $(yq -r '.. | select(.sources?) | .sources[]? | select(.type? == "patch") | .path' $1); do
-        echo cp $basedir/$patch $GIT_REPO/$basedir
-        cp $basedir/$patch $GIT_REPO/$basedir
-    done
+    # Expand YAML module references recursively.
+    while IFS= read -r module; do
+        [[ -z "$module" ]] && continue
+        local source_module="$source_dir/$module"
+        local module_dir
+        module_dir=$(dirname "$module")
+
+        # Keep shared-modules references as-is in the final manifest.
+        if [[ "${source_module#./}" == shared-modules/* ]]; then
+            continue
+        fi
+
+        local target_module="$target_dir/$module"
+        mkdir -p "$(dirname "$target_module")"
+        cp "$source_module" "$target_module"
+        update_tag "$target_module"
+        populate_modules "$source_module" "$target_module"
+
+        # Inlined modules are resolved from the top-level manifest, so normalize
+        # any relative shared-modules references to the top-level shared path.
+        yq -y -i 'if (.modules | type) == "array" then .modules |= map(if type == "string" then (sub("^\\./shared-modules/"; "shared-modules/") | sub("^(\\.\\./)+shared-modules/"; "shared-modules/")) else . end) else . end' "$target_module"
+
+        # Flatten relative patch paths for inlined modules by copying them next
+        # to the parent manifest and rewriting .path to the patch basename.
+        while IFS= read -r inlined_patch; do
+            [[ -z "$inlined_patch" ]] && continue
+            cp "$(dirname "$target_module")/$inlined_patch" "$target_dir/$(basename "$inlined_patch")"
+        done < <(yq -r '.sources[]? | select(type == "object" and .type? == "patch" and (.path? | type) == "string" and (.path | startswith("/") | not) and (.path | test("^[A-Za-z]+://") | not)) | .path' "$target_module")
+
+        yq -y -i 'if (.sources | type) == "array" then .sources |= map(if (type == "object" and .type? == "patch" and (.path? | type) == "string" and (.path | startswith("/") | not) and (.path | test("^[A-Za-z]+://") | not)) then .path |= (split("/") | last) else . end) else . end' "$target_module"
+
+        # Inline non-shared YAML modules and remove temporary copied files.
+        local module_json
+        module_json=$(yq -c '.' "$target_module")
+        yq -y -i --arg module "$module" --argjson module_obj "$module_json" '.modules |= map(if type == "string" and . == $module then $module_obj else . end)' "$target_file"
+        rm -f "$target_module"
+    done < <(yq -r '.modules[]? | select(type == "string" and endswith(".yaml"))' "$source_file")
+
+    # JSON source manifests remain file-based and are copied next to the target manifest.
+    while IFS= read -r module; do
+        [[ -z "$module" ]] && continue
+        local moduledir
+        moduledir=$(dirname "$module")
+        mkdir -p "$target_dir/$moduledir"
+        cp "$source_dir/$module" "$target_dir/$module"
+    done < <(yq -r '.. | select(.sources?) | .sources[]? | select(type == "string" and endswith("-sources.json"))' "$source_file")
+
+    # Patch files are also copied so patch paths stay valid after inlining.
+    while IFS= read -r patch; do
+        [[ -z "$patch" ]] && continue
+        echo cp "$source_dir/$patch" "$target_dir"
+        cp "$source_dir/$patch" "$target_dir"
+    done < <(yq -r '.. | select(.sources?) | .sources[]? | select(.type? == "patch") | .path' "$source_file")
 }
 
 if [[ "$1" == "" ]]; then
@@ -107,7 +151,7 @@ cp $PACKAGE.yaml $GIT_REPO/$PACKAGE.yaml
 
 rm -rf $GIT_REPO/modules
 
-populate_modules $PACKAGE.yaml
+populate_modules $PACKAGE.yaml $GIT_REPO/$PACKAGE.yaml
 
 yq -y -i 'del(.branch)' $GIT_REPO/$PACKAGE.yaml
 if [[ "$PACKAGE" =~ .*Addon.* ]]; then
