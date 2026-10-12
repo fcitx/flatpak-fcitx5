@@ -6,6 +6,46 @@ source "${SCRIPT_DIRECTORY}/functions.sh"
 
 printarr() { declare -n __p="$1"; for k in "${!__p[@]}"; do printf "%s=%s\n" "$k" "${__p[$k]}" ; done ;  }
 
+clean_output_repo() {
+    local repo_dir="$1"
+    local repo_abs
+    repo_abs=$(realpath "$repo_dir")
+    local workspace_abs
+    workspace_abs=$(realpath "$SCRIPT_DIRECTORY")
+
+    # Refuse dangerous paths and anything outside this workspace.
+    if [[ -z "$repo_abs" || "$repo_abs" == "/" || "$repo_abs" == "$HOME" || "$repo_abs" == "$workspace_abs" ]]; then
+        echo "Refusing to clean unsafe path: $repo_dir"
+        return 1
+    fi
+    if [[ "$repo_abs" != "$workspace_abs"/* ]]; then
+        echo "Refusing to clean path outside workspace: $repo_abs"
+        return 1
+    fi
+
+    # Disposable-clone mode: reset/clean repository contents aggressively.
+    git -C "$repo_abs" reset --hard HEAD
+    git -C "$repo_abs" clean -ffdqx
+}
+
+uses_shared_modules() {
+    local manifest="$1"
+    yq -r '.. | .modules? // empty | .[]? | select(type == "string")' "$manifest" \
+        | rg -q '^(\./)?shared-modules/|^(\.\./)+shared-modules/'
+}
+
+init_shared_modules_submodule_if_needed() {
+    local repo_dir="$1"
+    local manifest="$2"
+    if ! uses_shared_modules "$manifest"; then
+        return
+    fi
+
+    git -C "$repo_dir" checkout HEAD -- .gitmodules shared-modules
+    git -C "$repo_dir" submodule update --init --recursive shared-modules
+    git -C "$repo_dir/shared-modules" checkout "$SHARED_MODULE_SHA"
+}
+
 update_tag() {
     echo update_tag for $1
     for k in "${!repo_tag[@]}"; do
@@ -72,7 +112,10 @@ populate_modules() {
         # to the parent manifest and rewriting .path to the patch basename.
         while IFS= read -r inlined_patch; do
             [[ -z "$inlined_patch" ]] && continue
-            cp "$(dirname "$target_module")/$inlined_patch" "$target_dir/$(basename "$inlined_patch")"
+            local old_patch_path
+            old_patch_path="$(dirname "$target_module")/$inlined_patch"
+            cp "$old_patch_path" "$target_dir/$(basename "$inlined_patch")"
+            rm -f "$old_patch_path"
         done < <(yq -r '.sources[]? | select(type == "object" and .type? == "patch" and (.path? | type) == "string" and (.path | startswith("/") | not) and (.path | test("^[A-Za-z]+://") | not)) | .path' "$target_module")
 
         yq -y -i 'if (.sources | type) == "array" then .sources |= map(if (type == "object" and .type? == "patch" and (.path? | type) == "string" and (.path | startswith("/") | not) and (.path | test("^[A-Za-z]+://") | not)) then .path |= (split("/") | last) else . end) else . end' "$target_module"
@@ -147,11 +190,16 @@ if [[ "$2" == "new" ]]; then
     popd
 fi
 
+clean_output_repo "$GIT_REPO"
+
 cp $PACKAGE.yaml $GIT_REPO/$PACKAGE.yaml
 
 rm -rf $GIT_REPO/modules
 
 populate_modules $PACKAGE.yaml $GIT_REPO/$PACKAGE.yaml
+
+# Remove temporary module directory only if inlining left it empty.
+rmdir "$GIT_REPO/modules" 2>/dev/null || true
 
 yq -y -i 'del(.branch)' $GIT_REPO/$PACKAGE.yaml
 if [[ "$PACKAGE" =~ .*Addon.* ]]; then
@@ -170,11 +218,7 @@ update_cherry_pick $GIT_REPO/$PACKAGE.yaml
 
 cd $GIT_REPO
 
-if [ -d shared-modules ]; then
-    cd shared-modules
-    git checkout $SHARED_MODULE_SHA
-    cd ..
-fi
+init_shared_modules_submodule_if_needed "$PWD" "$PACKAGE.yaml"
 
 LABEL=${repo_tag[$REPO]/:/-}
 git add .
