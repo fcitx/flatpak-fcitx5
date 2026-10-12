@@ -35,7 +35,7 @@ modules:
           type: anitya
           project-id: 1353
           stable-only: true
-          tag-template: ${version}
+          tag-template: v${version}
         commit: 0c5e80e1200f84fab185d1c5bde458b770a0636c
       - type: file
         url: https://downloads.sourceforge.net/libpinyin/model20.text.tar.gz
