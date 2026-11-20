@@ -27,9 +27,9 @@
   dest: bazel-deps
   sha256: 6fd3b1e1a38ca744f9664be4627ced80895c7d2ee353891c172f1ab61309c933
 - type: file
-  url: https://github.com/bazel-contrib/bazel_features/releases/download/v1.42.1/bazel_features-v1.42.1.tar.gz
+  url: https://github.com/bazel-contrib/bazel_features/releases/download/v1.50.0/bazel_features-v1.50.0.tar.gz
   dest: bazel-deps
-  sha256: 8189bac9a6bf9cc155a854c4cbebfebf58b9ca7a2d0a67645f7d0c1f83c523ac
+  sha256: 094367e732ece23f334eaf84089a720b861d053beeba6a6a68356d3aee1dc32b
 - type: file
   url: https://github.com/bazel-contrib/rules_go/releases/download/v0.60.0/rules_go-v0.60.0.zip
   dest: bazel-deps
@@ -67,9 +67,9 @@
   dest: bazel-deps
   sha256: bdac384944a8a7b555f403e10fecb25de6096ff340722e090847bfb562c0ce89
 - type: file
-  url: https://github.com/bazelbuild/rules_cc/releases/download/0.2.17/rules_cc-0.2.17.tar.gz
+  url: https://github.com/bazelbuild/rules_cc/releases/download/0.2.22/rules_cc-0.2.22.tar.gz
   dest: bazel-deps
-  sha256: 283fa1cdaaf172337898749cf4b9b1ef5ea269da59540954e51fba0e7b8f277a
+  sha256: 81c10a95a5c22d838276ee90d712635d6042419fdfca5ef88328226b6321e53b
 - type: file
   url: https://github.com/bazelbuild/rules_java/releases/download/9.3.0/rules_java-9.3.0.tar.gz
   dest: bazel-deps
