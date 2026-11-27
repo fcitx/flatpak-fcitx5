@@ -17,6 +17,8 @@ jobs:
       fail-fast: false
 
     steps:
+      - name: Fix Git dubious ownership
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Setup
         run: |
           pacman -Syu --needed --noconfirm flatpak git
@@ -27,11 +29,19 @@ jobs:
           ref: ${{ matrix.branch }}
 
       - name: Update
+        id: update
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           for f in org.fcitx.Fcitx5*.yaml; do
-            flatpak run --filesystem=$PWD org.flathub.flatpak-external-data-checker --update --edit-only $f
+            flatpak run --filesystem=$PWD org.flathub.flatpak-external-data-checker --update --commit-only --commit-to-current-branch $f
           done
-          git diff || true
+          git log -p ${{ github.sha }}..HEAD || true
+          {
+            echo "details<<EOF"
+            git log --reverse --format="%B" ${{ github.sha }}..HEAD
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Create Pull request
         uses: peter-evans/create-pull-request@v7
@@ -40,10 +50,11 @@ jobs:
             *.yaml
           commit-message: |
             Update dependencies
-            - Updated ${{ github.event.repository.updated_at}}
+
+            ${{ steps.update.outputs.details }}
           branch: external-deps
           delete-branch: true
           title: 'Update dependencies'
           body: |
-            - Updated ${{ github.event.repository.updated_at}}
+            ${{ steps.update.outputs.details }}
 
