@@ -34,8 +34,8 @@ modules:
   - name: m17n-db
     sources:
       - type: archive
-        url: https://download-mirror.savannah.gnu.org/releases/m17n/m17n-db-1.8.16.tar.gz
-        sha256: 1215c347fbc2a8318ebfcc37eacd60577f14da0f4ffaef983a062fab261f3bea
+        url: https://download-mirror.savannah.gnu.org/releases/m17n/m17n-db-1.8.19.tar.gz
+        sha256: d17213d3a8178857b4b5e06cd549178bf9bcc1f77af61d730e696d846556c231
         x-checker-data:
           type: anitya
           project-id: 1869
