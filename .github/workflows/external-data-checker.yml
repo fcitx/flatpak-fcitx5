@@ -17,12 +17,13 @@ jobs:
       fail-fast: false
 
     steps:
-      - name: Fix Git dubious ownership
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Setup
         run: |
           pacman -Syu --needed --noconfirm flatpak git
           flatpak install -y --system --from https://dl.flathub.org/repo/appstream/org.flathub.flatpak-external-data-checker.flatpakref
+
+      - name: Fix Git dubious ownership
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       - uses: actions/checkout@v3
         with:
